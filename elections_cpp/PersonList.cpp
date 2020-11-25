@@ -25,7 +25,7 @@ PersonList::~PersonList(){
     }
 }
 
-bool PersonList::addPerson(const Person& p)
+Person& PersonList::addPerson(const Person& p)
 {
     Person* person_p =  new Person(p);
         
@@ -42,10 +42,10 @@ bool PersonList::addPerson(const Person& p)
     }
     
     _person_count++;
-    return true;
+    return *person_p;
 }
 
-bool PersonList::addPerson(Person* p){
+Person& PersonList::addPerson(Person* p){
         
     Node* newnode = new Node();
     newnode->person_p = p;
@@ -59,7 +59,7 @@ bool PersonList::addPerson(Person* p){
         _tail = _tail->next;
     }
     _person_count++;
-    return true;
+    return *p;
 }
 
 
@@ -83,7 +83,6 @@ Person& PersonList::getPerson(int idnum) {
     
     return *res;
 }
-
 
 
 void PersonList::printList(){

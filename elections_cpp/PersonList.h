@@ -11,28 +11,26 @@
 #include "Person.h"
 
 class PersonList {
-    
-public:
-    struct Node {
+     
+private:
+	struct Node {
         Person*    person_p;
         Node*      next = nullptr;
     };
-    
-    PersonList();
-    ~PersonList();
-    
-    Node* getHead() { return _head; }
-    Node* getTail() { return _tail; }
-    bool addPerson(const Person& p);
-    bool addPerson(Person* p);
-
-    bool isEmpty();
-    Person& getPerson(int idnum);
-    void printList();
-    
-private:
     Node* _head;
     Node* _tail;
     int   _person_count;
     
+public:
+	PersonList();
+	~PersonList();
+
+	Node* getHead() { return _head; }
+	Node* getTail() { return _tail; }
+	Person& addPerson(const Person& p);
+	Person& addPerson(Person* p);
+
+	bool isEmpty();
+	Person& getPerson(int idnum);
+	void printList();
 };
