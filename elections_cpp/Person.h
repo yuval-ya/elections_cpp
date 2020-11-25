@@ -4,20 +4,23 @@
 class Person
 {
 private:
-    const String _name;
-    const int _id;
-    const int _birth_year;
-    const int _district_num;
-    bool _voted;
+    String  _name;
+    int     _id;
+    int     _birth_year;
+    int     _district_num;
+    bool    _is_voted;
+    bool    _is_candidate;
 public:
     Person(const String&, int idnum, int year, int district_num);
-    ~Person();
+    Person(const Person& p);
+    ~Person() {}
     
-    const String& get_name() const { return _name; }
-    int get_id() const { return _id; };
-    int get_year() const { return _birth_year; };
-    int get_district() const { return _district_num; }
-    bool voted() const { return _voted; }
-
+    const String& getName() const { return _name; }
+    int getID() const { return _id; };
+    int getYear() const { return _birth_year; };
+    int getDistrict() const { return _district_num; }
+    bool isVoted() const { return _is_voted; }
+    bool isCandidate() const { return _is_candidate; }
+    
 };
 
