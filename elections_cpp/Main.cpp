@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 int main(void) {
     
       PersonList list;
@@ -23,3 +22,4 @@ int main(void) {
 
     return 0;
 }
+

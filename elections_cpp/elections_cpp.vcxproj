@@ -124,18 +124,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="District.cpp" />
+    <ClCompile Include="DistrictArray.cpp" />
     <ClCompile Include="Elections.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Party.cpp" />
+    <ClCompile Include="PartyArray.cpp" />
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="District.h" />
+    <ClInclude Include="DistrictArray.h" />
     <ClInclude Include="Elections.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Party.h" />
+    <ClInclude Include="PartyArray.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="String.h" />
   </ItemGroup>
