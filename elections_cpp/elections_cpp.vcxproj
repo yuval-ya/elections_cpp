@@ -123,10 +123,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="District.cpp" />
+    <ClCompile Include="Elections.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Party.cpp" />
     <ClCompile Include="Person.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="District.h" />
+    <ClInclude Include="Elections.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Party.h" />
     <ClInclude Include="Person.h" />
   </ItemGroup>
