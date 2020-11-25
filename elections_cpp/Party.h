@@ -22,3 +22,4 @@ public:
 	void set_candidate_id(int candidate_id) { _candidate_id = candidate_id; }
 };
 
+

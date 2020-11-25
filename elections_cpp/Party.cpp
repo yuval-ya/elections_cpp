@@ -10,3 +10,4 @@ Party::Party(const String& name, int candidate_id) :
 Party::~Party() {
 	
 }
+
