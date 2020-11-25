@@ -1,20 +1,25 @@
 #include <iostream>
+#include "PersonList.h"
+
 using namespace std;
 
-#include "String.h"
 
 int main(void) {
-	
-	char name[100];
+    
+      PersonList list;
+        
+        Person yuval = Person("Yuval", 1, 1, 1);
+        Person tamir = Person("Tamir", 2, 2, 2);
+        Person edi = Person("Edi", 3, 3, 3);
 
-	cout << "hello" << endl;
-	//cin >> name;
-	String myname = "yuval";
+        list.addPerson(yuval);
+        list.addPerson(tamir);
+        list.addPerson(edi);
+        
+        PersonList list2;
+        
+        Person* yuval_ptr = &list.getPerson(1);
+        list2.addPerson(yuval_ptr);
 
-	cout << myname;
-
-	myname.set("tamir");
-	cout << myname;
-	return 0;
-
+    return 0;
 }
