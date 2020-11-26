@@ -68,22 +68,7 @@ bool PersonList::isEmpty(){
     return _head == nullptr;
 }
 
-const Person& PersonList::getPerson(int idnum) const {
-    Node* curr = _head;
-    PersonPtr res = nullptr;
-    
-    if (curr != nullptr)
-    {
-        while (curr->person_p->getID() != idnum){
-            curr = curr->next;
-        }
-        if (curr != nullptr){
-            res = curr->person_p;
-        }
-    }
-    
-    return *res;
-}
+
 
 PersonPtr PersonList::getPerson(int idnum) {
     Node* curr = _head;
@@ -99,11 +84,8 @@ PersonPtr PersonList::getPerson(int idnum) {
         }
     }
     
-    
     return res;
 }
-
-
 
 void PersonList::printList(){
     Node* curr = _head;

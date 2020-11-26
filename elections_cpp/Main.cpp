@@ -18,7 +18,9 @@ int main(void) {
     
     list2.addPerson(list.getPerson(2));
 
-    Person a = list2.getPerson(2);
+    PersonPtr a = list2.getPerson(2);
+    
+    cout << a->getName();
     
     return 0;
 }

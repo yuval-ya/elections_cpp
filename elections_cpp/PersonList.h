@@ -28,7 +28,7 @@ public:
     bool addPerson(PersonPtr p);
     
     PersonPtr getPerson(int idnum);
-    const Person& getPerson(int idnum) const;    // cant call this getter 
+    Person& getPerson(int idnum) const;    // cant call this getter 
         
     void printList();
     bool isEmpty();
