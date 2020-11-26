@@ -1,4 +1,5 @@
 #include "Person.h"
+#include <iostream>
 
 Person::Person(const String& name, int idnum, int year, int district_num) :
 _name(name), _id(idnum), _birth_year(year), _district_num(district_num), _is_voted(false), _is_candidate(false)
@@ -8,4 +9,7 @@ _name(name), _id(idnum), _birth_year(year), _district_num(district_num), _is_vot
 Person::Person(const Person& p) :
 _name(p._name), _id(p._id), _birth_year(p._birth_year), _district_num(p._district_num)
 {
+}
+
+Person::~Person(){
 }

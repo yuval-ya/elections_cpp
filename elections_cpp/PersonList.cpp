@@ -17,17 +17,17 @@ PersonList::~PersonList(){
     while(curr != nullptr){
         temp = curr;
         curr = curr->next;
-        if (!temp->person_p->isCandidate())
-        {
-            delete temp->person_p;
-        }
+//        if (!temp->person_p->isCandidate())
+//        {
+//            delete temp->person_p;
+//        }
         delete temp;
     }
 }
 
 bool PersonList::addPerson(const Person& p)
 {
-    Person* person_p =  new Person(p);
+    PersonPtr person_p =  new Person(p);
         
     Node* newnode = new Node();
     newnode->person_p = person_p;
@@ -45,10 +45,11 @@ bool PersonList::addPerson(const Person& p)
     return true;
 }
 
-bool PersonList::addPerson(Person* p){
+bool PersonList::addPerson(PersonPtr p){
         
     Node* newnode = new Node();
     newnode->person_p = p;
+
     
     if (_head == nullptr){
         _head = _tail = newnode;
@@ -67,9 +68,9 @@ bool PersonList::isEmpty(){
     return _head == nullptr;
 }
 
-Person& PersonList::getPerson(int idnum) {
+const Person& PersonList::getPerson(int idnum) const {
     Node* curr = _head;
-    Person* res = nullptr;
+    PersonPtr res = nullptr;
     
     if (curr != nullptr)
     {
@@ -82,6 +83,24 @@ Person& PersonList::getPerson(int idnum) {
     }
     
     return *res;
+}
+
+PersonPtr PersonList::getPerson(int idnum) {
+    Node* curr = _head;
+    PersonPtr res = nullptr;
+
+    if (curr != nullptr)
+    {
+        while (curr->person_p->getID() != idnum){
+            curr = curr->next;
+        }
+        if (curr != nullptr){
+            res = curr->person_p;
+        }
+    }
+    
+    
+    return res;
 }
 
 

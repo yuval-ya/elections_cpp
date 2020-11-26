@@ -8,13 +8,13 @@
 
 #pragma once
 #include <iostream>
-#include "Person.h"
+#include "PersonPtr.h"
 
 class PersonList {
     
 public:
     struct Node {
-        Person*    person_p;
+        PersonPtr  person_p;
         Node*      next = nullptr;
     };
     
@@ -23,13 +23,16 @@ public:
     
     Node* getHead() { return _head; }
     Node* getTail() { return _tail; }
-    bool addPerson(const Person& p);
-    bool addPerson(Person* p);
-
-    bool isEmpty();
-    Person& getPerson(int idnum);
-    void printList();
     
+    bool addPerson(const Person& p);
+    bool addPerson(PersonPtr p);
+    
+    PersonPtr getPerson(int idnum);
+    const Person& getPerson(int idnum) const;    // cant call this getter 
+        
+    void printList();
+    bool isEmpty();
+
 private:
     Node* _head;
     Node* _tail;
