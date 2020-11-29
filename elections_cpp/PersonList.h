@@ -24,11 +24,11 @@ public:
     Node* getHead() { return _head; }
     Node* getTail() { return _tail; }
     
-    bool addPerson(const Person& p);
+    PersonPtr addPerson(const Person& p);
     bool addPerson(PersonPtr p);
     
-    PersonPtr getPerson(int idnum);
-    Person& getPerson(int idnum) const;    // cant call this getter 
+    PersonPtr getPersonPtr(int idnum);
+    const Person& getPerson(int idnum) const;    // cant call this getter 
         
     void printList();
     bool isEmpty();
