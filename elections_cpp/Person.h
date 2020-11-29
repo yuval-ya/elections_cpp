@@ -1,5 +1,7 @@
 #pragma once
 #include "String.h"
+#include <ostream>
+using namespace std;
 
 class Person
 {
@@ -22,5 +24,7 @@ public:
     bool isVoted() const { return _is_voted; }
     bool isCandidate() const { return _is_candidate; }
     
+
+    friend ostream& operator<<(ostream& os, const Person& p);
 };
 

@@ -26,8 +26,6 @@ PersonPtr::PersonPtr(const PersonPtr& other) : _p(other._p), _r(other._r)
 
 PersonPtr::PersonPtr(Person* pnt) : _p(pnt), _r(new int(1))
 {
-    cout << "new person pnt" <<endl;
-    cout << "new int pnt" <<endl;
 }
 
 PersonPtr::~PersonPtr()
@@ -41,8 +39,6 @@ void PersonPtr::release()
     if (*_r == 0) {
         delete _r;
         delete _p;
-        cout << "deleted person ptr" <<endl;
-        cout << "deleted int pnt" <<endl;
     }
 }
 

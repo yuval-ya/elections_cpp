@@ -13,3 +13,9 @@ _name(p._name), _id(p._id), _birth_year(p._birth_year), _district_num(p._distric
 
 Person::~Person(){
 }
+
+
+ostream& operator<<(ostream& os, const Person& p) {
+    os << p.getName() << " | " << p.getID() << " | " << p.getDistrict();
+    return os;
+}
