@@ -28,7 +28,7 @@ public:
     
     PersonPtr getPersonPtr(int idnum);
     const Person& getPerson(int idnum) const;
-        
+
     void printList();
     bool isEmpty();
 

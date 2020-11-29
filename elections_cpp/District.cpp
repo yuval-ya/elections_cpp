@@ -23,3 +23,23 @@ float District::get_voters_percentage() const
 { 
 	return _number_of_voters / static_cast<float>(_number_of_citizens) * 100; 
 }
+
+
+PersonPtr District::addPerson(const Person& p) {
+	return _voters.addPerson(p);
+}
+const Person& District::addPerson(PersonPtr p) {
+	return _voters.addPerson(p);
+}
+
+PersonPtr District::getPersonPtr(int idnum) {
+	return _voters.getPersonPtr(idnum);
+}
+const Person& District::getPerson(int idnum) const {
+	return _voters.getPerson(idnum);
+}
+
+ostream& operator<<(ostream& os, const District& d) {
+	os << d._id << " | " << d._name << " | " << d._number_of_candidates;
+	return os;
+}

@@ -5,8 +5,8 @@ class PartyArray
 {
 private:
 	Party** _arr;
-	int _log_size = 0;
-	int _pys_size = 0;
+	int _log_size;
+	int _pys_size;
 	void resize(int new_size);
 
 public:
@@ -18,8 +18,10 @@ public:
 	void set(int idx, Party* d);
 
 	void add(const Party& d);
+	void add_district_to_party();
 	int get_length() { return _log_size; }
 	void set_length(int new_size);
+	void print() const;
 
 	Party& operator[](int idx); /* return by index arr[0] = Party No.1 */
 	const Party& operator[](int idx) const; 
