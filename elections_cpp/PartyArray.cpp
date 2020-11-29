@@ -3,6 +3,7 @@
 PartyArray::PartyArray(int size) :
 	_arr(new Party*[size]), _log_size(size), _pys_size(size)
 {
+    cout << "PartyArr ctor" <<endl;
 }
 
 PartyArray::~PartyArray() {
@@ -56,14 +57,14 @@ const Party& PartyArray::operator[](int idx) const {
 }
 
 void PartyArray::print() const {
-	for (int i = 0; i <= _log_size; i++)
+	for (int i = 0; i < _log_size; i++)
 	{
 		cout << *_arr[i] << endl;
 	}
 }
 
 void PartyArray::add_district_to_party(){
-	for (int i = 0; i <= _log_size; i++)
+	for (int i = 0; i < _log_size; i++)
 	{
 		_arr[i]->add_district_to_candidates_arr();
 	}

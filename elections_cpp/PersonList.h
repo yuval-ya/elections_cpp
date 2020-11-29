@@ -28,6 +28,7 @@ public:
     
     PersonPtr getPersonPtr(int idnum);
     const Person& getPerson(int idnum) const;
+    int get_person_number() const { return _person_count; }
     void printList() const;
     bool isEmpty() const;
 

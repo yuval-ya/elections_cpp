@@ -8,7 +8,7 @@
 
 #include "PersonList.h"
 
-PersonList::PersonList() : _head(nullptr), _tail(nullptr), _person_count(0) {}
+PersonList::PersonList() : _head(nullptr), _tail(nullptr), _person_count(0) { cout << "PersonList ctor" <<endl;}
 
 PersonList::~PersonList(){
     Node* curr = _head;
@@ -17,12 +17,9 @@ PersonList::~PersonList(){
     while(curr != nullptr){
         temp = curr;
         curr = curr->next;
-//        if (!temp->person_p->isCandidate())
-//        {
-//            delete temp->person_p;
-//        }
         delete temp;
     }
+    cout << "PersonList dtor" << endl;
 }
 
 PersonPtr PersonList::addPerson(const Person& p)
@@ -103,11 +100,12 @@ const Person& PersonList::getPerson(int idnum) const {
     return *res;
 }
 
-void PersonList::printList() const{
+void PersonList::printList() const
+{
     Node* curr = _head;
     
     while(curr != nullptr){
-        cout << *curr->person_p;
+        cout << *curr->person_p <<endl;
         curr = curr->next;
     }
 }

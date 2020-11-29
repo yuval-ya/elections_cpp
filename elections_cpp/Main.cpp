@@ -1,27 +1,27 @@
 #include <iostream>
-#include "PersonList.h"
+#include "Elections.h"
 
 using namespace std;
 
 int main(void) {
     
-    PersonList list;
+    Elections election;
+    
+//    election.add_distric("NY", 2);
+//    election.add_distric("NJ", 3);
+//    election.add_distric("TT", 1);
+//    election.add_party("paapa", 123);
 
-    Person yuval = Person("Yuval", 1, 1, 1);
-    Person tamir = Person("Tamir", 2, 2, 2);
 
-    list.addPerson(yuval);
-    list.addPerson(tamir);
-    
-    
-    PersonList list2;
-    
-    list2.addPerson(list.getPerson(2));
+    election.add_party("paapa", 123);
+    election.add_party("paapa", 123);
+    election.add_party("paapa", 123);
+    election.add_distric("NV", 3);
+    election.add_distric("NV", 3);
 
-    PersonPtr a = list2.getPerson(2);
-    
-    cout << a->getName();
-    
+//    election.add_party("Kahol Lavan", 2222);
+//    election.add_distric("CA", 1);
+//    election.add_party("Meretz", 3333);
     return 0;
 }
 

@@ -12,7 +12,6 @@ District::District(const District& d) :
 	_id(d._id), _name(d._name), _number_of_candidates(d._number_of_candidates)
 {
 	_number_of_voters = d.get_voters();
-	_number_of_citizens = d.get_citizens();
 }
 
 District::~District() {
@@ -21,7 +20,7 @@ District::~District() {
 
 float District::get_voters_percentage() const
 { 
-	return _number_of_voters / static_cast<float>(_number_of_citizens) * 100; 
+	return _number_of_voters / static_cast<float>(get_citizens_number()) * 100; 
 }
 
 

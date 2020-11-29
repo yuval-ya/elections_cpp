@@ -9,7 +9,6 @@ private:
 	String		_name;
 	int			_number_of_candidates;
 	int			_number_of_voters = 0;
-	int			_number_of_citizens = 0;
 	PersonList	_voters;
 	// result after the votes
 
@@ -24,7 +23,7 @@ public:
 	const String& get_name() const { return _name; }
 	int get_candidates() const { return _number_of_candidates; }
 	int get_voters() const { return _number_of_voters; }
-	int get_citizens() const { return _number_of_citizens; }
+    int get_citizens_number() const { return _voters.get_person_number(); }
 	float get_voters_percentage() const;
 	
 	void set_candidates(int candidates) { _number_of_candidates = candidates; }

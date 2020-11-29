@@ -21,6 +21,7 @@ public:
     int getID() const { return _id; };
     int getYear() const { return _birth_year; };
     int getDistrict() const { return _district_num; }
+    void setAsCandidate() { _is_candidate = true; }
     bool isVoted() const { return _is_voted; }
     bool isCandidate() const { return _is_candidate; }
     

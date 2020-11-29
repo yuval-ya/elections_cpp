@@ -4,6 +4,7 @@
 DistrictArray::DistrictArray(int size) : 
 	_arr(new District*[size]), _log_size(size), _pys_size(size)
 {
+    cout << "DistrictArr ctor" <<endl;
 }
 
 DistrictArray::~DistrictArray() {
@@ -57,7 +58,7 @@ const District& DistrictArray::operator[](int idx) const {
 }
 
 void DistrictArray::print() const {
-	for (int i = 0; i <= _log_size; i++)
+	for (int i = 0; i < _log_size; i++)
 	{
 		cout << *_arr[i] << endl;
 	}

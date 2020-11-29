@@ -3,16 +3,17 @@
 int Party::total_parties = 0;
 
 Party::Party(const String& name, int candidate_id) : 
-	_id(++total_parties), _name(name), _first_candidate_id(candidate_id), 
-	_candidates(0)
+	_id(++total_parties), _name(name), _first_candidate_id(candidate_id)
 {
-
+    cout << "party ctor" <<endl;
 }
 
 Party::Party(const Party& p) :
 	_id(p._id), _name(p._name), _first_candidate_id(p._first_candidate_id), 
 	_candidates(District::total_districts) 
 {
+    cout << "party copy ctor" <<endl;
+
 }
 
 Party::~Party() {
@@ -28,6 +29,7 @@ ostream& operator<<(ostream& os, const Party& p) {
 	return os;
 }
 
-void Party::add_district_to_candidates_arr() {
+void Party::add_district_to_candidates_arr()
+{
 	_candidates.add();
 }

@@ -1,8 +1,9 @@
 #include "CandidatesArray.h"
 
-CandidatesArray::CandidatesArray(int size) :
-	_arr(new PersonList*[size]), _log_size(size), _pys_size(size)
+CandidatesArray::CandidatesArray(int size) : _log_size(size), _pys_size(size)
 {
+    _arr = new PersonList*[size];
+    cout << "CandidatesArray ctor" <<endl;
 }
 
 CandidatesArray::~CandidatesArray() {
@@ -33,8 +34,7 @@ void CandidatesArray::add() {
 	if (_log_size == _pys_size) {
 		resize(_log_size * 2 + 1);
 	}
-
-	_arr[_log_size] = new PersonList();
+//  	_arr[_log_size] = new PersonList();
 	++_log_size;
 }
 void CandidatesArray::set_length(int new_size) {

@@ -10,7 +10,7 @@ private:
 	void resize(int new_size);
 
 public:
-	explicit PartyArray(int size = 0);
+    PartyArray(int size = 0);
 	PartyArray(const PartyArray&) = delete;
 	~PartyArray();
 
