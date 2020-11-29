@@ -55,3 +55,10 @@ District& DistrictArray::operator[](int idx) {
 const District& DistrictArray::operator[](int idx) const {
 	return *_arr[idx];
 }
+
+void DistrictArray::print() const {
+	for (int i = 0; i <= _log_size; i++)
+	{
+		cout << *_arr[i] << endl;
+	}
+}

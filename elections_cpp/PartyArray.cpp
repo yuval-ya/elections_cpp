@@ -54,3 +54,17 @@ Party& PartyArray::operator[](int idx) {
 const Party& PartyArray::operator[](int idx) const {
 	return *_arr[idx];
 }
+
+void PartyArray::print() const {
+	for (int i = 0; i <= _log_size; i++)
+	{
+		cout << *_arr[i] << endl;
+	}
+}
+
+void PartyArray::add_district_to_party(){
+	for (int i = 0; i <= _log_size; i++)
+	{
+		_arr[i]->add_district_to_candidates_arr();
+	}
+}

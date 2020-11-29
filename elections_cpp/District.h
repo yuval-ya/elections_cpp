@@ -1,5 +1,6 @@
 #pragma once
 #include "String.h"
+#include "PersonList.h"
 
 class District
 {
@@ -9,7 +10,7 @@ private:
 	int			_number_of_candidates;
 	int			_number_of_voters = 0;
 	int			_number_of_citizens = 0;
-	// list of person that can vote
+	PersonList	_voters;
 	// result after the votes
 
 public:
@@ -28,5 +29,12 @@ public:
 	
 	void set_candidates(int candidates) { _number_of_candidates = candidates; }
 
+	PersonPtr addPerson(const Person& p);
+	const Person& addPerson(PersonPtr p);
+
+	PersonPtr getPersonPtr(int idnum);
+	const Person& getPerson(int idnum) const;
+
+	friend ostream& operator<<(ostream& os, const District& d);
 };
 

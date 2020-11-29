@@ -27,8 +27,7 @@ public:
     const Person& addPerson(PersonPtr p);
     
     PersonPtr getPersonPtr(int idnum);
-    const Person& getPerson(int idnum) const;
-        
+    const Person& getPerson(int idnum) const;     
     void printList() const;
     bool isEmpty() const;
 
