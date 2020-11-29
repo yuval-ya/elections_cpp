@@ -15,7 +15,7 @@ public:
 	static int total_parties;
 
 	Party(const String& name, int candidate_id);
-
+	Party(const Party& p);
 	~Party();
 
 	int get_id() const { return _id; }
@@ -24,7 +24,7 @@ public:
 
 	void set_candidate_id(int candidate_id) { _first_candidate_id = candidate_id; }
 
-	void add_candidate(PersonPtr p, int district_id);
+	bool add_candidate(PersonPtr p, int district_id);
 	void add_district_to_candidates_arr();
 
 	friend ostream& operator<<(ostream& os, const Party& p);
