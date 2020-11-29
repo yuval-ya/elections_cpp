@@ -15,6 +15,7 @@ public:
 	static int total_parties;
 
 	Party(const String& name, int candidate_id);
+	Party(const Party& p);
 	~Party();
 
 	int get_id() const { return _id; }

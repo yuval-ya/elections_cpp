@@ -3,11 +3,18 @@
 int Party::total_parties = 0;
 
 Party::Party(const String& name, int candidate_id) : 
-	_name(name), _first_candidate_id(candidate_id), _id(++total_parties),
-	_candidates(District::total_districts)
+	_id(++total_parties), _name(name), _first_candidate_id(candidate_id), 
+	_candidates(0)
 {
 
 }
+
+Party::Party(const Party& p) :
+	_id(p._id), _name(p._name), _first_candidate_id(p._first_candidate_id), 
+	_candidates(District::total_districts) 
+{
+}
+
 Party::~Party() {
 	
 }
