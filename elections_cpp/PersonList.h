@@ -29,24 +29,11 @@ public:
     PersonPtr getPersonPtr(int idnum);
     const Person& getPerson(int idnum) const;
         
-    void printList();
-    bool isEmpty();
+    void printList() const;
+    bool isEmpty() const;
 
 private:
     Node* _head;
     Node* _tail;
     int   _person_count;
-    
-public:
-	PersonList();
-	~PersonList();
-
-	Node* getHead() { return _head; }
-	Node* getTail() { return _tail; }
-	Person& addPerson(const Person& p);
-	Person& addPerson(Person* p);
-
-	bool isEmpty();
-	Person& getPerson(int idnum);
-	void printList();
 };

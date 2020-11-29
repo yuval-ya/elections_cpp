@@ -63,7 +63,7 @@ const Person& PersonList::addPerson(PersonPtr p){
 }
 
 
-bool PersonList::isEmpty(){
+bool PersonList::isEmpty() const{
     return _head == nullptr;
 }
 
@@ -103,11 +103,11 @@ const Person& PersonList::getPerson(int idnum) const {
     return *res;
 }
 
-void PersonList::printList(){
+void PersonList::printList() const{
     Node* curr = _head;
     
     while(curr != nullptr){
-        cout << curr->person_p->getName() <<endl;
+        cout << *curr->person_p;
         curr = curr->next;
     }
 }

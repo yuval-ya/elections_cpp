@@ -5,8 +5,8 @@ class PartyArray
 {
 private:
 	Party** _arr;
-	int _log_size = 0;
-	int _pys_size = 0;
+	int _log_size;
+	int _pys_size;
 	void resize(int new_size);
 
 public:
