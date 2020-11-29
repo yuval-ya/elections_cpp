@@ -131,6 +131,7 @@
     <ClCompile Include="Party.cpp" />
     <ClCompile Include="PartyArray.cpp" />
     <ClCompile Include="Person.cpp" />
+    <ClCompile Include="PersonList.cpp" />
     <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +142,7 @@
     <ClInclude Include="Party.h" />
     <ClInclude Include="PartyArray.h" />
     <ClInclude Include="Person.h" />
+    <ClInclude Include="PersonList.h" />
     <ClInclude Include="String.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

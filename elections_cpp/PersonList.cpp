@@ -45,8 +45,7 @@ PersonPtr PersonList::addPerson(const Person& p)
     return person_p;
 }
 
-bool PersonList::addPerson(PersonPtr p){
-        
+const Person& PersonList::addPerson(PersonPtr p){
     Node* newnode = new Node();
     newnode->person_p = p;
 
@@ -60,7 +59,7 @@ bool PersonList::addPerson(PersonPtr p){
         _tail = _tail->next;
     }
     _person_count++;
-    return true;
+    return *p;
 }
 
 
