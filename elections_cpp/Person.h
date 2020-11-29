@@ -13,7 +13,7 @@ private:
 public:
     Person(const String&, int idnum, int year, int district_num);
     Person(const Person& p);
-    ~Person() {}
+    ~Person();
     
     const String& getName() const { return _name; }
     int getID() const { return _id; };
