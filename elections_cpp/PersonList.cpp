@@ -25,7 +25,7 @@ PersonList::~PersonList(){
     }
 }
 
-Person& PersonList::addPerson(const Person& p)
+PersonPtr PersonList::addPerson(const Person& p)
 {
     PersonPtr person_p =  new Person(p);
         
@@ -42,11 +42,10 @@ Person& PersonList::addPerson(const Person& p)
     }
     
     _person_count++;
-    return *person_p;
+    return person_p;
 }
 
-bool PersonList::addPerson(PersonPtr p){
-        
+const Person& PersonList::addPerson(PersonPtr p){
     Node* newnode = new Node();
     newnode->person_p = p;
 
@@ -70,7 +69,7 @@ bool PersonList::isEmpty(){
 
 
 
-PersonPtr PersonList::getPerson(int idnum) {
+PersonPtr PersonList::getPersonPtr(int idnum) {
     Node* curr = _head;
     PersonPtr res = nullptr;
 
@@ -87,6 +86,22 @@ PersonPtr PersonList::getPerson(int idnum) {
     return res;
 }
 
+const Person& PersonList::getPerson(int idnum) const {
+    Node* curr = _head;
+    PersonPtr res = nullptr;
+
+    if (curr != nullptr)
+    {
+        while (curr->person_p->getID() != idnum){
+            curr = curr->next;
+        }
+        if (curr != nullptr){
+            res = curr->person_p;
+        }
+    }
+    
+    return *res;
+}
 
 void PersonList::printList(){
     Node* curr = _head;

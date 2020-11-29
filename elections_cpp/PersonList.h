@@ -10,8 +10,7 @@
 #include <iostream>
 #include "PersonPtr.h"
 
-class PersonList {
-    
+class PersonList {    
 public:
     struct Node {
         PersonPtr  person_p;
@@ -24,11 +23,11 @@ public:
     Node* getHead() { return _head; }
     Node* getTail() { return _tail; }
     
-    bool addPerson(const Person& p);
-    bool addPerson(PersonPtr p);
+    PersonPtr addPerson(const Person& p);
+    const Person& addPerson(PersonPtr p);
     
-    PersonPtr getPerson(int idnum);
-    Person& getPerson(int idnum) const;    // cant call this getter 
+    PersonPtr getPersonPtr(int idnum);
+    const Person& getPerson(int idnum) const;
         
     void printList();
     bool isEmpty();
