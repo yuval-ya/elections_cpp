@@ -10,7 +10,7 @@ private:
 	void resize(int new_size);
 
 public:
-	CandidatesArray(int size = 1);
+	CandidatesArray(int size = 0);
 	CandidatesArray(const CandidatesArray&) = delete;
 	~CandidatesArray();
 

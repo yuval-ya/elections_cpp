@@ -70,14 +70,11 @@ PersonPtr PersonList::getPersonPtr(int idnum) {
     Node* curr = _head;
     PersonPtr res = nullptr;
 
-    if (curr != nullptr)
-    {
-        while (curr->person_p->getID() != idnum){
-            curr = curr->next;
-        }
-        if (curr != nullptr){
-            res = curr->person_p;
-        }
+    while (curr != nullptr && curr->person_p->getID() != idnum){
+        curr = curr->next;
+    }
+    if (curr != nullptr){
+        res = curr->person_p;
     }
     
     return res;

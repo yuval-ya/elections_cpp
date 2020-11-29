@@ -13,7 +13,7 @@ void Elections::add_distric(String name, int number_of_candidates)
 bool Elections::add_person(String name, int id, int birth_year, int distric_num)
 {
     // check if person can vote 
-    if (_voters.getPersonPtr(id) == nullptr || distric_num > District::total_districts) {
+    if (!(_voters.getPersonPtr(id) == nullptr) || distric_num > District::total_districts) {
         return false;
     }
     Person new_person(name, id, birth_year, distric_num);

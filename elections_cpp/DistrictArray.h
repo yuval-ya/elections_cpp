@@ -9,7 +9,7 @@ private:
 	int _pys_size;
 	void resize(int new_size);
 public:
-	explicit DistrictArray(int size = 0);
+    DistrictArray(int size = 0);
 	DistrictArray(const DistrictArray&) = delete;
 	~DistrictArray();
 
