@@ -9,7 +9,7 @@ String::String(const String& str) {
 	const char* tmp = str.get();
 	int size = strlen(tmp);
 	_str = new char[size + 1];
-
+    
 	for (int i = 0; i < size; i++) {
 		_str[i] = tmp[i];
 	}
@@ -18,7 +18,7 @@ String::String(const String& str) {
 
 String::~String()
 {
-	delete[] _str;
+	delete _str;
 }
 
 void String::set(const char *str) {

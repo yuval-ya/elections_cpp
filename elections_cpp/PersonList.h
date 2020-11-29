@@ -8,15 +8,32 @@
 
 #pragma once
 #include <iostream>
-#include "Person.h"
+#include "PersonPtr.h"
 
 class PersonList {
-     
-private:
-	struct Node {
-        Person*    person_p;
+    
+public:
+    struct Node {
+        PersonPtr  person_p;
         Node*      next = nullptr;
     };
+    
+    PersonList();
+    ~PersonList();
+    
+    Node* getHead() { return _head; }
+    Node* getTail() { return _tail; }
+    
+    bool addPerson(const Person& p);
+    bool addPerson(PersonPtr p);
+    
+    PersonPtr getPerson(int idnum);
+    Person& getPerson(int idnum) const;    // cant call this getter 
+        
+    void printList();
+    bool isEmpty();
+
+private:
     Node* _head;
     Node* _tail;
     int   _person_count;
