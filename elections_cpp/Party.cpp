@@ -12,7 +12,7 @@ Party::~Party() {
 	
 }
 
-bool Party::add_candidate(PersonPtr p, int district_id) {
+void Party::add_candidate(PersonPtr p, int district_id) {
 	_candidates.get(district_id).addPerson(p);
 }
 
