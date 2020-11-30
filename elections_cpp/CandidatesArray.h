@@ -17,9 +17,11 @@ public:
 	PersonList& get(int district_id); /* Notice: get(1) return PersonList No.1 */
 
 	void add();
-	int get_length() { return _log_size; }
+	int get_length() const { return _log_size; }
 	void set_length(int new_size);
 
 	PersonList& operator[](int idx); /* return by index arr[0] = PersonList No.1 */
 	const PersonList& operator[](int idx) const;
+
+	friend ostream& operator<<(ostream& os, const CandidatesArray& c_arr);
 };

@@ -32,6 +32,8 @@ public:
     void printList() const;
     bool isEmpty() const;
 
+	friend ostream& operator<<(ostream& os, const PersonList& p_lst);
+
 private:
     Node* _head;
     Node* _tail;

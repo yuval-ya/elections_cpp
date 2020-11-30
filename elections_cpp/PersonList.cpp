@@ -102,7 +102,20 @@ void PersonList::printList() const
     Node* curr = _head;
     
     while(curr != nullptr){
-        cout << *curr->person_p <<endl;
+        cout << *(curr->person_p) <<endl;
         curr = curr->next;
     }
 }
+
+
+ostream& operator<<(ostream& os, const PersonList& p_lst) {
+	PersonList::Node* curr = p_lst._head;
+	
+	while (curr != nullptr) {
+		os << *(curr->person_p) << endl;
+		curr = curr->next;
+	}
+	return os;
+}
+
+

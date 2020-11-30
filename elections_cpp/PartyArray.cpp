@@ -3,6 +3,7 @@
 PartyArray::PartyArray(int size) :
 	_arr(new Party*[size]), _log_size(size), _pys_size(size)
 {
+
     cout << "PartyArr ctor" <<endl;
 }
 

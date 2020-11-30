@@ -52,3 +52,12 @@ PersonList& CandidatesArray::operator[](int idx) {
 const PersonList& CandidatesArray::operator[](int idx) const {
 	return *_arr[idx];
 }
+
+ostream& operator<<(ostream& os, const CandidatesArray& c_arr) {
+	int size = c_arr.get_length();
+	for (int i = 0; i < size; i++) {
+		os << "District No." << (i + 1) << " :" << endl;
+		os << c_arr[i] << endl;
+	}
+	return os;
+}
