@@ -26,11 +26,11 @@ float District::calc_voters_percentage() const
 
 float District::calc_party_percent_in_votes(int party_id) const
 {
-	return (_votes_by_parties[party_id - 1] / _number_of_voters) * 100;
+	return (_votes_by_parties[party_id - 1] / static_cast<float>(_number_of_voters)) * 100;
 }
 
 int District::calc_final_sum_of_candidates_from_party(int party_id) const {
-	int res = static_cast<int>((_votes_by_parties[party_id - 1] / _number_of_voters) * _number_of_candidates);
+	int res = static_cast<int>((_votes_by_parties[party_id - 1] / static_cast<float>(_number_of_voters)) * _number_of_candidates);
 	return res;
 }
 

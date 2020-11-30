@@ -73,21 +73,20 @@ bool Elections::vote(int person_id, int party_id)
 	return true;
 }
 
-void Elections::finish_election() {
+void Elections::election_evaluation() {
 	int num_of_districts = _districs.get_length();
 	int num_of_parties = _parties.get_length();
-	DynamicArray total_candidates_by_party(num_of_parties);
-	DynamicArray total_votes_by_party(num_of_parties);
 	
 	for (int i = 0; i < num_of_districts; i++) 
 	{ 
+		int district_id = i + 1;
 		int winner_party_in_cur_district = _districs[i].get_winner_party_id();
-		//_parties[winner_party_in_cur_district - 1].add_total_candidates(_districs[i].get_number_of_candidates());
-		total_candidates_by_party[winner_party_in_cur_district - 1]+= _districs[i].get_number_of_candidates();
+		_parties[winner_party_in_cur_district - 1].add_total_candidates(_districs[i].get_number_of_candidates());
 		int winner_candidate_id = _parties.get(winner_party_in_cur_district).get_candidate_id();
 		
-		cout << "id" << " | " << "name" << " | " << "number of candidates" << " | " << "winning candidate";
-		cout << _districs[i] << winner_candidate_id;
+		cout << "============================================ " << endl;
+		cout << "id" << " | " << "name" << " | " << "number of candidates" << " | " << "winning candidate" << endl;
+		cout << _districs[i] << winner_candidate_id << endl;
 
 		for (int j = 0; j < num_of_parties; j++)
 		{
@@ -95,21 +94,32 @@ void Elections::finish_election() {
 			float cur_percent = _districs[i].calc_party_percent_in_votes(party_id);
 			int votes_in_district_to_party = _districs[i].get_party_votes(party_id);
 			int num_of_candidates_from_party = _districs[i].calc_final_sum_of_candidates_from_party(party_id);
-			//_parties[winner_party_in_cur_district - 1].add_total_votes(votes_in_district_to_party);
-			total_votes_by_party[j] += votes_in_district_to_party;
+			_parties[j].add_total_votes(votes_in_district_to_party);
 
 			cout << "Party No." << party_id << endl;
-			_parties[j].print_final_candidates_for_district(i, num_of_candidates_from_party);
+			_parties[j].print_final_candidates_for_district(district_id, num_of_candidates_from_party);
 			cout << "Total votes - " << votes_in_district_to_party << endl;
 			cout << "Percentage of votes - " << cur_percent << endl;
 		}
-		cout << "Percentage of votes in the district: " << _districs[i].calc_voters_percentage() << endl;
+		cout << "Percentage of votes in the district: " << _districs[i].calc_voters_percentage() << endl << endl;
+	}
+}
+
+void Elections::election_result() {
+	int num_of_parties = _parties.get_length();
+	//
+	// sort partiesArray
+	//
+	cout << endl;
+	for (int i = 0; i < num_of_parties; i++)
+	{
+		_parties[i].print_election_result();
 	}
 
-	for (int j = 0; j < num_of_parties; j++)
-	{
-		
-	}
+}
+void Elections::finish_election() {
+	election_evaluation();
+	election_result();
 }
 
 

@@ -10,6 +10,7 @@ Party::Party(const String& name, int candidate_id) :
 
 Party::Party(const Party& p) :
 	_id(p._id), _name(p._name), _first_candidate_id(p._first_candidate_id), 
+	_total_candidates(p._total_candidates) , _total_votes(p._total_votes),
 	_candidates(District::total_districts) 
 {
     cout << "party copy ctor" <<endl;
@@ -38,3 +39,7 @@ void Party::print_final_candidates_for_district(int district_id, int size) const
 	_candidates[district_id - 1].printList(size);
 }
 
+void Party::print_election_result() const {
+	
+	cout << "first candidate: " << _first_candidate_id << " total candidates: " << _total_candidates << " votes count: "<< _total_votes << endl;
+}

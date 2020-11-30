@@ -11,6 +11,10 @@ private:
     PersonList		_voters;
     DistrictArray	_districs;
     PartyArray		_parties;
+
+	void election_evaluation();
+	void election_result();
+
 public:
     Elections(int day = 1, int month = 1, int year = 2021);
     
@@ -19,13 +23,13 @@ public:
     void add_party(String name, int candidate_id);
     bool add_person_as_candidate(int person_id, int party_id, int district_id);
 	bool vote(int person_id, int party_id);
+
 	void finish_election();
 
     void print_voters() const;
     void print_districts() const;
     void print_parties() const;
 
-	friend class District;
 };
 
 
