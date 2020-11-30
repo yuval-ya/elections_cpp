@@ -25,8 +25,7 @@ void Party::add_candidate(PersonPtr p, int district_id) {
 }
 
 ostream& operator<<(ostream& os, const Party& p) {
-	os << p._id << " | " << p._name << " | " << p._first_candidate_id;
-	//deal with candidates array print
+	os << p._id << " | " << p._name << " | " << p._first_candidate_id << endl << p._candidates;
 	return os;
 }
 
