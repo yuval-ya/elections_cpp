@@ -13,7 +13,6 @@ Party::Party(const Party& p) :
 	_candidates(District::total_districts) 
 {
     cout << "party copy ctor" <<endl;
-
 }
 
 Party::~Party() {
@@ -33,3 +32,9 @@ void Party::add_district_to_candidates_arr()
 {
 	_candidates.add();
 }
+
+void Party::print_final_candidates_for_district(int district_id, int size) const
+{
+	_candidates[district_id - 1].printList(size);
+}
+

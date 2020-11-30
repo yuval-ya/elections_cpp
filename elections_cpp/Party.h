@@ -27,6 +27,8 @@ public:
 	void add_candidate(PersonPtr p, int district_id);
 	void add_district_to_candidates_arr();
 
+	void print_final_candidates_for_district(int district_id, int size) const;
+
 	friend ostream& operator<<(ostream& os, const Party& p);
 };
 

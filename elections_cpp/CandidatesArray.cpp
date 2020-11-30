@@ -22,6 +22,10 @@ void CandidatesArray::resize(int new_size) {
 	for (int i = 0; i < copy; ++i)
 		temp[i] = _arr[i];
 
+	for (int j = copy; j < _log_size; j++) {
+		delete _arr[j];
+	}
+
 	delete[] _arr;
 	_arr = temp;
 	this->_pys_size = new_size;

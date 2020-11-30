@@ -22,6 +22,10 @@ void DistrictArray::resize(int new_size) {
 	for (int i = 0; i < copy; ++i)
 		temp[i] = _arr[i];
 
+	for (int j = copy; j < _log_size; j++) {
+		delete _arr[j];
+	}
+
 	delete[] _arr;
 	_arr = temp;
 	this->_pys_size = new_size;
@@ -61,5 +65,12 @@ void DistrictArray::print() const {
 	for (int i = 0; i < _log_size; i++)
 	{
 		cout << *_arr[i] << endl;
+	}
+}
+
+void DistrictArray::add_party_to_district() {
+	for (int i = 0; i < _log_size; i++)
+	{
+		_arr[i]->add_party_to_votes_arr();
 	}
 }

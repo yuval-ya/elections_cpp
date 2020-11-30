@@ -23,5 +23,7 @@ public:
 
 	District& operator[](int idx); /* return by index arr[0] = District No.1 */
 	const District& operator[](int idx) const;
+
+	void add_party_to_district();
 };
 

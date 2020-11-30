@@ -106,6 +106,15 @@ void PersonList::printList() const
         curr = curr->next;
     }
 }
+void PersonList::printList(int count) const
+{
+	Node* curr = _head;
+	for (int i = 0; i < count && curr != nullptr; i++)
+	{
+		cout << *(curr->person_p) << endl;
+		curr = curr->next;
+	}
+}
 
 
 ostream& operator<<(ostream& os, const PersonList& p_lst) {

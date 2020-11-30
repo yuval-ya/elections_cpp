@@ -5,10 +5,12 @@
 class Elections
 {
 private:
-    int _day, _month, _year;
-    PersonList _voters;
-    DistrictArray _districs;
-    PartyArray _partys;
+    int				_day,	
+					_month, 
+					_year;
+    PersonList		_voters;
+    DistrictArray	_districs;
+    PartyArray		_parties;
 public:
     Elections(int day = 1, int month = 1, int year = 2021);
     
@@ -16,10 +18,14 @@ public:
     bool add_person(String name, int id, int birth_year, int distric_num);
     void add_party(String name, int candidate_id);
     bool add_person_as_candidate(int person_id, int party_id, int district_id);
-    void print_voters() const;
-    void print_district() const;
-    void print_partys() const;
+	bool vote(int person_id, int party_id);
+	void finish_election();
 
+    void print_voters() const;
+    void print_districts() const;
+    void print_parties() const;
+
+	friend class District;
 };
 
 

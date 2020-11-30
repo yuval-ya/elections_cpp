@@ -30,6 +30,7 @@ public:
     const Person& getPerson(int idnum) const;
     int get_person_number() const { return _person_count; }
     void printList() const;
+	void printList(int count) const;
     bool isEmpty() const;
 
 	friend ostream& operator<<(ostream& os, const PersonList& p_lst);
