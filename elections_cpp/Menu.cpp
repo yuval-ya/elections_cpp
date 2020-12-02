@@ -30,7 +30,7 @@ void Menu::start()
 
 
 
-///   Change core functions to return bool
+///   Change core functions to return bool ////// 
 bool Menu::new_district() {
     char name[MAX_SIZE];
     int candidates_num;
