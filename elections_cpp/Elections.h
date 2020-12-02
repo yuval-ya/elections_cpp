@@ -16,8 +16,10 @@ private:
 	void election_result();
 
 public:
-    Elections(int day = 1, int month = 1, int year = 2021);
+    Elections() {}
+    Elections(int day, int month, int year);
     
+    void setDate(int year, int month, int day);
     void add_distric(String name, int number_of_candidates);
     bool add_person(String name, int id, int birth_year, int distric_num);
     void add_party(String name, int candidate_id);
