@@ -26,8 +26,10 @@ public:
 	int get_total_candidates() const { return _total_candidates; }
 	int get_total_votes() const { return _total_votes; }
 	const PersonList& get_candidates_list_from_district(int district_id) const { return _candidates[district_id - 1]; }
+	const CandidatesArray& get_candidates_array() const { return _candidates; }
 
 	void set_candidate_id(int candidate_id) { _first_candidate_id = candidate_id; }
+	void set_total_candidates() { _total_candidates = 0; }
 
 	void add_candidate(PersonPtr p, int district_id);
 	void add_district_to_candidates_arr();

@@ -30,13 +30,13 @@ public:
     bool add_person_as_candidate(int person_id, int party_id, int district_id);
 	bool vote(int person_id, int party_id);
 
-	void final_evaluation();
-	void sort_parties();
-
     void print_voters() const;
     void print_districts() const;
     void print_parties() const;
-
+	
+	void final_evaluation();
+	int compare_parties(const void* a, const void* b);
+	Party** get_sorted_parties_arr(int& size);
 };
 
 

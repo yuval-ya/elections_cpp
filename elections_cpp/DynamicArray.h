@@ -14,15 +14,15 @@ public:
 	~DynamicArray();
 
 	int get(int party_id) const { return _arr[party_id - 1]; }
-	int get_max_votes() const; // return the idx of the max number
+	int get_max() const; // return the idx of the max number
 	void set(int idx, int val) { _arr[idx] = val; }
 	void add(int val = 0);
 
 	int get_length() const { return _log_size; }
 	void set_length(int new_size);
 
-	int& operator[](int idx) { return _arr[idx]; } /* return by index arr[0] = Party No.1 */
-	const int& operator[](int idx) const { return _arr[idx]; }
+	int& operator[](int idx); /* return by index arr[0] = Party No.1 */
+	const int& operator[](int idx) const;
 
 };
 

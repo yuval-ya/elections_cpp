@@ -1,5 +1,5 @@
 #include "Elections.h"
-
+#include <cstdlib>
 
 Elections::Elections(int day, int month, int year) : _day(day), _month(month), _year(year) {}
 
@@ -11,9 +11,6 @@ void Elections::setDate(int year, int month, int day) {
 
 bool Elections::add_distric(String name, int number_of_candidates)
 {
-	if (false) {
-		// check if there is already district with the same name
-	}
     District new_distric(name, number_of_candidates);
     _districts.add(new_distric);
     _parties.add_district_to_party();
@@ -46,7 +43,7 @@ bool Elections::add_party(String name, int candidate_id)
 
 bool Elections::add_person_as_candidate(int person_id, int party_id, int district_id)
 {
-    if (district_id <= District::total_districts)
+    if (district_id <= _districts.get_length() && party_id <= _parties.get_length())
     {
         PersonPtr candidate = _districts.get(district_id).getPersonPtr(person_id);
 
@@ -78,7 +75,7 @@ void Elections::print_parties() const
 bool Elections::vote(int person_id, int party_id)
 {
 	PersonPtr person = _voters.getPersonPtr(person_id);
-	if (person == nullptr || person->isVoted() || party_id > Party::total_parties) {
+	if (person == nullptr || person->isVoted() || party_id > _parties.get_length()) {
 		return false;
 	}
 	int district_id = person->getDistrict();
@@ -87,67 +84,41 @@ bool Elections::vote(int person_id, int party_id)
 	person->setVoted();
 	return true;
 }
-//
-//void Elections::election_evaluation() {
-//	int num_of_districts = _districts.get_length();
-//	int num_of_parties = _parties.get_length();
-//	
-//	for (int i = 0; i < num_of_districts; i++) 
-//	{ 
-//		int district_id = i + 1;
-//		int winner_party_in_cur_district = _districts[i].get_winner_party_id();
-//		_parties[winner_party_in_cur_district - 1].add_total_candidates(_districts[i].get_number_of_candidates());
-//		int winner_candidate_id = _parties.get(winner_party_in_cur_district).get_candidate_id();
-//		
-//		cout << "============================================ " << endl;
-//		cout << "id" << " | " << "name" << " | " << "number of candidates" << " | " << "winning candidate" << endl;
-//		cout << _districts[i] << winner_candidate_id << endl;
-//
-//		for (int j = 0; j < num_of_parties; j++)
-//		{
-//			int party_id = j + 1;
-//			float cur_percent = _districts[i].calc_party_percent_in_votes(party_id);
-//			int votes_in_district_to_party = _districts[i].get_party_votes(party_id);
-//			int num_of_candidates_from_party = _districts[i].calc_final_sum_of_candidates_from_party(party_id);
-//			//_parties[j].add_total_votes(votes_in_district_to_party);
-//
-//			cout << "Party No." << party_id << endl;
-//			// check if num_of_candidates_from_party <= number of candidate the party have in the same district
-//			_parties[j].print_final_candidates_for_district(district_id, num_of_candidates_from_party);
-//			cout << "Total votes - " << votes_in_district_to_party << endl;
-//			cout << "Percentage of votes - " << cur_percent << endl;
-//		}
-//		cout << "Percentage of votes in the district: " << _districts[i].calc_voters_percentage() << endl << endl;
-//	}
-//}
 
 void Elections::final_evaluation() {
 	int num_of_districts = _districts.get_length();
 
 	for (int i = 0; i < num_of_districts; i++)
 	{
-		int winner_party_in_cur_district = _districts[i].get_winner_party_id();
-		_parties[winner_party_in_cur_district - 1].add_total_candidates(_districts[i].get_number_of_candidates());		
+		int winner_party_in_district = _districts[i].eval_partition();
+		_parties[winner_party_in_district - 1].add_total_candidates(_districts[i].get_number_of_candidates());				
 	}
 }
 
 
-void Elections::sort_parties() {
+
+Party** Elections::get_sorted_parties_arr(int& size) {
 	int num_of_parties = _parties.get_length();
-	//
-	// sort partiesArray
-	//
+	Party** res = new Party*[num_of_parties];
 
-
-	//cout << endl;
-	//for (int i = 0; i < num_of_parties; i++)
-	//{
-	//	_parties[i].print_election_result();
-	//}
-
+	for (int i = 0; i < num_of_parties; i++)
+	{
+		res[i] = &_parties[i];
+	}
+	
+	//qsort(res, num_of_parties, sizeof(Party*), compare_parties);
+	size = num_of_parties;
+	return res;
 }
 
+int Elections::compare_parties(const void* a,const void* b) {
+	const Party* p_a = static_cast<const Party*>(a);
+	const Party* p_b = static_cast<const Party*>(b);
 
+	int total_a = p_a->get_total_candidates();
+	int total_b = p_b->get_total_candidates();
 
+	return (total_a > total_b) - (total_a < total_b);
+}
 
 

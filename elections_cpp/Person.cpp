@@ -16,6 +16,6 @@ Person::~Person(){
 
 
 ostream& operator<<(ostream& os, const Person& p) {
-    os << p.getName() << " | " << p.getID() << " | " << p.getDistrict();
+    os << "Person Name: " << p.getName() << " | ID: " << p.getID() << " | District: " << p.getDistrict();
     return os;
 }

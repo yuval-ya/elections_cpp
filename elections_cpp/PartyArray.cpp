@@ -32,6 +32,9 @@ void PartyArray::resize(int new_size) {
 }
 
 Party& PartyArray::get(int id) {
+	if ((id-1) >= _log_size || (id-1) < 0) {
+		exit(1); // index error
+	}
 	return *_arr[id - 1];
 }
 
@@ -54,10 +57,16 @@ void PartyArray::set_length(int new_size) {
 }
 
 Party& PartyArray::operator[](int idx) {
+	if (idx >= _log_size || idx < 0){
+		exit(1); // index error
+	}
 	return *_arr[idx];
 }
 
 const Party& PartyArray::operator[](int idx) const {
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
+	}
 	return *_arr[idx];
 }
 
@@ -65,6 +74,7 @@ void PartyArray::print() const {
 	for (int i = 0; i < _log_size; i++)
 	{
 		cout << *_arr[i] << endl;
+		cout << _arr[i]->get_candidates_array() << endl;
 	}
 }
 

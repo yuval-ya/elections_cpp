@@ -32,6 +32,9 @@ void DistrictArray::resize(int new_size) {
 }
 
 District& DistrictArray::get(int id) {
+	if ((id - 1) >= _log_size || (id - 1) < 0) {
+		exit(1); // index error
+	}
 	return *_arr[id - 1];
 }
 
@@ -54,10 +57,16 @@ void DistrictArray::set_length(int new_size) {
 }
 
 District& DistrictArray::operator[](int idx) {
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
+	}
 	return *_arr[idx];
 }
 
 const District& DistrictArray::operator[](int idx) const {
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
+	}
 	return *_arr[idx];
 }
 
@@ -71,6 +80,6 @@ void DistrictArray::print() const {
 void DistrictArray::add_party_to_district() {
 	for (int i = 0; i < _log_size; i++)
 	{
-		_arr[i]->add_party_to_votes_arr();
+		_arr[i]->add_party_to_district();
 	}
 }

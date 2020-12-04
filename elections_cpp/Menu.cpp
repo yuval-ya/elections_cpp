@@ -140,49 +140,51 @@ void Menu::print_statistics() {
 	for (int i = 1; i <= num_of_districts; i++) 
 	{ 
 		const District& district = _election.get_district(i);
-		int winner_party_in_cur_district = district.get_winner_party_id();
-		int winner_candidate_id = _election.get_party(winner_party_in_cur_district).get_candidate_id();
+		int winner_party_in_district = district.get_winner_party();
+		int winner_candidate_id = _election.get_party(winner_party_in_district).get_candidate_id();
 			
 		cout << "============================================ " << endl;
-		cout << "ID" << " | " << "Name" << " | " << "Number of candidates" << " | " << "Winning candidate" << endl;
-		cout << district << winner_candidate_id << endl;
+		cout << district << " | Winning candidate: " << winner_candidate_id << endl;
 	
 		for (int j = 1; j <= num_of_parties; j++)
-		{
+		{	
 			const Party& party = _election.get_party(j);
-			int num_of_candidates_from_party = district.calc_final_sum_of_candidates_from_party(j);
+			int num_of_candidates_from_party = district.get_party_candidates_num(j);
 			const PersonList& candidate_lst = party.get_candidates_list_from_district(i);
 				
-			if (candidate_lst.get_person_number() < num_of_candidates_from_party){
-				exit(1); //There are not enough candidates from this district 
+			if (candidate_lst.get_person_number() < num_of_candidates_from_party)
+			{	//There are not enough candidates from this district 
+				cout << "There are not enough candidates from district " << i << endl;
+				exit(1);											
 			}
-			cout << "Party No." << j << endl;
+			cout << "\nParty No." << j << endl;
 			candidate_lst.printList(num_of_candidates_from_party);
 			cout << "Total votes - " << district.get_party_votes(j) << endl;
 			cout << "Percentage of votes - " << district.calc_party_percent_in_votes(j) << endl;
 		}
-		cout << "Percentage of votes in the district: " << district.calc_voters_percentage() << endl << endl;
+		cout << "\nPercentage of votes in the district: " << district.calc_voters_percentage() << endl << endl;
 	}
 }
 
 void Menu::print_results() {
-	int num_of_parties = _election.get_num_parties();
+	int size = 0;
+	Party** arr = _election.get_sorted_parties_arr(size);
 	
 	cout << "\n~ Results ~" << endl;
-	for (int i = 1; i <= num_of_parties; i++)
+	for (int i = 0; i < size; i++)
 	{
-		const Party& party = _election.get_party(i);
+		const Party& party = *arr[i];
 		cout << "ID: " << party.get_id() << " Name: " << party.get_name() << endl;
 		cout << "First candidate: " << party.get_candidate_id() << endl;
 		cout << "Total candidates: " << party.get_total_candidates() << endl;
 		cout << "Votes count: " << party.get_total_votes() << endl;
 		cout << "---------------------------- " << endl;	
 	}
+	delete[] arr;
 }
 
 void Menu::finish() {
 	_election.final_evaluation();
 	print_statistics();
-	_election.sort_parties();
 	print_results();
 }

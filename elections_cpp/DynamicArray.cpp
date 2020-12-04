@@ -1,4 +1,5 @@
 #include "DynamicArray.h"
+#include <iostream>
 
 DynamicArray::DynamicArray(int size)
 	: _arr(new int[size]), _log_size(size), _pys_size(size)
@@ -44,8 +45,10 @@ void DynamicArray::add(int val)
 	++_log_size;
 }
 
-int DynamicArray::get_max_votes() const {
-	int max_val = _arr[0] , max_idx = 0;
+int DynamicArray::get_max() const {
+	if (_log_size == 0) return -1;
+
+	int max_val = _arr[0], max_idx = 0;
 	for (int i = 1; i < _log_size; i++) {
 		if (_arr[i] > max_val) {
 			max_val = _arr[i];
@@ -53,4 +56,20 @@ int DynamicArray::get_max_votes() const {
 		}
 	}
 	return max_idx;
+}
+
+
+int& DynamicArray::operator[](int idx)
+{
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
+	}
+	return _arr[idx];
+}
+const int& DynamicArray::operator[](int idx) const
+{
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
+	}
+	return _arr[idx];
 }
