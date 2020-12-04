@@ -18,7 +18,7 @@ public:
 	void set(int idx, int val) { _arr[idx] = val; }
 	void add(int val = 0);
 
-	int get_length() { return _log_size; }
+	int get_length() const { return _log_size; }
 	void set_length(int new_size);
 
 	int& operator[](int idx) { return _arr[idx]; } /* return by index arr[0] = Party No.1 */

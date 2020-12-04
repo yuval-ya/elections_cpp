@@ -4,7 +4,8 @@
 
 #include <iostream>
 #include "Elections.h"
-#include "DynamicArray.h"
+#include "Menu.h"
+
 using namespace std;
 
 int main(void) {
@@ -13,6 +14,12 @@ int main(void) {
 	//_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
 	//int* arr = new int[100];
     
+
+	Elections election;
+	Menu menu(election);
+	menu.start();
+
+
 //    Elections election;
 //
 //	election.add_distric("A", 4);

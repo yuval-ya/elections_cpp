@@ -57,4 +57,12 @@ PersonPtr& PersonPtr::operator=(PersonPtr& other)
     return *this;
 }
 
-bool PersonPtr::operator==(Person* pnt) { return _p == pnt; }
+bool PersonPtr::operator==(Person* pnt)
+{
+	return _p == pnt;
+}
+
+bool PersonPtr::operator!=(Person* pnt)
+{
+	return _p != pnt;
+}

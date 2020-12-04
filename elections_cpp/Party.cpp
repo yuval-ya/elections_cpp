@@ -33,13 +33,3 @@ void Party::add_district_to_candidates_arr()
 {
 	_candidates.add();
 }
-
-void Party::print_final_candidates_for_district(int district_id, int size) const
-{
-	_candidates[district_id - 1].printList(size);
-}
-
-void Party::print_election_result() const {
-	
-	cout << "first candidate: " << _first_candidate_id << " total candidates: " << _total_candidates << " votes count: "<< _total_votes << endl;
-}

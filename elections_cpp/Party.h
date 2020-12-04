@@ -25,6 +25,7 @@ public:
 	const String& get_name() const { return _name; }
 	int get_total_candidates() const { return _total_candidates; }
 	int get_total_votes() const { return _total_votes; }
+	const PersonList& get_candidates_list_from_district(int district_id) const { return _candidates[district_id - 1]; }
 
 	void set_candidate_id(int candidate_id) { _first_candidate_id = candidate_id; }
 
@@ -32,9 +33,6 @@ public:
 	void add_district_to_candidates_arr();
 	void add_total_candidates(int val) { _total_candidates += val; }
 	void add_total_votes(int val) { _total_votes += val; }
-
-	void print_final_candidates_for_district(int district_id, int size) const;
-	void print_election_result() const;
 
 	friend ostream& operator<<(ostream& os, const Party& p);
 };

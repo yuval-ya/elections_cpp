@@ -24,6 +24,7 @@ class PersonPtr
 
         PersonPtr& operator=(PersonPtr&);
         bool operator==(Person* pnt);
+		bool operator!=(Person* pnt);
         Person* operator->() { return _p; }
         Person& operator*() { return *_p; }
 };

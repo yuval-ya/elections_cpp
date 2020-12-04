@@ -27,7 +27,7 @@ public:
 	int get_number_of_voters() const { return _number_of_voters; }
     int get_citizens_number() const { return _voters.get_person_number(); }
 	int get_winner_party_id() const;
-	int get_party_votes(int party_id) { return _votes_by_parties[party_id - 1]; }
+	int get_party_votes(int party_id) const { return _votes_by_parties[party_id - 1]; }
 	
 	float calc_voters_percentage() const;
 	float calc_party_percent_in_votes(int party_id) const;
