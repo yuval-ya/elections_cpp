@@ -47,7 +47,7 @@ bool Elections::add_person_as_candidate(int person_id, int party_id, int distric
     {
         PersonPtr candidate = _districts.get(district_id).getPersonPtr(person_id);
 
-        if (candidate != nullptr && !candidate->isCandidate() && candidate->getDistrict() == district_id)
+        if (!(candidate == nullptr) && !candidate->isCandidate() && candidate->getDistrict() == district_id)
         {
             _parties.get(party_id).add_candidate(candidate, district_id);
             candidate->setAsCandidate();

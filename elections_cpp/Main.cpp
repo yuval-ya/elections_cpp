@@ -27,7 +27,7 @@ int main(void) {
 	election.add_distric("A", 4);
     election.add_distric("B", 5);
 	election.add_distric("C", 3);
-
+    
     election.add_person("yuval", 1, 1996, 1);
 	election.add_person("tamir", 2, 1994, 1);
 	election.add_person("ohad", 3, 1996, 1);
@@ -105,9 +105,26 @@ int main(void) {
 	election.vote(12, 3);
 	election.vote(13, 1);
 	election.vote(14, 2);
-	election.vote(15, 3);	election.vote(16, 1);	election.vote(17, 2);	election.vote(18, 3);	election.vote(19, 1);	election.vote(20, 2);	election.vote(21, 3);	election.vote(22, 1);	election.vote(23, 2);	election.vote(24, 3);	election.vote(25, 1);	election.vote(26, 2);	election.vote(27, 3);	election.vote(28, 1);	election.vote(29, 2);	election.vote(30, 3);
+	election.vote(15, 3);
+	election.vote(16, 1);
+	election.vote(17, 2);
+	election.vote(18, 3);
+	election.vote(19, 1);
+	election.vote(20, 2);
+	election.vote(21, 3);
+	election.vote(22, 1);
+	election.vote(23, 2);
+	election.vote(24, 3);
+	election.vote(25, 1);
+	election.vote(26, 2);
+	election.vote(27, 3);
+	election.vote(28, 1);
+	election.vote(29, 2);
+	election.vote(30, 3);
 
-	start(election);
+    Menu menu(election);
+    
+    menu.start();
     
     return 0;
 }
