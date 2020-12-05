@@ -31,13 +31,13 @@ bool Elections::add_person(String name, int id, int birth_year, int distric_num)
 bool Elections::add_party(String name, int candidate_id)
 {
 	PersonPtr candidate = _voters.getPersonPtr(candidate_id);
-	if (candidate == nullptr) {  // more conditions?
+	if (candidate == nullptr) {  // more conditions? *******************************************************************
 		return false;
 	}
     Party new_party = Party(name,candidate_id);
     _parties.add(new_party);
 	_districts.add_party_to_district();
-	candidate->setAsCandidate(); // can the first candidate can be a regular candidate?
+	candidate->setAsCandidate(); // can the first candidate can be a regular candidate? ********************************
 	return true;
 }
 
@@ -106,12 +106,12 @@ Party** Elections::get_sorted_parties_arr(int& size) {
 		res[i] = &_parties[i];
 	}
 	
-	//qsort(res, num_of_parties, sizeof(Party*), compare_parties);
+	//qsort(res, num_of_parties, sizeof(Party*), compare_parties); *******************************************
 	size = num_of_parties;
 	return res;
 }
 
-int Elections::compare_parties(const void* a,const void* b) {
+int Elections::compare_parties(const void* a,const void* b) {  ////////*****************************************
 	const Party* p_a = static_cast<const Party*>(a);
 	const Party* p_b = static_cast<const Party*>(b);
 
