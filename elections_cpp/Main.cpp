@@ -119,9 +119,7 @@ int main(void) {
 	election.vote(29, 2);
 	election.vote(30, 3);
 
-    Menu menu(election);
-    
-    menu.start();
+	start(election);
     
     return 0;
 }
