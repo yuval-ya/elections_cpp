@@ -20,8 +20,14 @@ District::~District() {
 }
 
 float District::calc_voters_percentage() const
-{ 
-	return _number_of_voters / static_cast<float>(get_citizens_number()) * 100; 
+{
+    int citizen_number = get_citizens_number();
+    if (citizen_number == 0)
+    {
+        // division by zero error!
+        return 0;
+    }
+    return _number_of_voters / static_cast<float>(citizen_number) * 100;
 }
 
 float District::calc_party_percent_in_votes(int party_id) const

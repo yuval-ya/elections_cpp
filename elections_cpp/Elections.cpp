@@ -47,7 +47,7 @@ bool Elections::add_person_as_candidate(int person_id, int party_id, int distric
     {
         PersonPtr candidate = _districts.get(district_id).getPersonPtr(person_id);
 
-        if (!(candidate == nullptr) && !candidate->isCandidate() && candidate->getDistrict() == district_id)
+        if (candidate != nullptr && !candidate->isCandidate() && candidate->getDistrict() == district_id)
         {
             _parties.get(party_id).add_candidate(candidate, district_id);
             candidate->setAsCandidate();
@@ -87,7 +87,13 @@ bool Elections::vote(int person_id, int party_id)
 
 void Elections::final_evaluation() {
 	int num_of_districts = _districts.get_length();
-
+    int num_of_parties = _parties.get_length();
+    
+    for (int i = 0; i < num_of_parties; i++)
+    {
+        _parties[i].set_total_candidates(0);
+    }
+    
 	for (int i = 0; i < num_of_districts; i++)
 	{
 		int winner_party_in_district = _districts[i].eval_partition();
@@ -105,20 +111,9 @@ Party** Elections::get_sorted_parties_arr(int& size) {
 	{
 		res[i] = &_parties[i];
 	}
-	
-	//qsort(res, num_of_parties, sizeof(Party*), compare_parties); *******************************************
+    Party::mergeSort(res, 0, num_of_parties - 1);
+    // qsort(res, num_of_parties, sizeof(Party*), Party::compare_parties);
 	size = num_of_parties;
 	return res;
 }
-
-int Elections::compare_parties(const void* a,const void* b) {  ////////*****************************************
-	const Party* p_a = static_cast<const Party*>(a);
-	const Party* p_b = static_cast<const Party*>(b);
-
-	int total_a = p_a->get_total_candidates();
-	int total_b = p_b->get_total_candidates();
-
-	return (total_a > total_b) - (total_a < total_b);
-}
-
 

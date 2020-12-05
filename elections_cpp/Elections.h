@@ -2,6 +2,9 @@
 #include "PersonList.h"
 #include "PartyArray.h"
 #include "DistrictArray.h"
+
+int compare_parties(const void* a, const void* b);
+
 class Elections
 {
 private:
@@ -11,7 +14,6 @@ private:
     PersonList		_voters;
     DistrictArray	_districts;
     PartyArray		_parties;
-
 public:
     Elections() {}
     Elections(int day, int month, int year);
@@ -35,7 +37,6 @@ public:
     void print_parties() const;
 	
 	void final_evaluation();
-	int compare_parties(const void* a, const void* b);
 	Party** get_sorted_parties_arr(int& size);
 };
 

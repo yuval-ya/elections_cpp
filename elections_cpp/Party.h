@@ -29,13 +29,17 @@ public:
 	const CandidatesArray& get_candidates_array() const { return _candidates; }
 
 	void set_candidate_id(int candidate_id) { _first_candidate_id = candidate_id; }
-	void set_total_candidates() { _total_candidates = 0; }
+	void set_total_candidates(int val) { _total_candidates = val; }
 
 	void add_candidate(PersonPtr p, int district_id);
 	void add_district_to_candidates_arr();
 	void add_total_candidates(int val) { _total_candidates += val; }
 	void add_total_votes(int val) { _total_votes += val; }
 
+    static void mergeSort(Party** arr,int l,int r);
+    static void merge(Party** arr, int l, int m, int r);
+
+//    static int compare_parties(const void* a, const void* b); *****************************
 	friend ostream& operator<<(ostream& os, const Party& p);
 };
 
