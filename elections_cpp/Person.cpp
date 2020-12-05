@@ -7,7 +7,7 @@ _name(name), _id(idnum), _birth_year(year), _district_num(district_num), _is_vot
 }
 
 Person::Person(const Person& p) :
-_name(p._name), _id(p._id), _birth_year(p._birth_year), _district_num(p._district_num)
+_name(p._name), _id(p._id), _birth_year(p._birth_year), _district_num(p._district_num), _is_voted(p._is_voted), _is_candidate(p._is_candidate)
 {
 }
 
