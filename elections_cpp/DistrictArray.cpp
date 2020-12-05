@@ -22,12 +22,19 @@ void DistrictArray::resize(int new_size) {
 	for (int i = 0; i < copy; ++i)
 		temp[i] = _arr[i];
 
+	for (int j = copy; j < _log_size; j++) {
+		delete _arr[j];
+	}
+
 	delete[] _arr;
 	_arr = temp;
 	this->_pys_size = new_size;
 }
 
 District& DistrictArray::get(int id) {
+	if ((id - 1) >= _log_size || (id - 1) < 0) {
+		exit(1); // index error
+	}
 	return *_arr[id - 1];
 }
 
@@ -50,10 +57,16 @@ void DistrictArray::set_length(int new_size) {
 }
 
 District& DistrictArray::operator[](int idx) {
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
+	}
 	return *_arr[idx];
 }
 
 const District& DistrictArray::operator[](int idx) const {
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
+	}
 	return *_arr[idx];
 }
 
@@ -61,5 +74,12 @@ void DistrictArray::print() const {
 	for (int i = 0; i < _log_size; i++)
 	{
 		cout << *_arr[i] << endl;
+	}
+}
+
+void DistrictArray::add_party_to_district() {
+	for (int i = 0; i < _log_size; i++)
+	{
+		_arr[i]->add_party_to_district();
 	}
 }

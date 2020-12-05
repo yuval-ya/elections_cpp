@@ -19,7 +19,7 @@ public:
 
 	void add(const Party& d);
 	void add_district_to_party();
-	int get_length() { return _log_size; }
+	int get_length() const { return _log_size; }
 	void set_length(int new_size);
 	void print() const;
 
