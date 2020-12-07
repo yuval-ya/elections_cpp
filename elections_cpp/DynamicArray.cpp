@@ -45,6 +45,11 @@ void DynamicArray::add(int val)
 	++_log_size;
 }
 
+int DynamicArray::get(int id) const{
+	check_valid_idx(id - 1);
+	return _arr[id - 1];
+}
+
 int DynamicArray::get_max() const {
 	if (_log_size == 0) return -1;
 
@@ -61,15 +66,17 @@ int DynamicArray::get_max() const {
 
 int& DynamicArray::operator[](int idx)
 {
-	if (idx >= _log_size || idx < 0) {
-		exit(1); // index error
-	}
+	check_valid_idx(idx);
 	return _arr[idx];
 }
 const int& DynamicArray::operator[](int idx) const
 {
+	check_valid_idx(idx);
+	return _arr[idx];
+}
+
+void DynamicArray::check_valid_idx(int idx) const {
 	if (idx >= _log_size || idx < 0) {
 		exit(1); // index error
 	}
-	return _arr[idx];
 }

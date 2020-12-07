@@ -3,10 +3,11 @@
 #include "PartyArray.h"
 #include "DistrictArray.h"
 
-int compare_parties(const void* a, const void* b);
 
 class Elections
 {
+	// A class representing a Election round
+
 private:
     int				_day,	
 					_month, 
@@ -26,17 +27,30 @@ public:
 	int get_num_districts() const { return _districts.get_length(); }
 	int get_num_parties() const { return _parties.get_length(); }
 
-    bool add_distric(String name, int number_of_candidates);
+	// add new district to the elections
+    bool add_district(String name, int number_of_candidates);
+
+	// add a new person to the voters list and to the district he belongs
     bool add_person(String name, int id, int birth_year, int distric_num);
+
+	// add new party to the elections
     bool add_party(String name, int candidate_id);
+
+	// Add a person as a candidate of a party in a given district
     bool add_person_as_candidate(int person_id, int party_id, int district_id);
+
 	bool vote(int person_id, int party_id);
 
     void print_voters() const;
     void print_districts() const;
     void print_parties() const;
 	
+	// Performs a calculation of all votes in all districts and updates the number of 
+	// votes and candidates each party received
 	void final_evaluation();
+
+	// return a pointer tp Party array and it's size (as an output parameter) 
+	// The array is sorted by the order of votes each party received (the winnig party in index 0) 
 	Party** get_sorted_parties_arr(int& size);
 };
 

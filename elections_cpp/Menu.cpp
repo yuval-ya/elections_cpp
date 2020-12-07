@@ -45,7 +45,7 @@ bool Menu::new_district() {
     cin >> name;
     cout << "Enter number of candidates: ";
     cin >> candidates_num;
-    return _election.add_distric(name, candidates_num);
+    return _election.add_district(name, candidates_num);
 }
 
 bool Menu::new_party() {

@@ -32,13 +32,12 @@ void PartyArray::resize(int new_size) {
 }
 
 Party& PartyArray::get(int id) {
-	if ((id-1) >= _log_size || (id-1) < 0) {
-		exit(1); // index error
-	}
+	check_valid_idx(id - 1);
 	return *_arr[id - 1];
 }
 
 void PartyArray::set(int idx, Party* d) {
+	check_valid_idx(idx);
 	_arr[idx] = d;
 }
 void PartyArray::add(const Party& d) {
@@ -57,16 +56,12 @@ void PartyArray::set_length(int new_size) {
 }
 
 Party& PartyArray::operator[](int idx) {
-	if (idx >= _log_size || idx < 0){
-		exit(1); // index error
-	}
+	check_valid_idx(idx);
 	return *_arr[idx];
 }
 
 const Party& PartyArray::operator[](int idx) const {
-	if (idx >= _log_size || idx < 0) {
-		exit(1); // index error
-	}
+	check_valid_idx(idx);
 	return *_arr[idx];
 }
 
@@ -82,5 +77,11 @@ void PartyArray::add_district_to_party(){
 	for (int i = 0; i < _log_size; i++)
 	{
 		_arr[i]->add_district_to_candidates_arr();
+	}
+}
+
+void PartyArray::check_valid_idx(int idx) const {
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
 	}
 }

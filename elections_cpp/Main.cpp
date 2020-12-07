@@ -1,29 +1,20 @@
+#include "Elections.h"
+
+#include "Menu.h"  // ????????????????
+#include "Main.h"  // ????????????????
 
 #include <iostream>
-#include "Elections.h"
-#include "Menu.h"
-
 using namespace std;
 
-const int MAX_SIZE = 100;
-void start(Elections& election);
-bool options(Elections& election, int choice);
-bool new_district(Elections& election);
-bool new_party(Elections& election);
-bool new_citizen(Elections& election);
-bool set_citizen_as_candidate(Elections& election);
-bool vote(Elections& election);
-void print_statistics(Elections& election);
-void print_results(Elections& election);
-void finish(Elections& election);
 
 int main(void) {
 
 	Elections election;
+	//Menu menu(election);
 
-	election.add_distric("A", 4);
-    election.add_distric("B", 5);
-	election.add_distric("C", 3);
+	/*election.add_district("A", 4);
+    election.add_district("B", 5);
+	election.add_district("C", 3);
     
     election.add_person("yuval", 1, 1996, 1);
 	election.add_person("tamir", 2, 1994, 1);
@@ -117,8 +108,9 @@ int main(void) {
 	election.vote(27, 3);
 	election.vote(28, 1);
 	election.vote(29, 2);
-	election.vote(30, 3);
+	election.vote(30, 3);*/
 
+	//menu.start();
 	start(election);
     
     return 0;
@@ -130,8 +122,8 @@ void start(Elections& election)
 	int choice = 1;
 	int year, month, day;
 	cout << "Enter election's date (year,month,day): " << endl;
-	//cin >> year >> month >> day;                               *****************************************************
-	election.setDate(1, 1, 1); //election.setDate(year, month, day);
+	cin >> year >> month >> day;
+	election.setDate(year, month, day);
 
 	while (choice != 10) {
 		cout << "\nMain menu - choose an option:" << endl;
@@ -161,7 +153,7 @@ bool new_district(Elections& election) {
 	cin >> name;
 	cout << "Enter number of candidates: ";
 	cin >> candidates_num;
-	return election.add_distric(name, candidates_num);
+	return election.add_district(name, candidates_num);
 }
 
 bool new_party(Elections& election) {

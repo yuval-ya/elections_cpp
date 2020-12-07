@@ -50,7 +50,8 @@ void Party::merge(Party** arr, int l, int m, int r)
     int n1 = m - l + 1;
     int n2 = r - m;
     int i, j;
-    Party* L[n1], *R[n2];
+	Party** L = new Party*[n1];
+	Party** R = new Party*[n2];
     
     for (i = 0; i < n1; i++)
         L[i] = arr[l + i];
@@ -85,6 +86,9 @@ void Party::merge(Party** arr, int l, int m, int r)
         j++;
         k++;
     }
+
+	delete[] L;
+	delete[] R;
 }
 
 

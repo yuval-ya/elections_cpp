@@ -32,9 +32,7 @@ void CandidatesArray::resize(int new_size) {
 }
 
 PersonList& CandidatesArray::get(int district_id) {
-	if ((district_id - 1) >= _log_size || (district_id - 1) < 0) {
-		exit(1); // index error
-	}
+	check_valid_idx(district_id - 1);
 	return *_arr[district_id - 1];
 }
 
@@ -53,16 +51,12 @@ void CandidatesArray::set_length(int new_size) {
 }
 
 PersonList& CandidatesArray::operator[](int idx) {
-	if (idx >= _log_size || idx < 0) {
-		exit(1); // index error
-	}
+	check_valid_idx(idx);
 	return *_arr[idx];
 }
 
 const PersonList& CandidatesArray::operator[](int idx) const {
-	if (idx >= _log_size || idx < 0) {
-		exit(1); // index error
-	}
+	check_valid_idx(idx);
 	return *_arr[idx];
 }
 
@@ -75,4 +69,10 @@ ostream& operator<<(ostream& os, const CandidatesArray& c_arr) {
 		}
 	}
 	return os;
+}
+
+void CandidatesArray::check_valid_idx(int idx) const {
+	if (idx >= _log_size || idx < 0) {
+		exit(1); // index error
+	}
 }

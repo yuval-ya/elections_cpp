@@ -5,6 +5,8 @@
 
 class Party
 {
+	// A class representing a Party in the elections
+
 private:
 	const int			_id;
 	String				_name;
@@ -31,15 +33,22 @@ public:
 	void set_candidate_id(int candidate_id) { _first_candidate_id = candidate_id; }
 	void set_total_candidates(int val) { _total_candidates = val; }
 
+	// add a new candidate to the candidate list according to the district id
 	void add_candidate(PersonPtr p, int district_id);
+
+	// add a new empty list to Candidates Array
 	void add_district_to_candidates_arr();
+
+	// add value to the total number of candidates the party get in the elections 
 	void add_total_candidates(int val) { _total_candidates += val; }
 	void add_total_votes(int val) { _total_votes += val; }
 
+	// Sorting a pointer to Party array according to the total number of candidates 
+	// the party received in the election (implementaion of mergeSort)
     static void mergeSort(Party** arr,int l,int r);
     static void merge(Party** arr, int l, int m, int r);
 
-//    static int compare_parties(const void* a, const void* b); *****************************
+	//static int compare_parties(const void* a, const void* b); ***********************************
 	friend ostream& operator<<(ostream& os, const Party& p);
 };
 

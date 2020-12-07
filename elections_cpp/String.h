@@ -13,7 +13,7 @@ public:
 	~String();
 
 	const char* get() const { return _str; }
-	void set(const char *str); // delete if not needed
+	void set(const char *str);
 	friend ostream& operator<<(ostream& os, const String& str);
 };
 

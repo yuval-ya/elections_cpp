@@ -9,7 +9,7 @@ void Elections::setDate(int year, int month, int day) {
 	_day = day;
 }
 
-bool Elections::add_distric(String name, int number_of_candidates)
+bool Elections::add_district(String name, int number_of_candidates)
 {
     District new_distric(name, number_of_candidates);
     _districts.add(new_distric);
@@ -96,8 +96,10 @@ void Elections::final_evaluation() {
     
 	for (int i = 0; i < num_of_districts; i++)
 	{
-		int winner_party_in_district = _districts[i].eval_partition();
-		_parties[winner_party_in_district - 1].add_total_candidates(_districts[i].get_number_of_candidates());				
+		int winning_party_in_district = _districts[i].eval_partition();
+		
+		// The winning party gets the number of candidates in the current district
+		_parties[winning_party_in_district - 1].add_total_candidates(_districts[i].get_number_of_candidates());
 	}
 }
 
@@ -112,7 +114,7 @@ Party** Elections::get_sorted_parties_arr(int& size) {
 		res[i] = &_parties[i];
 	}
     Party::mergeSort(res, 0, num_of_parties - 1);
-    // qsort(res, num_of_parties, sizeof(Party*), Party::compare_parties);
+    // qsort(res, num_of_parties, sizeof(Party*), Party::compare_parties);   ***********************************
 	size = num_of_parties;
 	return res;
 }
