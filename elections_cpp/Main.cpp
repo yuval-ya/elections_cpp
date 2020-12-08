@@ -8,9 +8,7 @@ using namespace std;
 
 
 int main(void) {
-
 	Elections election;
-	//Menu menu(election);
 
 	/*election.add_district("A", 4);
     election.add_district("B", 5);
@@ -110,8 +108,8 @@ int main(void) {
 	election.vote(29, 2);
 	election.vote(30, 3);*/
 
-	//menu.start();
-	start(election);
+	Menu::start(election);
+	//start(election);
     
     return 0;
 }
@@ -150,7 +148,8 @@ bool new_district(Elections& election) {
 	char name[MAX_SIZE];
 	int candidates_num;
 	cout << "Enter district name: ";
-	cin >> name;
+	cin.ignore();
+	cin.getline(name, MAX_SIZE);
 	cout << "Enter number of candidates: ";
 	cin >> candidates_num;
 	return election.add_district(name, candidates_num);
@@ -160,7 +159,8 @@ bool new_party(Elections& election) {
 	char name[MAX_SIZE];
 	int candidate_id;
 	cout << "Enter party name: ";
-	cin >> name;
+	cin.ignore();
+	cin.getline(name, MAX_SIZE);
 	cout << "Enter first candidate ID: ";
 	cin >> candidate_id;
 	return election.add_party(name, candidate_id);
@@ -170,7 +170,8 @@ bool new_citizen(Elections& election) {
 	char name[MAX_SIZE];
 	int id, year, district_id;
 	cout << "Enter name: ";
-	cin >> name;
+	cin.ignore();
+	cin.getline(name, MAX_SIZE);
 	cout << "Enter id: ";
 	cin >> id;
 	cout << "Enter year of birth: ";

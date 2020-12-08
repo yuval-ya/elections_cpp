@@ -14,9 +14,6 @@ PersonPtr::PersonPtr() : _p(nullptr), _r(nullptr) {}
 PersonPtr::PersonPtr(const String& name, int idnum, int year, int district_num) :
 _p(new Person(name, idnum, year, district_num)), _r(new int(1))
 {
-    cout << "new person pnt" <<endl;
-    cout << "new int pnt" <<endl;
-
 }
 
 PersonPtr::PersonPtr(const PersonPtr& other) : _p(other._p), _r(other._r)

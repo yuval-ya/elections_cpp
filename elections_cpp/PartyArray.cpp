@@ -1,10 +1,7 @@
 #include "PartyArray.h"
 
 PartyArray::PartyArray(int size) :
-	_arr(new Party*[size]), _log_size(size), _pys_size(size)
-{
-
-    cout << "PartyArr ctor" <<endl;
+	_arr(new Party*[size]), _log_size(size), _pys_size(size){
 }
 
 PartyArray::~PartyArray() {

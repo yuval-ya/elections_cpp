@@ -2,9 +2,7 @@
 
 
 DistrictArray::DistrictArray(int size) : 
-	_arr(new District*[size]), _log_size(size), _pys_size(size)
-{
-    cout << "DistrictArr ctor" <<endl;
+	_arr(new District*[size]), _log_size(size), _pys_size(size){
 }
 
 DistrictArray::~DistrictArray() {

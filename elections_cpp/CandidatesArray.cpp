@@ -4,7 +4,6 @@ CandidatesArray::CandidatesArray(int size) : _arr(new PersonList*[size]), _log_s
 {
     for (int i = 0; i < size; i++)
         _arr[i] = new PersonList;
-    cout << "CandidatesArray ctor" <<endl;
 }
 
 CandidatesArray::~CandidatesArray() {

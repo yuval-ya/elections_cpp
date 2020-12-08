@@ -8,7 +8,8 @@
 
 #include "PersonList.h"
 
-PersonList::PersonList() : _head(nullptr), _tail(nullptr), _person_count(0) { cout << "PersonList ctor" <<endl;}
+PersonList::PersonList() : _head(nullptr), _tail(nullptr), _person_count(0) { 
+}
 
 PersonList::~PersonList(){
     Node* curr = _head;
@@ -19,7 +20,6 @@ PersonList::~PersonList(){
         curr = curr->next;
         delete temp;
     }
-    cout << "PersonList dtor" << endl;
 }
 
 PersonPtr PersonList::addPerson(const Person& p)
