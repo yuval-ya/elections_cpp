@@ -11,8 +11,8 @@
 
 PersonPtr::PersonPtr() : _p(nullptr), _r(nullptr) {}
 
-PersonPtr::PersonPtr(const String& name, int idnum, int year, int district_num) :
-_p(new Person(name, idnum, year, district_num)), _r(new int(1))
+PersonPtr::PersonPtr(const String& name, int id, int year, District& district) :
+_p(new Person(name, id, year, district)), _r(new int(1))
 {
 }
 

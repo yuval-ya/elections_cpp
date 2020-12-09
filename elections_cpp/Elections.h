@@ -31,7 +31,7 @@ public:
     bool add_district(String name, int number_of_candidates);
 
 	// add a new person to the voters list and to the district he belongs
-    bool add_person(String name, int id, int birth_year, int distric_num);
+    bool add_person(String name, int id, int birth_year, int distric_id);
 
 	// add new party to the elections
     bool add_party(String name, int candidate_id);

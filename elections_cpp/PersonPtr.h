@@ -17,7 +17,7 @@ class PersonPtr
         void release();
     public:
         PersonPtr();
-        PersonPtr(const String&, int idnum, int year, int district_num);
+        PersonPtr(const String&, int idnum, int year, District& district);
         PersonPtr(const PersonPtr&);
         PersonPtr(Person*);
         ~PersonPtr();

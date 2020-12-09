@@ -7,7 +7,7 @@ using namespace std;
 int main(void) {
 	Elections election;
 
-	/*election.add_district("A", 4);
+	election.add_district("A", 10);
     election.add_district("B", 5);
 	election.add_district("C", 3);
     
@@ -103,13 +103,12 @@ int main(void) {
 	election.vote(27, 3);
 	election.vote(28, 1);
 	election.vote(29, 2);
-	election.vote(30, 3);*/
+	election.vote(30, 3);
 
 	start(election);
 
     return 0;
 }
-
 
 void start(Elections& election)
 {
@@ -255,13 +254,13 @@ void print_statistics(Elections& election) {
 			const Party& party = election.get_party(j);
 			int num_of_candidates_from_party = district.get_party_candidates_num(j);
 			const PersonList& candidate_lst = party.get_candidates_list_from_district(i);
-
+			
+			cout << "\nParty No." << j << endl;
 			if (candidate_lst.get_person_number() < num_of_candidates_from_party)
 			{	//There are not enough candidates from this district 
-				cout << "There are not enough candidates from district " << i << endl;
-				exit(1);
+				cout << "There are not enough candidates in the party to district " << i << endl;
+				//exit(1);    ///////////////////////////////////// ?????????????????? !!!!!!!!!! *********************************
 			}
-			cout << "\nParty No." << j << endl;
 			candidate_lst.printList(num_of_candidates_from_party);
 			cout << "Total votes - " << district.get_party_votes(j) << endl;
 			cout << "Percentage of votes - " << district.calc_party_percent_in_votes(j) << endl;

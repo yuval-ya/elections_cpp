@@ -2,13 +2,13 @@
 
 int Party::total_parties = 0;
 
-Party::Party(const String& name, int candidate_id) : 
-	_id(++total_parties), _name(name), _first_candidate_id(candidate_id)
+Party::Party(const String& name, const Person& candidate) :
+	_id(++total_parties), _name(name), _first_candidate(candidate)
 {
 }
 
 Party::Party(const Party& p) :
-	_id(p._id), _name(p._name), _first_candidate_id(p._first_candidate_id), 
+	_id(p._id), _name(p._name), _first_candidate(p._first_candidate), 
 	_total_candidates(p._total_candidates) , _total_votes(p._total_votes),
 	_candidates(District::total_districts) 
 {
@@ -18,12 +18,18 @@ Party::~Party() {
 	
 }
 
+int Party::get_candidate_id() const
+{
+	return _first_candidate.getID();
+}
+
 void Party::add_candidate(PersonPtr p, int district_id) {
 	_candidates.get(district_id).addPerson(p);
 }
 
+
 ostream& operator<<(ostream& os, const Party& p) {
-	os << "Party ID: " << p._id << " | Name: " << p._name << " | First candidate ID: " << p._first_candidate_id;
+	os << "Party ID: " << p._id << " | Name: " << p._name << " | First candidate ID: " << p._first_candidate.getID();
 	return os;
 }
 

@@ -5,10 +5,12 @@
 //  Created by Yuval  Yakovskind  on 25/11/2020.
 //  Copyright © 2020 Tamir Houri 205668627 & Yuval Yakovskind 316550524. All rights reserved.
 //
+#include <iostream>
+using namespace std;
 
 #include "PersonList.h"
 
-PersonList::PersonList() : _head(nullptr), _tail(nullptr), _person_count(0) { 
+PersonList::PersonList() : _head(nullptr), _tail(nullptr), _person_count(0){
 }
 
 PersonList::~PersonList(){

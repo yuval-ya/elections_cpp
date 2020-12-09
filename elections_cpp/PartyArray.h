@@ -1,5 +1,6 @@
 #pragma once
 #include "Party.h"
+#include <ostream>
 
 class PartyArray
 {
@@ -27,7 +28,7 @@ public:
 	void set_length(int new_size);
 	
 	// add new Party to the array in the next empty cell
-	void add(const Party& d);
+	const Party& add(const Party& d);                       //////////////////////////***************** change return value
 
 	// add new cell for District in each Party in the array
 	void add_district_to_party();

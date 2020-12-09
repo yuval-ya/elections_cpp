@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 #include "PartyArray.h"
 
 PartyArray::PartyArray(int size) :
@@ -37,14 +40,17 @@ void PartyArray::set(int idx, Party* d) {
 	check_valid_idx(idx);
 	_arr[idx] = d;
 }
-void PartyArray::add(const Party& d) {
+
+const Party& PartyArray::add(const Party& d) {
 	if (_log_size == _pys_size) {
 		resize(_log_size * 2 + 1);
 	}
 
 	_arr[_log_size] = new Party(d);
 	++_log_size;
+	return *_arr[_log_size - 1];
 }
+
 void PartyArray::set_length(int new_size) {
 	if (new_size > _pys_size) {
 		resize(new_size);

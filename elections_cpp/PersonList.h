@@ -7,7 +7,7 @@
 //
 
 #pragma once
-#include <iostream>
+#include <ostream>
 #include "PersonPtr.h"
 
 class PersonList {    

@@ -10,27 +10,26 @@ class Party
 private:
 	const int			_id;
 	String				_name;
-	int					_first_candidate_id,
-						_total_candidates = 0,
+	const Person&		_first_candidate;
+	int					_total_candidates = 0,
 						_total_votes = 0;
 	CandidatesArray		_candidates;
 	
 public:
 	static int total_parties;
 
-	Party(const String& name, int candidate_id);
+	Party(const String& name, const Person& candidate);
 	Party(const Party& p);
 	~Party();
 
 	int get_id() const { return _id; }
-	int get_candidate_id() const { return _first_candidate_id; }
+	int get_candidate_id() const;
 	const String& get_name() const { return _name; }
 	int get_total_candidates() const { return _total_candidates; }
 	int get_total_votes() const { return _total_votes; }
 	const PersonList& get_candidates_list_from_district(int district_id) const { return _candidates[district_id - 1]; }
 	const CandidatesArray& get_candidates_array() const { return _candidates; }
 
-	void set_candidate_id(int candidate_id) { _first_candidate_id = candidate_id; }
 	void set_total_candidates(int val) { _total_candidates = val; }
 
 	// add a new candidate to the candidate list according to the district id

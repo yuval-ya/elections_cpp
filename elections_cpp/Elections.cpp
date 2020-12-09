@@ -1,5 +1,4 @@
 #include "Elections.h"
-#include <cstdlib>
 
 Elections::Elections(int day, int month, int year) : _day(day), _month(month), _year(year) {}
 
@@ -17,14 +16,14 @@ bool Elections::add_district(String name, int number_of_candidates)
 	return true;
 }
 
-bool Elections::add_person(String name, int id, int birth_year, int distric_num)
+bool Elections::add_person(String name, int id, int birth_year, int distric_id)
 {
-    if (_voters.getPersonPtr(id) != nullptr || distric_num > _districts.get_length() || distric_num <= 0) {
+    if (_voters.getPersonPtr(id) != nullptr || distric_id > _districts.get_length() || distric_id <= 0) {
         return false;
     }
-    Person new_person(name, id, birth_year, distric_num);
+    Person new_person(name, id, birth_year, _districts.get(distric_id));
     PersonPtr person_ptr = _voters.addPerson(new_person);
-    _districts.get(distric_num).addPerson(person_ptr);
+    _districts.get(distric_id).addPerson(person_ptr);
     return true;
 }
 
@@ -34,10 +33,10 @@ bool Elections::add_party(String name, int candidate_id)
 	if (candidate == nullptr) {  // more conditions? *******************************************************************
 		return false;
 	}
-    Party new_party = Party(name,candidate_id);
-    _parties.add(new_party);
+    Party new_party = Party(name, *candidate);
+	const Party& p = _parties.add(new_party);
 	_districts.add_party_to_district();
-	candidate->setAsCandidate(); // can the first candidate can be a regular candidate? ********************************
+	candidate->setAsCandidate(&p); // can the first candidate can be a regular candidate? ********************************
 	return true;
 }
 
@@ -49,8 +48,9 @@ bool Elections::add_person_as_candidate(int person_id, int party_id, int distric
 
         if (candidate != nullptr && !candidate->isCandidate() /*&& candidate->getDistrict() == district_id*/) ///***************************************
         {
-            _parties.get(party_id).add_candidate(candidate, district_id);
-            candidate->setAsCandidate();
+			Party& party = _parties.get(party_id);
+			party.add_candidate(candidate, district_id);
+            candidate->setAsCandidate(&party);
             return true;
         }
     }
@@ -78,11 +78,10 @@ bool Elections::vote(int person_id, int party_id)
 	if (person == nullptr || person->isVoted() || party_id > _parties.get_length()) {
 		return false;
 	}
-	int district_id = person->getDistrict();
+	int district_id = person->getDistrictID();
 	_districts[district_id - 1].vote(party_id);
 	_parties[party_id - 1].add_total_votes(1);
-	person->setVoted();
-	return true;
+	return person->setVote(&(_parties.get(party_id)));
 }
 
 void Elections::final_evaluation() {
