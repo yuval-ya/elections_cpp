@@ -32,19 +32,6 @@ void Party::add_district_to_candidates_arr()
 	_candidates.add();
 }
 
-
-//int Party::compare_parties(const void* a,const void* b) { *******************************
-//    const Party& p_a = *(static_cast<const Party*>(a));
-//    const Party& p_b = *(static_cast<const Party*>(b));
-//
-//    int total_a = p_a.get_total_candidates();
-//    int total_b = p_b.get_total_candidates();
-//
-//    return (total_a > total_b) - (total_a < total_b);
-//}
-//
-
-
 void Party::merge(Party** arr, int l, int m, int r)
 {
     int n1 = m - l + 1;

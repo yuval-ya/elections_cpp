@@ -1,11 +1,8 @@
-#include "Elections.h"
-
-#include "Menu.h"  // ????????????????
-#include "Main.h"  // ????????????????
-
 #include <iostream>
 using namespace std;
 
+#include "Main.h" 
+#include "Elections.h"
 
 int main(void) {
 	Elections election;
@@ -108,9 +105,8 @@ int main(void) {
 	election.vote(29, 2);
 	election.vote(30, 3);*/
 
-	Menu::start(election);
-	//start(election);
-    
+	start(election);
+
     return 0;
 }
 
