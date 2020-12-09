@@ -1,7 +1,7 @@
+#include "PartyArray.h"
 #include <iostream>
 using namespace std;
 
-#include "PartyArray.h"
 
 PartyArray::PartyArray(int size) :
 	_arr(new Party*[size]), _log_size(size), _pys_size(size){

@@ -33,5 +33,5 @@ public:
 	PersonList& operator[](int idx);
 	const PersonList& operator[](int idx) const;
 
-	friend ostream& operator<<(ostream& os, const CandidatesArray& c_arr);
+	friend std::ostream& operator<<(std::ostream& os, const CandidatesArray& c_arr);
 };

@@ -1,4 +1,5 @@
 #include "String.h"
+using namespace std;
 
 String::String(const char* str) : _str(nullptr)
 {

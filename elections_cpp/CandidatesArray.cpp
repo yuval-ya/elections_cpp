@@ -1,5 +1,5 @@
 #include "CandidatesArray.h"
-
+using namespace std;
 CandidatesArray::CandidatesArray(int size) : _arr(new PersonList*[size]), _log_size(size), _pys_size(size)
 {
     for (int i = 0; i < size; i++)

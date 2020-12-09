@@ -61,6 +61,6 @@ public:
 	PersonPtr getPersonPtr(int idnum);
 	const Person& getPerson(int idnum) const;
 
-	friend ostream& operator<<(ostream& os, const District& d);
+	friend std::ostream& operator<<(std::ostream& os, const District& d);
 };
 
