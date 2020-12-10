@@ -1,14 +1,16 @@
 #pragma once
 #include "String.h"
-
 #include <ostream>
-using namespace std;
+#include <ostream>
 
 class District;
 class Party;
 
 class Person
 {
+    
+    // A class representing a citizen in the elections
+    
 private:
     String				_name;
     int					_id;
@@ -25,12 +27,20 @@ public:
     int getID() const { return _id; };
     int getYear() const { return _birth_year; };
 	int getDistrictID() const;
+    
+    // set the citizen as a candidate of a party by adding the pointer to the party
 	bool setAsCandidate(const Party* p);
+    
+    // returns if the citizen is a candidate of some party
 	bool isCandidate() const;
+    
+    // returns if the citizen already voted in the current elections
 	bool isVoted() const;
+    
+    // save the party that the citizen vote for 
 	bool setVote(const Party* p);
 
-    friend ostream& operator<<(ostream& os, const Person& p);
+    friend std::ostream& operator<<(std::ostream& os, const Person& p);
 
 };
 

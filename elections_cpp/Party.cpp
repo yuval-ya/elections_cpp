@@ -1,4 +1,5 @@
 #include "Party.h"
+using namespace std;
 
 int Party::total_parties = 0;
 

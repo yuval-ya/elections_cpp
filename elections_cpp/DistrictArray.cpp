@@ -1,7 +1,7 @@
+#include "DistrictArray.h"
 #include <iostream>
 using namespace std;
 
-#include "DistrictArray.h"
 
 DistrictArray::DistrictArray(int size) : 
 	_arr(new District*[size]), _log_size(size), _pys_size(size){

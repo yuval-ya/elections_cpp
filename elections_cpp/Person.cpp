@@ -2,6 +2,7 @@
 #include "Party.h"
 #include "Person.h"
 #include <ostream>
+using namespace std;
 
 
 

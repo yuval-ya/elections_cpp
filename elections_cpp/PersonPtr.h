@@ -11,6 +11,9 @@
 
 class PersonPtr
 {
+    
+    // Smart pointer to Person
+    
     private:
         Person* _p;
         int*    _r;

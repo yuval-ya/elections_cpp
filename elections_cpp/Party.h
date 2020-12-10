@@ -47,7 +47,7 @@ public:
     static void mergeSort(Party** arr,int l,int r);
     static void merge(Party** arr, int l, int m, int r);
 
-	friend ostream& operator<<(ostream& os, const Party& p);
+	friend std::ostream& operator<<(std::ostream& os, const Party& p);
 };
 
 

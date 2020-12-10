@@ -1,10 +1,12 @@
 #pragma once
 #include <cstring>
 #include <ostream>
-using namespace std;
 
 class String
 {
+    
+    // Class to store a string
+    
 private:
 	char * _str;
 public:
@@ -14,6 +16,6 @@ public:
 
 	const char* get() const { return _str; }
 	void set(const char *str);
-	friend ostream& operator<<(ostream& os, const String& str);
+	friend std::ostream& operator<<(std::ostream& os, const String& str);
 };
 
