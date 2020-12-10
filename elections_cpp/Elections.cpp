@@ -30,30 +30,31 @@ bool Elections::add_person(String name, int id, int birth_year, int distric_id)
 bool Elections::add_party(String name, int candidate_id)
 {
 	PersonPtr candidate = _voters.getPersonPtr(candidate_id);
-	if (candidate == nullptr) {  // more conditions? *******************************************************************
+	if (candidate == nullptr) {  
 		return false;
 	}
     Party new_party = Party(name, *candidate);
 	const Party& p = _parties.add(new_party);
 	_districts.add_party_to_district();
-	candidate->setAsCandidate(&p); // can the first candidate can be a regular candidate? ********************************
+	candidate->setAsCandidate(&p);
 	return true;
 }
 
 bool Elections::add_person_as_candidate(int person_id, int party_id, int district_id)
 {
-    if (district_id <= _districts.get_length() && party_id <= _parties.get_length())
-    {
-        PersonPtr candidate = _districts.get(district_id).getPersonPtr(person_id);
+	if (district_id <= _districts.get_length() && district_id > 0
+		&& party_id <= _parties.get_length() && party_id > 0)
+	{
+		PersonPtr candidate = _voters.getPersonPtr(person_id);
 
-        if (candidate != nullptr && !candidate->isCandidate() /*&& candidate->getDistrict() == district_id*/) ///***************************************
-        {
+		if (candidate != nullptr && !candidate->isCandidate())
+		{
 			Party& party = _parties.get(party_id);
 			party.add_candidate(candidate, district_id);
-            candidate->setAsCandidate(&party);
-            return true;
-        }
-    }
+			candidate->setAsCandidate(&party);
+			return true;
+		}
+	}
     return false;
 }
 
