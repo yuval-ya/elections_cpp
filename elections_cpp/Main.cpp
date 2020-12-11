@@ -159,7 +159,7 @@ void print_statistics(Elections& election) {
 			cout << "\nParty No." << j << endl;
 			if (candidate_lst.get_person_number() < num_of_candidates_from_party)
 			{	//There are not enough candidates from this district 
-				cout << "*** There are not enough candidates in the party to district ***" << i << endl;
+				cout << "*** There are not enough candidates in the party to district" << i << " ***" << endl;
 			}
 			candidate_lst.printList(num_of_candidates_from_party);
 			cout << "Total votes - " << district.get_party_votes(j) << endl;
