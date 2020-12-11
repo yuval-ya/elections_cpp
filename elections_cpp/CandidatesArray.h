@@ -11,8 +11,8 @@ private:
 	int _log_size;
 	int _pys_size;
 	
-	void resize(int new_size);
-	void check_valid_idx(int idx) const;
+	bool resize(int new_size);
+	bool check_valid_idx(int idx) const;
 public:
 	CandidatesArray(int size = 0);
 	CandidatesArray(const CandidatesArray&) = delete;
@@ -23,10 +23,10 @@ public:
 	PersonList& get(int district_id); 
 
 	// add empty list to the next empty cell
-	void add();
+	bool add();
 
 	int get_length() const { return _log_size; }
-	void set_length(int new_size);
+	bool set_length(int new_size);
 
 	// return list of candidates according to the index received
 	// Notice: arr[0] = PersonList No.1

@@ -11,7 +11,7 @@ class District
 private:
 	const int		_id;
 	String			_name;
-	const int		_number_of_candidates;
+	int				_number_of_candidates;
 	int				_number_of_voters = 0,
 					_winner_party = 0;
 	PersonList		_voters;
@@ -34,6 +34,8 @@ public:
 	int get_party_candidates_num(int party_id) const { return _candidate_partition[party_id - 1]; }
 	int get_winner_party() const { return _winner_party; }
 
+	bool set_number_of_candidates(int number_of_candidates);
+
 	// Calculation of the percentage of votes in the whole district
 	float calc_voters_percentage() const;
 
@@ -51,7 +53,7 @@ public:
 	bool vote(int party_id);
 
 	// Adds a new party for voting and calculation
-	void add_party_to_district();
+	bool add_party_to_district();
 
 	// add new person to voters list in the district
 	PersonPtr addPerson(const Person& p);

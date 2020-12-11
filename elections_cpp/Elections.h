@@ -16,11 +16,10 @@ private:
     DistrictArray	_districts;
     PartyArray		_parties;
 public:
-    Elections() {}
-    Elections(int day, int month, int year);
+	Elections(int day = 1, int month = 1, int year = 2021);
 	Elections(const Elections&) = delete;
 
-    void setDate(int year, int month, int day);
+    bool setDate(int year, int month, int day);
 
 	const District& get_district(int district_id) const { return _districts[district_id - 1];  }
 	const Party& get_party(int party_id) const { return _parties[party_id - 1]; }
@@ -47,7 +46,7 @@ public:
 	
 	// Performs a calculation of all votes in all districts and updates the number of 
 	// votes and candidates each party received
-	void final_evaluation();
+	bool final_evaluation();
 
 	// return a pointer tp Party array and it's size (as an output parameter) 
 	// The array is sorted by the order of votes each party received (the winnig party in index 0) 

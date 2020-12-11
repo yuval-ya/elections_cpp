@@ -1,11 +1,18 @@
 #include "Elections.h"
 
-Elections::Elections(int day, int month, int year) : _day(day), _month(month), _year(year) {}
+Elections::Elections(int day, int month, int year)
+{
+	setDate(year, month, day);
+}
 
-void Elections::setDate(int year, int month, int day) {
+bool Elections::setDate(int year, int month, int day) {
+	if (year < 1 || year > 2022 || month < 1 || month > 12 || day < 1 || day > 31) {
+		return false;
+	}
 	_year = year;
 	_month = month;
 	_day = day;
+	return true;
 }
 
 bool Elections::add_district(String name, int number_of_candidates)
@@ -86,7 +93,7 @@ bool Elections::vote(int person_id, int party_id)
 	return person->setVote(&(_parties.get(party_id)));
 }
 
-void Elections::final_evaluation() {
+bool Elections::final_evaluation() {
 	int num_of_districts = _districts.get_length();
     int num_of_parties = _parties.get_length();
     
@@ -102,6 +109,7 @@ void Elections::final_evaluation() {
 		// The winning party gets the number of candidates in the current district
 		_parties[winning_party_in_district - 1].add_total_candidates(_districts[i].get_number_of_candidates());
 	}
+	return true;
 }
 
 

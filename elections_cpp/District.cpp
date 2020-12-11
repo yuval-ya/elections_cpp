@@ -75,10 +75,14 @@ bool District::vote(int party_id) {
 	return true;
 }
 
-void District::add_party_to_district()
+bool District::set_number_of_candidates(int number_of_candidates) {
+	_number_of_candidates = number_of_candidates;
+	return true;
+}
+
+bool District::add_party_to_district()
 {
-	_votes_by_parties.add();
-	_candidate_partition.add();
+	return _votes_by_parties.add() && _candidate_partition.add();
 }
 
 

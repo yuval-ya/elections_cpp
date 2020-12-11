@@ -14,9 +14,10 @@ void start(Elections& election)
 {
 	int choice = 1;
 	int year, month, day;
-	cout << "Enter election's date (year,month,day): " << endl;
-	cin >> year >> month >> day;
-	election.setDate(year, month, day);
+	do {
+		cout << "Enter election's date (year,month,day): " << endl;
+		cin >> year >> month >> day;
+	} while (!election.setDate(year, month, day));
 
 	while (choice != 10) {
 		cout << "\nMain menu - choose an option:" << endl;

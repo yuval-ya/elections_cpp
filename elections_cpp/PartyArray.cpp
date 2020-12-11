@@ -14,8 +14,7 @@ PartyArray::~PartyArray() {
 	}
 	delete[] _arr;
 }
-void PartyArray::resize(int new_size) {
-
+bool PartyArray::resize(int new_size) {
 	Party** temp = new Party*[new_size];
 
 	int copy = _log_size <= new_size ? _log_size : new_size;
@@ -29,6 +28,7 @@ void PartyArray::resize(int new_size) {
 	delete[] _arr;
 	_arr = temp;
 	this->_pys_size = new_size;
+	return true;
 }
 
 Party& PartyArray::get(int id) {
@@ -36,9 +36,12 @@ Party& PartyArray::get(int id) {
 	return *_arr[id - 1];
 }
 
-void PartyArray::set(int idx, Party* d) {
-	check_valid_idx(idx);
-	_arr[idx] = d;
+bool PartyArray::set(int idx, Party* d) {
+	if (check_valid_idx(idx)) {
+		_arr[idx] = d;
+		return true;
+	}
+	return false;
 }
 
 const Party& PartyArray::add(const Party& d) {
@@ -51,11 +54,12 @@ const Party& PartyArray::add(const Party& d) {
 	return *_arr[_log_size - 1];
 }
 
-void PartyArray::set_length(int new_size) {
+bool PartyArray::set_length(int new_size) {
 	if (new_size > _pys_size) {
 		resize(new_size);
 	}
 	_log_size = new_size;
+	return true;
 }
 
 Party& PartyArray::operator[](int idx) {
@@ -76,17 +80,19 @@ void PartyArray::print() const {
 	}
 }
 
-void PartyArray::add_district_to_party(){
+bool PartyArray::add_district_to_party() {
 	for (int i = 0; i < _log_size; i++)
 	{
 		_arr[i]->add_district_to_candidates_arr();
 	}
+	return true;
 }
 
-void PartyArray::check_valid_idx(int idx) const {
+bool PartyArray::check_valid_idx(int idx) const {
 	if (idx >= _log_size || idx < 0) {
 		exit(1); // index error
 	}
+	return true;
 }
 
 
