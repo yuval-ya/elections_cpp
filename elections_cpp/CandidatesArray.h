@@ -11,8 +11,8 @@ private:
 	int _log_size;
 	int _pys_size;
 	
-	void resize(int new_size);
-	void check_valid_idx(int idx) const;
+	bool resize(int new_size);
+	bool check_valid_idx(int idx) const;
 public:
 	CandidatesArray(int size = 0);
 	CandidatesArray(const CandidatesArray&) = delete;

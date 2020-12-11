@@ -13,7 +13,8 @@ CandidatesArray::~CandidatesArray() {
 	}
 	delete[] _arr;
 }
-void CandidatesArray::resize(int new_size) {
+
+bool CandidatesArray::resize(int new_size) {
 
 	PersonList** temp = new PersonList*[new_size];
 
@@ -28,6 +29,7 @@ void CandidatesArray::resize(int new_size) {
 	delete[] _arr;
 	_arr = temp;
 	this->_pys_size = new_size;
+    return true;
 }
 
 PersonList& CandidatesArray::get(int district_id) {
@@ -70,8 +72,9 @@ ostream& operator<<(ostream& os, const CandidatesArray& c_arr) {
 	return os;
 }
 
-void CandidatesArray::check_valid_idx(int idx) const {
+bool CandidatesArray::check_valid_idx(int idx) const {
 	if (idx >= _log_size || idx < 0) {
 		exit(1); // index error
 	}
+    return true;
 }
