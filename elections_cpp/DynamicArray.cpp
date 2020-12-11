@@ -14,6 +14,12 @@ DynamicArray::~DynamicArray()
 	delete[] _arr;
 }
 
+bool DynamicArray::set(int idx, int val)
+{
+    _arr[idx] = val;
+    return true;
+}
+
 void DynamicArray::resize(int new_size)
 {
 	int* temp = new int[new_size];
@@ -35,7 +41,7 @@ void DynamicArray::set_length(int new_size) {
 }
 
 
-void DynamicArray::add(int val)
+bool DynamicArray::add(int val)
 {
 	if (_log_size == _pys_size) {
 		resize(_log_size * 2 + 1);
@@ -43,6 +49,7 @@ void DynamicArray::add(int val)
 
 	_arr[_log_size] = val;
 	++_log_size;
+    return true;
 }
 
 int DynamicArray::get(int id) const{

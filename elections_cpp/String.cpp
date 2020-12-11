@@ -22,7 +22,7 @@ String::~String()
 	delete[] _str;
 }
 
-void String::set(const char *str) {
+bool String::set(const char *str) {
 	if (_str)
 		delete[] _str;
 
@@ -33,6 +33,7 @@ void String::set(const char *str) {
 		_str[i] = str[i];
 	}
 	_str[_len] = '\0';
+    return true;
 }
 
 String& String::operator=(String& other){

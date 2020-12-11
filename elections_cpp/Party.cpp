@@ -19,6 +19,18 @@ Party::~Party() {
 	
 }
 
+bool Party::set_total_candidates(int val)
+{
+    _total_candidates = val;
+    return true;
+}
+
+bool Party::set_first_candidate(PersonPtr candidate)
+{
+    _first_candidate = candidate;
+    return true;
+}
+
 void Party::add_candidate(PersonPtr p, int district_id) {
 	_candidates.get(district_id).addPerson(p);
 }

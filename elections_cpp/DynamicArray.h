@@ -18,8 +18,8 @@ public:
 
 	int get(int id) const; // return value by id (arr[id-1])
 	int get_max() const; // return the idx of the max number
-	void set(int idx, int val) { _arr[idx] = val; }
-	void add(int val = 0);
+    bool set(int idx, int val);
+	bool add(int val = 0);
 
 	int get_length() const { return _log_size; }
 	void set_length(int new_size);

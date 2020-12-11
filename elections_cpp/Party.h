@@ -30,8 +30,8 @@ public:
 	const CandidatesArray& get_candidates_array() const { return _candidates; }
     const Person& get_candidate() const { return *_first_candidate; }
 
-	void set_total_candidates(int val) { _total_candidates = val; }
-    void set_first_candidate(PersonPtr candidate) { _first_candidate = candidate; }
+    bool set_total_candidates(int val);
+    bool set_first_candidate(PersonPtr candidate);
 
 	// add a new candidate to the candidate list according to the district id
 	void add_candidate(PersonPtr p, int district_id);
