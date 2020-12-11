@@ -1,31 +1,45 @@
 #pragma once
 #include "String.h"
 #include <ostream>
-using namespace std;
+
+class District;
+class Party;
 
 class Person
 {
+    
+    // A class representing a citizen in the elections
+    
 private:
-    String  _name;
-    int     _id;
-    int     _birth_year;
-    int     _district_num;
-    bool    _is_voted;
-    bool    _is_candidate;
+    String				_name;
+    int					_id;
+    int					_birth_year;
+    const District*		_district;
+    const Party*		_vote;
+	const Party*		_is_candidate;
 public:
-    Person(const String&, int idnum, int year, int district_num);
+    Person(const String&, int id, int year,const District* district);
     Person(const Person& p);
     ~Person();
     
     const String& getName() const { return _name; }
     int getID() const { return _id; };
     int getYear() const { return _birth_year; };
-    int getDistrict() const { return _district_num; }
-    void setAsCandidate() { _is_candidate = true; }
-    bool isCandidate() const { return _is_candidate; }
-    bool isVoted() const { return _is_voted; }
-	bool setVoted() { return _is_voted = true; }
+	int getDistrictID() const;
+    
+    // set the citizen as a candidate of a party by adding the pointer to the party
+	bool setAsCandidate(const Party* p);
+    
+    // returns if the citizen is a candidate of some party
+	bool isCandidate() const;
+    
+    // returns if the citizen already voted in the current elections
+	bool isVoted() const;
+    
+    // save the party that the citizen vote for 
+	bool setVote(const Party* p);
 
-    friend ostream& operator<<(ostream& os, const Person& p);
+    friend std::ostream& operator<<(std::ostream& os, const Person& p);
+
 };
 

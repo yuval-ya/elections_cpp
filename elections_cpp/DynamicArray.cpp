@@ -14,6 +14,12 @@ DynamicArray::~DynamicArray()
 	delete[] _arr;
 }
 
+bool DynamicArray::set(int idx, int val)
+{
+    _arr[idx] = val;
+    return true;
+}
+
 void DynamicArray::resize(int new_size)
 {
 	int* temp = new int[new_size];
@@ -35,7 +41,7 @@ void DynamicArray::set_length(int new_size) {
 }
 
 
-void DynamicArray::add(int val)
+bool DynamicArray::add(int val)
 {
 	if (_log_size == _pys_size) {
 		resize(_log_size * 2 + 1);
@@ -43,6 +49,12 @@ void DynamicArray::add(int val)
 
 	_arr[_log_size] = val;
 	++_log_size;
+    return true;
+}
+
+int DynamicArray::get(int id) const{
+	check_valid_idx(id - 1);
+	return _arr[id - 1];
 }
 
 int DynamicArray::get_max() const {
@@ -61,15 +73,17 @@ int DynamicArray::get_max() const {
 
 int& DynamicArray::operator[](int idx)
 {
-	if (idx >= _log_size || idx < 0) {
-		exit(1); // index error
-	}
+	check_valid_idx(idx);
 	return _arr[idx];
 }
 const int& DynamicArray::operator[](int idx) const
 {
+	check_valid_idx(idx);
+	return _arr[idx];
+}
+
+void DynamicArray::check_valid_idx(int idx) const {
 	if (idx >= _log_size || idx < 0) {
 		exit(1); // index error
 	}
-	return _arr[idx];
 }

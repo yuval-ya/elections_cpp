@@ -1,15 +1,21 @@
 #include "Elections.h"
-#include <cstdlib>
 
-Elections::Elections(int day, int month, int year) : _day(day), _month(month), _year(year) {}
+Elections::Elections(int day, int month, int year)
+{
+	setDate(year, month, day);
+}
 
-void Elections::setDate(int year, int month, int day) {
+bool Elections::setDate(int year, int month, int day) {
+	if (year < 1 || year > 2022 || month < 1 || month > 12 || day < 1 || day > 31) {
+		return false;
+	}
 	_year = year;
 	_month = month;
 	_day = day;
+	return true;
 }
 
-bool Elections::add_distric(String name, int number_of_candidates)
+bool Elections::add_district(String name, int number_of_candidates)
 {
     District new_distric(name, number_of_candidates);
     _districts.add(new_distric);
@@ -17,43 +23,46 @@ bool Elections::add_distric(String name, int number_of_candidates)
 	return true;
 }
 
-bool Elections::add_person(String name, int id, int birth_year, int distric_num)
+bool Elections::add_person(String name, int id, int birth_year, int distric_id)
 {
-    if (_voters.getPersonPtr(id) != nullptr || distric_num > District::total_districts) {
+    if (_voters.getPersonPtr(id) != nullptr || distric_id > _districts.get_length() || distric_id <= 0) {
         return false;
     }
-    Person new_person(name, id, birth_year, distric_num);
+    District& district = _districts.get(distric_id);
+    Person new_person(name, id, birth_year, &district);
     PersonPtr person_ptr = _voters.addPerson(new_person);
-    _districts.get(distric_num).addPerson(person_ptr);
+    district.addPerson(person_ptr);
     return true;
 }
 
 bool Elections::add_party(String name, int candidate_id)
 {
 	PersonPtr candidate = _voters.getPersonPtr(candidate_id);
-	if (candidate == nullptr) {  // more conditions? *******************************************************************
+	if (candidate == nullptr || candidate->isCandidate()) {
 		return false;
 	}
-    Party new_party = Party(name,candidate_id);
-    _parties.add(new_party);
+    Party new_party = Party(name, candidate);
+	const Party& p = _parties.add(new_party);
 	_districts.add_party_to_district();
-	candidate->setAsCandidate(); // can the first candidate can be a regular candidate? ********************************
+	candidate->setAsCandidate(&p);
 	return true;
 }
 
 bool Elections::add_person_as_candidate(int person_id, int party_id, int district_id)
 {
-    if (district_id <= _districts.get_length() && party_id <= _parties.get_length())
-    {
-        PersonPtr candidate = _districts.get(district_id).getPersonPtr(person_id);
+	if (district_id <= _districts.get_length() && district_id > 0
+		&& party_id <= _parties.get_length() && party_id > 0)
+	{
+		PersonPtr candidate = _voters.getPersonPtr(person_id);
 
-        if (candidate != nullptr && !candidate->isCandidate() && candidate->getDistrict() == district_id)
-        {
-            _parties.get(party_id).add_candidate(candidate, district_id);
-            candidate->setAsCandidate();
-            return true;
-        }
-    }
+		if (candidate != nullptr && !candidate->isCandidate())
+		{
+			Party& party = _parties.get(party_id);
+			party.add_candidate(candidate, district_id);
+			candidate->setAsCandidate(&party);
+			return true;
+		}
+	}
     return false;
 }
 
@@ -78,14 +87,13 @@ bool Elections::vote(int person_id, int party_id)
 	if (person == nullptr || person->isVoted() || party_id > _parties.get_length()) {
 		return false;
 	}
-	int district_id = person->getDistrict();
+	int district_id = person->getDistrictID();
 	_districts[district_id - 1].vote(party_id);
 	_parties[party_id - 1].add_total_votes(1);
-	person->setVoted();
-	return true;
+	return person->setVote(&(_parties.get(party_id)));
 }
 
-void Elections::final_evaluation() {
+bool Elections::final_evaluation() {
 	int num_of_districts = _districts.get_length();
     int num_of_parties = _parties.get_length();
     
@@ -96,9 +104,12 @@ void Elections::final_evaluation() {
     
 	for (int i = 0; i < num_of_districts; i++)
 	{
-		int winner_party_in_district = _districts[i].eval_partition();
-		_parties[winner_party_in_district - 1].add_total_candidates(_districts[i].get_number_of_candidates());				
+		int winning_party_in_district = _districts[i].eval_partition();
+		
+		// The winning party gets the number of candidates in the current district
+		_parties[winning_party_in_district - 1].add_total_candidates(_districts[i].get_number_of_candidates());
 	}
+	return true;
 }
 
 
@@ -111,8 +122,7 @@ Party** Elections::get_sorted_parties_arr(int& size) {
 	{
 		res[i] = &_parties[i];
 	}
-    Party::mergeSort(res, 0, num_of_parties - 1);
-    // qsort(res, num_of_parties, sizeof(Party*), Party::compare_parties);
+    PartyArray::mergeSort(res, 0, num_of_parties - 1);
 	size = num_of_parties;
 	return res;
 }

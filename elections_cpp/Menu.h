@@ -6,24 +6,18 @@ class Menu
 {
 private:
     static const int MAX_SIZE = 100;
-    Elections& _election;
-    
-    bool new_district();
-    bool new_party();
-    bool new_citizen();
-    bool set_citizen_as_candidate();
-    bool vote();
-    bool options(int choice);
-	void print_statistics();
-	void print_results();
-	void finish();
+   
+	static bool options(Elections&,int choice);
+	static bool new_district(Elections&);
+	static bool new_party(Elections&);
+	static bool new_citizen(Elections&);
+	static bool set_citizen_as_candidate(Elections&);
+	static bool vote(Elections&);
+	static void print_statistics(Elections&);
+	static void print_results(Elections&);
+	static void finish(Elections&);
 public:
-	Menu(Elections& e);
-	Menu(const Menu&) = delete;
-	~Menu();
-
-    void start();
-    
-    
+	static void start(Elections&);
+	static void test(Elections&);
 };
 

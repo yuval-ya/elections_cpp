@@ -11,20 +11,26 @@
 
 class PersonPtr
 {
+    
+    // Smart pointer to Person
+    
     private:
         Person* _p;
         int*    _r;
         void release();
     public:
         PersonPtr();
-        PersonPtr(const String&, int idnum, int year, int district_num);
+        PersonPtr(const String&, int idnum, int year, const District* district);
         PersonPtr(const PersonPtr&);
         PersonPtr(Person*);
         ~PersonPtr();
 
         PersonPtr& operator=(PersonPtr&);
-        bool operator==(Person* pnt);
-		bool operator!=(Person* pnt);
+        bool operator==(Person* pnt) const;
+		bool operator!=(Person* pnt) const;
         Person* operator->() { return _p; }
         Person& operator*() { return *_p; }
+    
+        const Person* operator->() const { return _p; }
+        const Person& operator*() const { return *_p; }
 };

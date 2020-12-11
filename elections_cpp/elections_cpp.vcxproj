@@ -143,6 +143,7 @@
     <ClInclude Include="DistrictArray.h" />
     <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="Elections.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Party.h" />
     <ClInclude Include="PartyArray.h" />

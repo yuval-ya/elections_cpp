@@ -1,20 +1,14 @@
 #include "Menu.h"
+#include <iostream>
+using namespace std;
 
-Menu::Menu(Elections& e) : _election(e)
-{
-}
-
-Menu::~Menu()
-{
-}
-
-void Menu::start()
+void Menu::start(Elections& election)
 {
     int choice = 1;
     int year, month, day;
     cout << "Enter election's date (year,month,day): "<<endl;
     cin >> year >> month >> day;
-    _election.setDate(year,month,day);
+    election.setDate(year,month,day);
     
     while (choice != 10) {
         cout << "\nMain menu - choose an option:"<<endl;
@@ -30,49 +24,154 @@ void Menu::start()
         cout << "10.Exit.\n" << endl;
 		
         cin >> choice;
-        if (!options(choice)) {
+        if (!options(election, choice)) {
             cout << "\nOops! Something went wrong\nplease try again"<<endl;
         }
 		cin.ignore();
     }
 }
 
+void Menu::test(Elections& election)
+{
+	election.add_district("A", 10);
+	election.add_district("B", 5);
+	election.add_district("C", 3);
 
-bool Menu::new_district() {
+	election.add_person("yuval", 1, 1996, 1);
+	election.add_person("tamir", 2, 1994, 1);
+	election.add_person("ohad", 3, 1996, 1);
+	election.add_person("nir", 4, 1994, 1);
+	election.add_person("gali", 5, 1996, 1);
+	election.add_person("gil", 6, 1994, 1);
+	election.add_person("itay", 7, 1996, 1);
+	election.add_person("omer", 8, 1997, 1);
+	election.add_person("hadar", 9, 1998, 1);
+	election.add_person("adi", 10, 1992, 1);
+	election.add_person("oded", 11, 1996, 2);
+	election.add_person("gal", 12, 1996, 2);
+	election.add_person("shaked", 13, 1996, 2);
+	election.add_person("mali", 14, 1996, 2);
+	election.add_person("zohar", 15, 1996, 2);
+	election.add_person("yuval", 16, 1996, 2);
+	election.add_person("tamir", 17, 1994, 2);
+	election.add_person("ohad", 18, 1996, 2);
+	election.add_person("nir", 19, 1994, 2);
+	election.add_person("gali", 20, 1996, 2);
+	election.add_person("gil", 21, 1994, 3);
+	election.add_person("itay", 22, 1996, 3);
+	election.add_person("omer", 23, 1997, 3);
+	election.add_person("hadar", 24, 1998, 3);
+	election.add_person("adi", 25, 1992, 3);
+	election.add_person("oded", 26, 1996, 3);
+	election.add_person("gal", 27, 1996, 3);
+	election.add_person("shaked", 28, 1996, 3);
+	election.add_person("mali", 29, 1996, 3);
+	election.add_person("zohar", 30, 1996, 3);
+
+	election.add_party("LIKUD", 1);
+	election.add_party("AVODA", 11);
+	election.add_party("LIBRMAN", 21);
+
+	election.add_person_as_candidate(2, 1, 1);
+	election.add_person_as_candidate(3, 1, 1);
+	election.add_person_as_candidate(4, 1, 1);
+	election.add_person_as_candidate(5, 2, 1);
+	election.add_person_as_candidate(6, 2, 1);
+	election.add_person_as_candidate(7, 2, 1);
+	election.add_person_as_candidate(8, 3, 1);
+	election.add_person_as_candidate(9, 3, 1);
+	election.add_person_as_candidate(10, 3, 1);
+	election.add_person_as_candidate(12, 1, 2);
+	election.add_person_as_candidate(13, 1, 2);
+	election.add_person_as_candidate(14, 1, 2);
+	election.add_person_as_candidate(15, 2, 2);
+	election.add_person_as_candidate(16, 2, 2);
+	election.add_person_as_candidate(17, 2, 2);
+	election.add_person_as_candidate(18, 3, 2);
+	election.add_person_as_candidate(19, 3, 2);
+	election.add_person_as_candidate(20, 3, 2);
+	election.add_person_as_candidate(22, 1, 3);
+	election.add_person_as_candidate(23, 1, 3);
+	election.add_person_as_candidate(24, 1, 3);
+	election.add_person_as_candidate(25, 2, 3);
+	election.add_person_as_candidate(26, 2, 3);
+	election.add_person_as_candidate(27, 2, 3);
+	election.add_person_as_candidate(28, 3, 3);
+	election.add_person_as_candidate(29, 3, 3);
+	election.add_person_as_candidate(30, 3, 3);
+
+	election.vote(1, 1);
+	election.vote(2, 2);
+	election.vote(3, 3);
+	election.vote(4, 1);
+	election.vote(5, 2);
+	election.vote(6, 3);
+	election.vote(7, 1);
+	election.vote(8, 2);
+	election.vote(9, 3);
+	election.vote(10, 1);
+	election.vote(11, 2);
+	election.vote(12, 3);
+	election.vote(13, 1);
+	election.vote(14, 2);
+	election.vote(15, 3);
+	election.vote(16, 1);
+	election.vote(17, 2);
+	election.vote(18, 3);
+	election.vote(19, 1);
+	election.vote(20, 2);
+	election.vote(21, 3);
+	election.vote(22, 1);
+	election.vote(23, 2);
+	election.vote(24, 3);
+	election.vote(25, 1);
+	election.vote(26, 2);
+	election.vote(27, 3);
+	election.vote(28, 1);
+	election.vote(29, 2);
+	election.vote(30, 3);
+
+}
+
+
+bool Menu::new_district(Elections& election) {
     char name[MAX_SIZE];
     int candidates_num;
     cout << "Enter district name: ";
-    cin >> name;
+    cin.ignore();
+	cin.getline(name, MAX_SIZE);
     cout << "Enter number of candidates: ";
     cin >> candidates_num;
-    return _election.add_distric(name, candidates_num);
+    return election.add_district(name, candidates_num);
 }
 
-bool Menu::new_party() {
+bool Menu::new_party(Elections& election) {
     char name[MAX_SIZE];
     int candidate_id;
     cout << "Enter party name: ";
-    cin >> name;
+    cin.ignore(); 
+	cin.getline(name, MAX_SIZE);
     cout << "Enter first candidate ID: ";
     cin >> candidate_id;
-    return _election.add_party(name, candidate_id);
+    return election.add_party(name, candidate_id);
 }
 
-bool Menu::new_citizen() {
+bool Menu::new_citizen(Elections& election) {
     char name[MAX_SIZE];
     int id, year, district_id;
     cout << "Enter name: ";
-    cin >> name;
+    cin.ignore(); 
+	cin.getline(name, MAX_SIZE);
     cout << "Enter id: ";
     cin >> id;
     cout << "Enter year of birth: ";
     cin >> year;
     cout << "Enter district id: ";
     cin >> district_id;
-    return _election.add_person(name, id, year, district_id);
+    return election.add_person(name, id, year, district_id);
 }
 
-bool Menu::set_citizen_as_candidate() {
+bool Menu::set_citizen_as_candidate(Elections& election) {
     int candidate_id, party_id, district_id;
     cout << "Enter candidate ID: ";
     cin >> candidate_id;
@@ -80,49 +179,49 @@ bool Menu::set_citizen_as_candidate() {
     cin >> district_id;
     cout << "Enter party ID: ";
     cin >> party_id;
-    return _election.add_person_as_candidate(candidate_id, party_id, district_id);
+    return election.add_person_as_candidate(candidate_id, party_id, district_id);
 }
 
 
-bool Menu::vote() {
+bool Menu::vote(Elections& election) {
     int id, party_id;
     cout << "Enter ID: ";
     cin >> id;
     cout << "Enter party ID: ";
     cin >> party_id;
-    return _election.vote(id, party_id);
+    return election.vote(id, party_id);
 }
 
-bool Menu::options(int choice)
+bool Menu::options(Elections& election, int choice)
 {
     bool flag = true;
     switch (choice) {
         case 1:
-            flag = new_district();
+            flag = new_district(election);
             break;
         case 2:
-            flag = new_citizen();
+            flag = new_citizen(election);
 			break;
         case 3:
-            flag = new_party();
+            flag = new_party(election);
 			break;
         case 4:
-            flag = set_citizen_as_candidate();
+            flag = set_citizen_as_candidate(election);
 			break;
         case 5:
-            _election.print_districts();
+            election.print_districts();
 			break;
         case 6:
-            _election.print_voters();
+            election.print_voters();
 			break;
         case 7:
-            _election.print_parties();
+            election.print_parties();
 			break;
         case 8:
-            flag = vote();
+            flag = vote(election);
 			break;
         case 9:
-			finish();
+			finish(election);
 			break;
 		case 10:
 			break;
@@ -133,22 +232,22 @@ bool Menu::options(int choice)
     return flag;
 }
 
-void Menu::print_statistics() {
-	int num_of_districts = _election.get_num_districts();
-	int num_of_parties = _election.get_num_parties();
+void Menu::print_statistics(Elections& election) {
+	int num_of_districts = election.get_num_districts();
+	int num_of_parties = election.get_num_parties();
 
 	for (int i = 1; i <= num_of_districts; i++) 
 	{ 
-		const District& district = _election.get_district(i);
+		const District& district = election.get_district(i);
 		int winner_party_in_district = district.get_winner_party();
-		int winner_candidate_id = _election.get_party(winner_party_in_district).get_candidate_id();
+        const Person& winning_candidate = election.get_party(winner_party_in_district).get_candidate();
 			
 		cout << "============================================ " << endl;
-		cout << district << " | Winning candidate: " << winner_candidate_id << endl;
+		cout << district << " | Winning candidate: " << winning_candidate << endl;
 	
 		for (int j = 1; j <= num_of_parties; j++)
 		{	
-			const Party& party = _election.get_party(j);
+			const Party& party = election.get_party(j);
 			int num_of_candidates_from_party = district.get_party_candidates_num(j);
 			const PersonList& candidate_lst = party.get_candidates_list_from_district(i);
 				
@@ -166,16 +265,16 @@ void Menu::print_statistics() {
 	}
 }
 
-void Menu::print_results() {
+void Menu::print_results(Elections& election) {
 	int size = 0;
-	Party** arr = _election.get_sorted_parties_arr(size);
+	Party** arr = election.get_sorted_parties_arr(size);
 	
 	cout << "\n~ Results ~" << endl;
 	for (int i = 0; i < size; i++)
 	{
 		const Party& party = *arr[i];
 		cout << "ID: " << party.get_id() << " Name: " << party.get_name() << endl;
-		cout << "First candidate: " << party.get_candidate_id() << endl;
+		cout << "First candidate: " << party.get_candidate().getID() << endl;
 		cout << "Total candidates: " << party.get_total_candidates() << endl;
 		cout << "Votes count: " << party.get_total_votes() << endl;
 		cout << "---------------------------- " << endl;	
@@ -183,8 +282,8 @@ void Menu::print_results() {
 	delete[] arr;
 }
 
-void Menu::finish() {
-	_election.final_evaluation();
-	print_statistics();
-	print_results();
+void Menu::finish(Elections& election) {
+	election.final_evaluation();
+	print_statistics(election);
+	print_results(election);
 }

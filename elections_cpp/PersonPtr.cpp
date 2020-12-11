@@ -11,12 +11,9 @@
 
 PersonPtr::PersonPtr() : _p(nullptr), _r(nullptr) {}
 
-PersonPtr::PersonPtr(const String& name, int idnum, int year, int district_num) :
-_p(new Person(name, idnum, year, district_num)), _r(new int(1))
+PersonPtr::PersonPtr(const String& name, int id, int year,const District* district) :
+_p(new Person(name, id, year, district)), _r(new int(1))
 {
-    cout << "new person pnt" <<endl;
-    cout << "new int pnt" <<endl;
-
 }
 
 PersonPtr::PersonPtr(const PersonPtr& other) : _p(other._p), _r(other._r)
@@ -57,12 +54,13 @@ PersonPtr& PersonPtr::operator=(PersonPtr& other)
     return *this;
 }
 
-bool PersonPtr::operator==(Person* pnt)
+
+bool PersonPtr::operator==(Person* pnt) const
 {
 	return _p == pnt;
 }
 
-bool PersonPtr::operator!=(Person* pnt)
+bool PersonPtr::operator!=(Person* pnt) const 
 {
 	return _p != pnt;
 }

@@ -7,11 +7,16 @@
 //
 
 #pragma once
-#include <iostream>
+#include <ostream>
 #include "PersonPtr.h"
 
-class PersonList {    
+class PersonList {
+    
+    // Class to store list of Person
+    
 public:
+    
+    // Node to store pointer to a person and the next node in the list
     struct Node {
         PersonPtr  person_p;
         Node*      next = nullptr;
@@ -22,19 +27,21 @@ public:
     
     Node* getHead() { return _head; }
     Node* getTail() { return _tail; }
-    
-    PersonPtr addPerson(const Person& p);
-    const Person& addPerson(PersonPtr p);
-    
     PersonPtr getPersonPtr(int idnum);
     const Person& getPerson(int idnum) const;
     int get_person_number() const { return _person_count; }
     void printList() const;
 	void printList(int count) const;
     bool isEmpty() const;
+    
+    // Recives a refernce the a person, allocates new node and person pointer, and inserts it to the end of the list
+    PersonPtr addPerson(const Person& p);
+    
+    // Recives a pointer to person, and inserts it to the end of the list
+    const Person& addPerson(PersonPtr p);
 
-	friend ostream& operator<<(ostream& os, const PersonList& p_lst);
-
+	friend std::ostream& operator<<(std::ostream& os, const PersonList& p_lst);
+    
 private:
     Node* _head;
     Node* _tail;
