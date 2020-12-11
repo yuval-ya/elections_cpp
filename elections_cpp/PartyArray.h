@@ -24,8 +24,8 @@ public:
 	Party& get(int id);
 	int get_length() const { return _log_size; }
 
-	void set(int idx, Party* d);
-	void set_length(int new_size);
+	bool set(int idx, Party* d);
+	bool set_length(int new_size);
 	
 	// add new Party to the array in the next empty cell
 	const Party& add(const Party& d);                       //////////////////////////***************** change return value

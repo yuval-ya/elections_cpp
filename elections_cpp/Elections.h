@@ -20,7 +20,7 @@ public:
     Elections(int day, int month, int year);
 	Elections(const Elections&) = delete;
 
-    void setDate(int year, int month, int day);
+    bool setDate(int year, int month, int day);
 
 	const District& get_district(int district_id) const { return _districts[district_id - 1];  }
 	const Party& get_party(int party_id) const { return _parties[party_id - 1]; }

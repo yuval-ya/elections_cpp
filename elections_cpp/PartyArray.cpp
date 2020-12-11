@@ -36,9 +36,10 @@ Party& PartyArray::get(int id) {
 	return *_arr[id - 1];
 }
 
-void PartyArray::set(int idx, Party* d) {
+bool PartyArray::set(int idx, Party* d) {
 	check_valid_idx(idx);
 	_arr[idx] = d;
+    return true;
 }
 
 const Party& PartyArray::add(const Party& d) {
@@ -51,11 +52,12 @@ const Party& PartyArray::add(const Party& d) {
 	return *_arr[_log_size - 1];
 }
 
-void PartyArray::set_length(int new_size) {
+bool PartyArray::set_length(int new_size) {
 	if (new_size > _pys_size) {
 		resize(new_size);
 	}
 	_log_size = new_size;
+    return true;
 }
 
 Party& PartyArray::operator[](int idx) {

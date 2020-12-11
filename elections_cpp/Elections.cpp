@@ -2,10 +2,11 @@
 
 Elections::Elections(int day, int month, int year) : _day(day), _month(month), _year(year) {}
 
-void Elections::setDate(int year, int month, int day) {
+bool Elections::setDate(int year, int month, int day) {
 	_year = year;
 	_month = month;
 	_day = day;
+    return true;
 }
 
 bool Elections::add_district(String name, int number_of_candidates)
