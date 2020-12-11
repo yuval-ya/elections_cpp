@@ -18,6 +18,6 @@ private:
 	static void finish(Elections&);
 public:
 	static void start(Elections&);
-   
+	static void test(Elections&);
 };
 

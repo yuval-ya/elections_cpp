@@ -18,6 +18,7 @@ public:
 	const char* get() const { return _str; }
     long int get_len() const { return _len; }
 	void set(const char *str);
+
     String& operator=(String&);
 	friend std::ostream& operator<<(std::ostream& os, const String& str);
 };
