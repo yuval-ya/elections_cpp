@@ -17,7 +17,6 @@ District::District(const District& d) :
 }
 
 District::~District() {
-	// ...
 }
 
 float District::calc_voters_percentage() const

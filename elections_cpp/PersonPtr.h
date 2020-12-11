@@ -20,14 +20,17 @@ class PersonPtr
         void release();
     public:
         PersonPtr();
-        PersonPtr(const String&, int idnum, int year, District& district);
+        PersonPtr(const String&, int idnum, int year, const District* district);
         PersonPtr(const PersonPtr&);
         PersonPtr(Person*);
         ~PersonPtr();
 
         PersonPtr& operator=(PersonPtr&);
-        bool operator==(Person* pnt);
-		bool operator!=(Person* pnt);
+        bool operator==(Person* pnt) const;
+		bool operator!=(Person* pnt) const;
         Person* operator->() { return _p; }
         Person& operator*() { return *_p; }
+    
+        const Person* operator->() const { return _p; }
+        const Person& operator*() const { return *_p; }
 };

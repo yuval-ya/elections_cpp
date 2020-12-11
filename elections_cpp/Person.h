@@ -1,7 +1,6 @@
 #pragma once
 #include "String.h"
 #include <ostream>
-#include <ostream>
 
 class District;
 class Party;
@@ -15,11 +14,11 @@ private:
     String				_name;
     int					_id;
     int					_birth_year;
-    const District&		_district;
+    const District*		_district;
     const Party*		_vote;
 	const Party*		_is_candidate;
 public:
-    Person(const String&, int id, int year,const District& district);
+    Person(const String&, int id, int year,const District* district);
     Person(const Person& p);
     ~Person();
     

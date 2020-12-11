@@ -1,12 +1,11 @@
 #include "District.h"
 #include "Party.h"
 #include "Person.h"
-#include <ostream>
 using namespace std;
 
 
 
-Person::Person(const String& name, int id, int year, const District& district) :
+Person::Person(const String& name, int id, int year, const District* district) :
 	_name(name), _id(id), _birth_year(year), _district(district),
 	_vote(nullptr), _is_candidate(nullptr)
 {
@@ -23,7 +22,7 @@ Person::~Person(){
 
 int Person::getDistrictID() const
 {
-	return _district.get_id();
+	return _district->get_id();
 }
 
 bool Person::setAsCandidate(const Party* p)

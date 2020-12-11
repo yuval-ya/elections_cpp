@@ -34,6 +34,11 @@ public:
 	void add_district_to_party();
 
 	void print() const;
+    
+    // Sorting a pointer to Party array according to the total number of candidates
+    // the party received in the election (implementaion of mergeSort)
+    static void mergeSort(Party** arr,int l,int r);
+    static void merge(Party** arr, int l, int m, int r);
 
 	// return Party according to the index received
 	// Notice: arr[0] = Party No.1

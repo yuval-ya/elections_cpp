@@ -21,19 +21,20 @@ bool Elections::add_person(String name, int id, int birth_year, int distric_id)
     if (_voters.getPersonPtr(id) != nullptr || distric_id > _districts.get_length() || distric_id <= 0) {
         return false;
     }
-    Person new_person(name, id, birth_year, _districts.get(distric_id));
+    District& district = _districts.get(distric_id);
+    Person new_person(name, id, birth_year, &district);
     PersonPtr person_ptr = _voters.addPerson(new_person);
-    _districts.get(distric_id).addPerson(person_ptr);
+    district.addPerson(person_ptr);
     return true;
 }
 
 bool Elections::add_party(String name, int candidate_id)
 {
 	PersonPtr candidate = _voters.getPersonPtr(candidate_id);
-	if (candidate == nullptr) {  
+	if (candidate == nullptr || candidate->isCandidate()) {
 		return false;
 	}
-    Party new_party = Party(name, *candidate);
+    Party new_party = Party(name, candidate);
 	const Party& p = _parties.add(new_party);
 	_districts.add_party_to_district();
 	candidate->setAsCandidate(&p);
@@ -113,7 +114,7 @@ Party** Elections::get_sorted_parties_arr(int& size) {
 	{
 		res[i] = &_parties[i];
 	}
-    Party::mergeSort(res, 0, num_of_parties - 1);
+    PartyArray::mergeSort(res, 0, num_of_parties - 1);
 	size = num_of_parties;
 	return res;
 }

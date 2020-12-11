@@ -138,10 +138,10 @@ void Menu::print_statistics(Elections& election) {
 	{ 
 		const District& district = election.get_district(i);
 		int winner_party_in_district = district.get_winner_party();
-		int winner_candidate_id = election.get_party(winner_party_in_district).get_candidate_id();
+        const Person& winning_candidate = election.get_party(winner_party_in_district).get_candidate();
 			
 		cout << "============================================ " << endl;
-		cout << district << " | Winning candidate: " << winner_candidate_id << endl;
+		cout << district << " | Winning candidate: " << winning_candidate << endl;
 	
 		for (int j = 1; j <= num_of_parties; j++)
 		{	
@@ -172,7 +172,7 @@ void Menu::print_results(Elections& election) {
 	{
 		const Party& party = *arr[i];
 		cout << "ID: " << party.get_id() << " Name: " << party.get_name() << endl;
-		cout << "First candidate: " << party.get_candidate_id() << endl;
+		cout << "First candidate: " << party.get_candidate().getID() << endl;
 		cout << "Total candidates: " << party.get_total_candidates() << endl;
 		cout << "Votes count: " << party.get_total_votes() << endl;
 		cout << "---------------------------- " << endl;	
