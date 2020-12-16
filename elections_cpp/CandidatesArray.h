@@ -23,7 +23,7 @@ namespace elections {
 		// return list of candidates according to the district id received
 		// Notice: get(1) return PersonList No.1
 		PersonList& get(int district_id);
-
+		const PersonList& get(int district_id) const;
 		// add empty list to the next empty cell
 		bool add();
 

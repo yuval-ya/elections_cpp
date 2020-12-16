@@ -1,5 +1,8 @@
 #include "String.h"
 using namespace std;
+String::String() : _str(nullptr), _len(0) {
+
+}
 
 String::String(const char* str) : _str(nullptr)
 {

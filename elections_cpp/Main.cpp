@@ -1,3 +1,6 @@
+#define _CRTDB_MAP_ALLOC
+#include <crtdbg.h>
+
 #include <iostream>
 using namespace std;
 
@@ -5,9 +8,19 @@ using namespace std;
 #include "Elections.h"
 using namespace elections;
 
+#include "Menu.h"
+
+
 int main(void) {
-	Elections election;
-	start(election);
+
+	{
+		Elections election;	
+
+		Menu::test(election);
+		start(election);
+	}
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtDumpMemoryLeaks();
     return 0;
 }
 
@@ -139,13 +152,13 @@ bool options(Elections& election, int choice)
 }
 
 void print_statistics(Elections& election) {
-	int num_of_districts = election.get_num_districts();
-	int num_of_parties = election.get_num_parties();
+	int num_of_districts = election.getDistricts().get_length();
+	int num_of_parties = election.getParties().get_length();
 
 	for (int i = 1; i <= num_of_districts; i++)
 	{
 		const District& district = election.get_district(i);
-		int winner_party_in_district = district.get_winner_party();
+		int winner_party_in_district = district.getWinnerParty();
         const Person& winning_candidate = election.get_party(winner_party_in_district).get_candidate();
 
 		cout << "============================================ " << endl;
@@ -154,19 +167,19 @@ void print_statistics(Elections& election) {
 		for (int j = 1; j <= num_of_parties; j++)
 		{
 			const Party& party = election.get_party(j);
-			int num_of_candidates_from_party = district.get_party_candidates_num(j);
+			int num_of_candidates_from_party = district.getPartyCandidatesNum(j);
 			const PersonList& candidate_lst = party.get_candidates_list_from_district(i);
 			
 			cout << "\nParty No." << j << endl;
-			if (candidate_lst.get_person_number() < num_of_candidates_from_party)
+			if (candidate_lst.getPersonNumber() < num_of_candidates_from_party)
 			{	//There are not enough candidates from this district 
 				cout << "*** There are not enough candidates in the party to district" << i << " ***" << endl;
 			}
 			candidate_lst.printList(num_of_candidates_from_party);
-			cout << "Total votes - " << district.get_party_votes(j) << endl;
-			cout << "Percentage of votes - " << district.calc_party_percent_in_votes(j) << endl;
+			cout << "Total votes - " << district.getPartyVotes(j) << endl;
+			cout << "Percentage of votes - " << district.calcPartyPercentInVotes(j) << endl;
 		}
-		cout << "\nPercentage of votes in the district: " << district.calc_voters_percentage() << endl << endl;
+		cout << "\nPercentage of votes in the district: " << district.calcVotersPercentage() << endl << endl;
 	}
 }
 

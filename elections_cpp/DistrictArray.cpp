@@ -37,6 +37,11 @@ namespace elections {
 		return *_arr[id - 1];
 	}
 
+	const District& DistrictArray::get(int id) const{
+		check_valid_idx(id - 1);
+		return *_arr[id - 1];
+	}
+
 	void DistrictArray::set(int idx, District* d) {
 		check_valid_idx(idx);
 		_arr[idx] = d;
@@ -76,7 +81,7 @@ namespace elections {
 	void DistrictArray::add_party_to_district() {
 		for (int i = 0; i < _log_size; i++)
 		{
-			_arr[i]->add_party_to_district();
+			_arr[i]->addPartyToDistrict();
 		}
 	}
 

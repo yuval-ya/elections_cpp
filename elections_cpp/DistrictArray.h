@@ -22,6 +22,7 @@ namespace elections {
 		// return District according to the id received
 		// Notice: get(1) return District No.1
 		District& get(int id);
+		const District& get(int id) const;
 		void set(int idx, District* d);
 
 		// add new District to the array in the next empty cell

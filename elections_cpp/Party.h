@@ -13,7 +13,7 @@ namespace elections {
 		String				_name;
 		PersonPtr		    _first_candidate;
 		int					_total_candidates = 0,
-			_total_votes = 0;
+							_total_votes = 0;
 		CandidatesArray		_candidates;
 
 	public:

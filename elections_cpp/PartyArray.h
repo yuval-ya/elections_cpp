@@ -22,6 +22,7 @@ namespace elections {
 		// return Party according to the id received
 		// Notice: get(1) return Party No.1
 		Party& get(int id);
+		const Party& get(int id) const;
 		int get_length() const { return _log_size; }
 
 		bool set(int idx, Party* d);

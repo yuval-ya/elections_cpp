@@ -37,6 +37,11 @@ namespace elections {
 		return *_arr[id - 1];
 	}
 
+	const Party& PartyArray::get(int id) const {
+		check_valid_idx(id - 1);
+		return *_arr[id - 1];
+	}
+
 	bool PartyArray::set(int idx, Party* d) {
 		if (check_valid_idx(idx)) {
 			_arr[idx] = d;
