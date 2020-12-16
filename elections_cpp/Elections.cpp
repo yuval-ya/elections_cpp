@@ -21,13 +21,13 @@ namespace elections {
 	{
 		District new_distric(name, number_of_candidates);
 		_districts.add(new_distric);
-		_parties.add_district_to_party();
+		_parties.addDistrictToParty();
 		return true;
 	}
 
 	bool Elections::addPerson(String name, int id, int birth_year, int distric_id)
 	{
-		if (_voters.getPersonPtr(id) != nullptr || distric_id > _districts.get_length() || distric_id <= 0) {
+		if (_voters.getPersonPtr(id) != nullptr || distric_id > _districts.getLength() || distric_id <= 0) {
 			return false;
 		}
 		District& district = _districts.get(distric_id);
@@ -45,7 +45,7 @@ namespace elections {
 		}
 		Party new_party = Party(name, candidate);
 		const Party& p = _parties.add(new_party);
-		_districts.add_party_to_district();
+		_districts.addPartyToDistrict();
 		candidate->setAsCandidate(&p);
 		return true;
 	}
@@ -86,7 +86,7 @@ namespace elections {
 	bool Elections::vote(int person_id, int party_id)
 	{
 		PersonPtr person = _voters.getPersonPtr(person_id);
-		if (person == nullptr || person->isVoted() || party_id > _parties.get_length()) {
+		if (person == nullptr || person->isVoted() || party_id > _parties.getLength()) {
 			return false;
 		}
 		int district_id = person->getDistrictID();
@@ -110,7 +110,7 @@ namespace elections {
 
 			// The winning party gets the number of candidates in the current district
 
-			_parties[winningPartyInDistrict - 1].add_total_candidates(_districts[i].getNumberOfCandidates());
+			_parties[winningPartyInDistrict - 1].addTotalCandidates(_districts[i].getNumberOfCandidates());
 		}
 		return true;
 	}

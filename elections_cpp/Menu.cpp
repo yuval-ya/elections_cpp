@@ -235,17 +235,17 @@ namespace elections {
 	}
 
 	void Menu::printStatistics(Elections& election) {
-		int numOfDistricts = election.getDistricts().get_length();
-		int numOfParties = election.getParties().get_length();
+		int numOfDistricts = election.getDistricts().getLength();
+		int numOfParties = election.getParties().getLength();
 
 		for (int i = 1; i <= numOfDistricts; i++)
 		{
 			const District& district = election.getDistricts().get(i);
-			int winner_party_in_district = district.getWinnerParty();
-			const Person& winning_candidate = election.getParties().get(winner_party_in_district).get_candidate();
+			int winnerPartyInDistrict = district.getWinnerParty();
+			const Person& winningCandidate = election.getParties().get(winnerPartyInDistrict).getCandidate();
 
 			cout << "============================================ " << endl;
-			cout << district << " | Winning candidate: " << winning_candidate << endl;
+			cout << district << " | Winning candidate: " << winningCandidate << endl;
 
 			for (int j = 1; j <= numOfParties; j++)
 			{
@@ -256,7 +256,7 @@ namespace elections {
 				if (candidate_lst.getPersonNumber() < numOfCandidatesFromParty)
 				{	//There are not enough candidates from this district 
 					cout << "There are not enough candidates from district " << i << endl;
-					exit(1);
+                    //exit(1);
 				}
 				cout << "\nParty No." << j << endl;
 				candidate_lst.printList(numOfCandidatesFromParty);

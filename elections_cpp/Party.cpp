@@ -1,6 +1,8 @@
 #include "Party.h"
 using namespace std;
 
+namespace elections {
+
 int Party::totalParties = 0;
 
 Party::Party(const String& name, PersonPtr candidate) :
@@ -11,7 +13,7 @@ Party::Party(const String& name, PersonPtr candidate) :
 Party::Party(const Party& p) :
 	_id(p._id), _name(p._name), _firstCandidate(p._firstCandidate),
 	_totalCandidates(p._totalCandidates) , _totalVotes(p._totalVotes),
-	_candidates(District::total_districts) 
+	_candidates(District::totalDistricts) 
 {
 }
 
@@ -44,4 +46,6 @@ ostream& operator<<(ostream& os, const Party& p) {
 void Party::addDistrictToCandidatesArr()
 {
 	_candidates.add();
+}
+
 }

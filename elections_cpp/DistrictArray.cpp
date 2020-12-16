@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+namespace elections {
 
 DistrictArray::DistrictArray(int size) : 
 	_arr(new District*[size]), _logSize(size), _pysSize(size){
@@ -12,11 +13,12 @@ DistrictArray::~DistrictArray() {
 	{
 		delete _arr[i];
 	}
-  
-const District& DistrictArray::get(int id) const{
+}
+
+const District& DistrictArray::get(int id) const {
 	checkValidIdx(id - 1);
 	return *_arr[id - 1];
-	}
+}
 
 void DistrictArray::resize(int new_size) {
 	
@@ -44,6 +46,7 @@ void DistrictArray::set(int idx, District* d) {
 	checkValidIdx(idx);
 	_arr[idx] = d;
 }
+    
 void DistrictArray::add(const District& d) {
 	if (_logSize == _pysSize) {
 		resize(_logSize * 2 + 1);
@@ -89,4 +92,6 @@ void DistrictArray::checkValidIdx(int idx) const {
 		exit(1); // index error
 
 	}
+}
+
 }

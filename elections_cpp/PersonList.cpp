@@ -11,7 +11,7 @@ using namespace std;
 
 namespace elections {
 
-	PersonList::PersonList() : _head(nullptr), _tail(nullptr), _person_count(0) {
+	PersonList::PersonList() : _head(nullptr), _tail(nullptr), _personCount(0) {
 	}
 
 	PersonList::~PersonList() {
@@ -41,7 +41,7 @@ namespace elections {
 			_tail = _tail->next;
 		}
 
-		_person_count++;
+		_personCount++;
 		return person_p;
 	}
 
@@ -58,7 +58,7 @@ namespace elections {
 			_tail->next = newnode;
 			_tail = _tail->next;
 		}
-		_person_count++;
+		_personCount++;
 		return *p;
 	}
 

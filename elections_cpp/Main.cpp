@@ -1,5 +1,5 @@
-#define _CRTDB_MAP_ALLOC
-#include <crtdbg.h>
+//#define _CRTDB_MAP_ALLOC
+//#include <crtdbg.h>
 
 #include <iostream>
 using namespace std;
@@ -19,8 +19,8 @@ int main(void) {
 		Menu::test(election);
 		start(election);
 	}
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtDumpMemoryLeaks();
+//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+//	_CrtDumpMemoryLeaks();
     return 0;
 }
 
@@ -54,7 +54,7 @@ void start(Elections& election)
 	}
 }
 
-bool new_district(Elections& election) {
+bool newDistrict(Elections& election) {
 	char name[MAX_SIZE];
 	int candidates_num;
 	cout << "Enter district name: ";
@@ -62,10 +62,10 @@ bool new_district(Elections& election) {
 	cin.getline(name, MAX_SIZE);
 	cout << "Enter number of candidates: ";
 	cin >> candidates_num;
-	return election.add_district(name, candidates_num);
+	return election.addDistrict(name, candidates_num);
 }
 
-bool new_party(Elections& election) {
+bool newParty(Elections& election) {
 	char name[MAX_SIZE];
 	int candidate_id;
 	cout << "Enter party name: ";
@@ -73,10 +73,10 @@ bool new_party(Elections& election) {
 	cin.getline(name, MAX_SIZE);
 	cout << "Enter first candidate ID: ";
 	cin >> candidate_id;
-	return election.add_party(name, candidate_id);
+	return election.addParty(name, candidate_id);
 }
 
-bool new_citizen(Elections& election) {
+bool newCitizen(Elections& election) {
 	char name[MAX_SIZE];
 	int id, year, district_id;
 	cout << "Enter name: ";
@@ -88,10 +88,10 @@ bool new_citizen(Elections& election) {
 	cin >> year;
 	cout << "Enter district id: ";
 	cin >> district_id;
-	return election.add_person(name, id, year, district_id);
+	return election.addPerson(name, id, year, district_id);
 }
 
-bool set_citizen_as_candidate(Elections& election) {
+bool setCitizenAsCandidate(Elections& election) {
 	int candidate_id, party_id, district_id;
 	cout << "Enter candidate ID: ";
 	cin >> candidate_id;
@@ -99,7 +99,7 @@ bool set_citizen_as_candidate(Elections& election) {
 	cin >> district_id;
 	cout << "Enter party ID: ";
 	cin >> party_id;
-	return election.add_person_as_candidate(candidate_id, party_id, district_id);
+	return election.addPersonAsCandidate(candidate_id, party_id, district_id);
 }
 
 bool vote(Elections& election) {
@@ -116,25 +116,25 @@ bool options(Elections& election, int choice)
 	bool flag = true;
 	switch (choice) {
 	case 1:
-		flag = new_district(election);
+		flag = newDistrict(election);
 		break;
 	case 2:
-		flag = new_citizen(election);
+		flag = newCitizen(election);
 		break;
 	case 3:
-		flag = new_party(election);
+		flag = newParty(election);
 		break;
 	case 4:
-		flag = set_citizen_as_candidate(election);
+		flag = setCitizenAsCandidate(election);
 		break;
 	case 5:
-		election.print_districts();
+		election.printDistricts();
 		break;
 	case 6:
-		election.print_voters();
+		election.printVoters();
 		break;
 	case 7:
-		election.print_parties();
+		election.printParties();
 		break;
 	case 8:
 		flag = vote(election);
@@ -151,31 +151,31 @@ bool options(Elections& election, int choice)
 	return flag;
 }
 
-void print_statistics(Elections& election) {
-	int num_of_districts = election.getDistricts().get_length();
-	int num_of_parties = election.getParties().get_length();
+void printStatistics(Elections& election) {
+	int numOfDistricts = election.getDistricts().getLength();
+	int numOfParties = election.getParties().getLength();
 
-	for (int i = 1; i <= num_of_districts; i++)
+	for (int i = 1; i <= numOfDistricts; i++)
 	{
-		const District& district = election.get_district(i);
-		int winner_party_in_district = district.getWinnerParty();
-        const Person& winning_candidate = election.get_party(winner_party_in_district).get_candidate();
+		const District& district = election.getDistrict(i);
+		int winnerPartyInDistrict = district.getWinnerParty();
+        const Person& winningCandidate = election.getParty(winnerPartyInDistrict).getCandidate();
 
 		cout << "============================================ " << endl;
-		cout << district << endl << "Winning candidate: " << winning_candidate << endl;
+		cout << district << endl << "Winning candidate: " << winningCandidate << endl;
 
-		for (int j = 1; j <= num_of_parties; j++)
+		for (int j = 1; j <= numOfParties; j++)
 		{
-			const Party& party = election.get_party(j);
-			int num_of_candidates_from_party = district.getPartyCandidatesNum(j);
-			const PersonList& candidate_lst = party.get_candidates_list_from_district(i);
-			
+			const Party& party = election.getParty(j);
+			int numOfCandidatesFromParty = district.getPartyCandidatesNum(j);
+			const PersonList& candidateLst = party.getCandidatesListFromDistrict(i);
+
 			cout << "\nParty No." << j << endl;
-			if (candidate_lst.getPersonNumber() < num_of_candidates_from_party)
-			{	//There are not enough candidates from this district 
+			if (candidateLst.getPersonNumber() < numOfCandidatesFromParty)
+			{	//There are not enough candidates from this district
 				cout << "*** There are not enough candidates in the party to district" << i << " ***" << endl;
 			}
-			candidate_lst.printList(num_of_candidates_from_party);
+			candidateLst.printList(numOfCandidatesFromParty);
 			cout << "Total votes - " << district.getPartyVotes(j) << endl;
 			cout << "Percentage of votes - " << district.calcPartyPercentInVotes(j) << endl;
 		}
@@ -183,27 +183,27 @@ void print_statistics(Elections& election) {
 	}
 }
 
-void print_results(Elections& election) {
+void printResults(Elections& election) {
 	int size = 0;
-	Party** arr = election.get_sorted_parties_arr(size);
+	Party** arr = election.getSortedPartiesArr(size);
 
 	cout << "\n~ Results ~" << endl;
 	for (int i = 0; i < size; i++)
 	{
 		const Party& party = *arr[i];
-		cout << "ID: " << party.get_id() << " Name: " << party.get_name() << endl;
-		cout << "First candidate: " << party.get_candidate().getID() << endl;
-		cout << "Total candidates: " << party.get_total_candidates() << endl;
-		cout << "Votes count: " << party.get_total_votes() << endl;
+		cout << "ID: " << party.getId() << " Name: " << party.getName() << endl;
+		cout << "First candidate: " << party.getCandidate().getID() << endl;
+		cout << "Total candidates: " << party.getTotalCandidates() << endl;
+		cout << "Votes count: " << party.getTotalVotes() << endl;
 		cout << "---------------------------- " << endl;
 	}
 	delete[] arr;
 }
 
 void finish(Elections& election) {
-	election.final_evaluation();
-	print_statistics(election);
-	print_results(election);
+	election.finalEvaluation();
+	printStatistics(election);
+	printResults(election);
 }
 
 

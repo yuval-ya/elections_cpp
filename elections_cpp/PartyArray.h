@@ -1,7 +1,9 @@
 #pragma once
 #include "Party.h"
 #include <ostream>
-  
+
+namespace elections {
+
 class PartyArray
 {
 	// A Dynamic Array of Party Pointers.
@@ -48,3 +50,4 @@ public:
 	const Party& operator[](int idx) const; 
 };
 
+}

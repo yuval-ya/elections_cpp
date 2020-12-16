@@ -15,10 +15,10 @@ namespace elections {
 	private:
 		String				_name;
 		int					_id;
-		int					_birth_year;
+		int					_birthYear;
 		const District*		_district;
 		const Party*		_vote;
-		const Party*		_is_candidate;
+		const Party*		_isCandidate;
 	public:
 		Person(const String&, int id, int year, const District* district);
 		Person(const Person& p);
@@ -26,7 +26,7 @@ namespace elections {
 
 		const String& getName() const { return _name; }
 		int getID() const { return _id; };
-		int getYear() const { return _birth_year; };
+		int getYear() const { return _birthYear; };
 		int getDistrictID() const;
 
 		// set the citizen as a candidate of a party by adding the pointer to the party

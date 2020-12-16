@@ -1,6 +1,8 @@
 #pragma once
 #include "District.h"
 
+namespace elections {
+
 class DistrictArray
 {
 	// A Dynamic Array of District Pointers.
@@ -40,3 +42,4 @@ public:
 	void addPartyToDistrict();
 };
 
+}

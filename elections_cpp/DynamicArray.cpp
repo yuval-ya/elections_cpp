@@ -57,7 +57,7 @@ int DynamicArray::get(int id) const{
 	return _arr[id - 1];
 }
 
-int DynamicArray::get_max() const {
+int DynamicArray::getMax() const {
 	if (_logSize == 0) return -1;
 
 	int max_val = _arr[0], max_idx = 0;

@@ -1,6 +1,7 @@
 #pragma once
 #include "PersonList.h"
 
+namespace elections {
 
 class CandidatesArray
 {
@@ -38,3 +39,5 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const CandidatesArray& c_arr);
 };
 
+
+}

@@ -21,7 +21,7 @@ namespace elections {
 		DynamicArray	_candidatePartition;
 
 	public:
-		static int total_districts;
+		static int totalDistricts;
 
 		District(String name, int number_of_candidates);
 		District(const District&);
@@ -37,7 +37,7 @@ namespace elections {
 		int getWinnerParty() const { return _winnerParty; }
 
 		bool setNumberOfCandidates(int numberOfCandidates);
-		bool setName(String name) { _name = name; }
+        bool setName(String name) { _name = name; return true; }
 
 		// Calculation of the percentage of votes in the whole district
 		float calcVotersPercentage() const;

@@ -3,6 +3,8 @@
 #include "PartyArray.h"
 #include "DistrictArray.h"
 
+namespace elections {
+
 class Elections
 {
 	// A class representing a Election round
@@ -19,9 +21,9 @@ class Elections
 		Elections(const Elections&) = delete;
 
 		bool setDate(int year, int month, int day);
-		bool setDay(int day) { _day = day; }
-		bool setMonth(int month) { _month = month; }
-		bool setYear(int year) { _year = year; }
+        bool setDay(int day) { _day = day; return true;}
+        bool setMonth(int month) { _month = month; return true; }
+        bool setYear(int year) { _year = year; return true; }
 
 		int getDay() const { return _day; }
 		int getMonth() const { return _month; }
@@ -60,3 +62,5 @@ class Elections
 		// The array is sorted by the order of votes each party received (the winnig party in index 0) 
 		Party** getSortedPartiesArr(int& size);
 	};
+
+}

@@ -2,6 +2,8 @@
 #include <iostream>
 using namespace std;
 
+namespace elections {
+
 
 PartyArray::PartyArray(int size) :
 	_arr(new Party*[size]), _logSize(size), _pysSize(size){
@@ -30,17 +32,17 @@ bool PartyArray::resize(int new_size) {
 }
 
 	const Party& PartyArray::get(int id) const {
-		check_valid_idx(id - 1);
+		checkValidIdx(id - 1);
 		return *_arr[id - 1];
 	}
 
 Party& PartyArray::get(int id) {
-	check_valid_idx(id - 1);
+	checkValidIdx(id - 1);
 	return *_arr[id - 1];
 }
 
 bool PartyArray::set(int idx, Party* d) {
-	if (check_valid_idx(idx)) {
+	if (checkValidIdx(idx)) {
 		_arr[idx] = d;
 		return true;
 	}
@@ -66,12 +68,12 @@ bool PartyArray::setLength(int new_size) {
 }
 
 Party& PartyArray::operator[](int idx) {
-	check_valid_idx(idx);
+	checkValidIdx(idx);
 	return *_arr[idx];
 }
 
 const Party& PartyArray::operator[](int idx) const {
-	check_valid_idx(idx);
+	checkValidIdx(idx);
 	return *_arr[idx];
 }
 
@@ -79,7 +81,7 @@ void PartyArray::print() const {
 	for (int i = 0; i < _logSize; i++)
 	{
 		cout << *_arr[i] << endl;
-		cout << _arr[i]->get_candidates_array() << endl;
+		cout << _arr[i]->getCandidatesArray() << endl;
 	}
 }
 
@@ -118,7 +120,7 @@ void PartyArray::merge(Party** arr, int l, int m, int r)
     i = j = 0;
 
     while (i < n1 && j < n2) {
-        if (L[i]->get_total_candidates() >= R[j]->get_total_candidates())
+        if (L[i]->getTotalCandidates() >= R[j]->getTotalCandidates())
         {
             arr[k] = L[i];
             i++;
@@ -157,3 +159,4 @@ void PartyArray::mergeSort(Party** arr,int l,int r){
     merge(arr,l,m,r);
 }
 
+}

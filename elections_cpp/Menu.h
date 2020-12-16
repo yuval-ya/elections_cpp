@@ -8,13 +8,13 @@ namespace elections {
 		static const int MAX_SIZE = 100;
 
 		static bool options(Elections&, int choice);
-		static bool new_district(Elections&);
-		static bool new_party(Elections&);
-		static bool new_citizen(Elections&);
-		static bool set_citizen_as_candidate(Elections&);
+		static bool newDistrict(Elections&);
+		static bool newParty(Elections&);
+		static bool newCitizen(Elections&);
+		static bool setCitizenAsCandidate(Elections&);
 		static bool vote(Elections&);
-		static void print_statistics(Elections&);
-		static void print_results(Elections&);
+		static void printStatistics(Elections&);
+		static void printResults(Elections&);
 		static void finish(Elections&);
 	public:
 		static void start(Elections&);

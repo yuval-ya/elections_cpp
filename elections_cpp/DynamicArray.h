@@ -17,7 +17,7 @@ public:
 	~DynamicArray();
 
 	int get(int id) const; // return value by id (arr[id-1])
-	int get_max() const; // return the idx of the max number
+	int getMax() const; // return the idx of the max number
 	bool set(int idx, int val);
 	bool add(int val = 0);
 

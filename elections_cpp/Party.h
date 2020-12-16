@@ -3,6 +3,8 @@
 #include "CandidatesArray.h"
 #include "District.h"
 
+namespace elections {
+
 class Party
 {
 	// A class representing a Party in the elections
@@ -24,9 +26,9 @@ public:
 
 	int getId() const { return _id; }
 	const String& getName() const { return _name; }
-	const PersonList& get_candidates_list_from_district(int district_id) const { return _candidates[district_id - 1]; }
-	const CandidatesArray& get_candidates_array() const { return _candidates; }
-    const Person& get_candidate() const { return *_firstCandidate; }
+	const PersonList& getCandidatesListFromDistrict(int district_id) const { return _candidates[district_id - 1]; }
+	const CandidatesArray& getCandidatesArray() const { return _candidates; }
+    const Person& getCandidate() const { return *_firstCandidate; }
     int getTotalCandidates() const { return _totalCandidates; }
     int getTotalVotes() const { return _totalVotes; }
 
@@ -46,3 +48,4 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Party& p);
 };
 
+}

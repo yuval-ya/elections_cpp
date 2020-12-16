@@ -3,14 +3,14 @@ using namespace std;
 
 namespace elections {
 
-	CandidatesArray::CandidatesArray(int size) : _arr(new PersonList*[size]), _log_size(size), _pys_size(size)
+CandidatesArray::CandidatesArray(int size) : _arr(new PersonList*[size]), _logSize(size), _pysSize(size)
 	{
 		for (int i = 0; i < size; i++)
 			_arr[i] = new PersonList;
 	}
 
 	CandidatesArray::~CandidatesArray() {
-		for (int i = 0; i < _log_size; i++)
+		for (int i = 0; i < _logSize; i++)
 		{
 			delete _arr[i];
 		}
@@ -20,58 +20,58 @@ namespace elections {
 
 		PersonList** temp = new PersonList*[new_size];
 
-		int copy = _log_size <= new_size ? _log_size : new_size;
+		int copy = _logSize <= new_size ? _logSize : new_size;
 		for (int i = 0; i < copy; ++i)
 			temp[i] = _arr[i];
 
-		for (int j = copy; j < _log_size; j++) {
+		for (int j = copy; j < _logSize; j++) {
 			delete _arr[j];
 		}
 
 		delete[] _arr;
 		_arr = temp;
-		this->_pys_size = new_size;
+		this->_pysSize = new_size;
 		return true;
 	}
 
 	PersonList& CandidatesArray::get(int district_id) {
-		check_valid_idx(district_id - 1);
+		checkValidIdx(district_id - 1);
 		return *_arr[district_id - 1];
 	}
 
 	const PersonList& CandidatesArray::get(int district_id) const {
-		check_valid_idx(district_id - 1);
+		checkValidIdx(district_id - 1);
 		return *_arr[district_id - 1];
 	}
 
 	bool CandidatesArray::add() {
-		if (_log_size == _pys_size) {
-			resize(_log_size * 2 + 1);
+		if (_logSize == _pysSize) {
+			resize(_logSize * 2 + 1);
 		}
-		_arr[_log_size] = new PersonList();
-		_log_size++;
+		_arr[_logSize] = new PersonList();
+        _logSize++;
 		return true;
 	}
-	bool CandidatesArray::set_length(int new_size) {
-		if (new_size > _pys_size) {
+	bool CandidatesArray::setLength(int new_size) {
+		if (new_size > _pysSize) {
 			resize(new_size);
 		}
-		_log_size = new_size;
+		_logSize = new_size;
 		return true;
 	}
 
 	PersonList& CandidatesArray::operator[](int idx) {
-		check_valid_idx(idx);
+		checkValidIdx(idx);
 		return *_arr[idx];
 	}
 
 	const PersonList& CandidatesArray::operator[](int idx) const {
-		check_valid_idx(idx);
+		checkValidIdx(idx);
 		return *_arr[idx];
 	}
 
 	ostream& operator<<(ostream& os, const CandidatesArray& c_arr) {
-		int size = c_arr.get_length();
+		int size = c_arr.getLength();
 		for (int i = 0; i < size; i++) {
 			if (c_arr[i].getPersonNumber() > 0) {
 				os << "District No." << (i + 1) << " :" << endl;
@@ -81,8 +81,8 @@ namespace elections {
 		return os;
 	}
 
-	bool CandidatesArray::check_valid_idx(int idx) const {
-		if (idx >= _log_size || idx < 0) {
+	bool CandidatesArray::checkValidIdx(int idx) const {
+		if (idx >= _logSize || idx < 0) {
 			exit(1); // index error
 		}
 		return true;

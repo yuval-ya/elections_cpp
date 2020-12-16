@@ -3,16 +3,16 @@ using namespace std;
 
 namespace elections {
 
-	int District::total_districts = 0;
+	int District::totalDistricts = 0;
 
 	District::District(String name, int numberOfCandidates) :
-		_id(++total_districts), _name(name), _numberOfCandidates(numberOfCandidates)
+		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates)
 	{
 	}
 
 	District::District(const District& d) :
 		_id(d._id), _name(d._name), _numberOfCandidates(d._numberOfCandidates),
-		_votesByParties(Party::total_parties), _candidatePartition(Party::total_parties)
+		_votesByParties(Party::totalParties), _candidatePartition(Party::totalParties)
 	{
 		_numberOfVoters = d.getNumberOfVoters();
 	}
@@ -88,7 +88,7 @@ namespace elections {
 
 
 	int District::evalPartition() {
-		int parties_num = _votesByParties.get_length(), count = 0;
+		int parties_num = _votesByParties.getLength(), count = 0;
 
 		for (int i = 0; i < parties_num; i++)
 		{
@@ -97,11 +97,11 @@ namespace elections {
 		}
 
 		if (_numberOfCandidates > count) {
-			int i = _votesByParties.get_max();
+			int i = _votesByParties.getMax();
 			_candidatePartition[i] += _numberOfCandidates - count;
 		}
 
-		_winnerParty = _candidatePartition.get_max() + 1;
+		_winnerParty = _candidatePartition.getMax() + 1;
 		return _winnerParty;
 	}
 

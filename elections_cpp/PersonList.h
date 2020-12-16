@@ -10,6 +10,8 @@
 #include <ostream>
 #include "PersonPtr.h"
 
+namespace elections {
+
 class PersonList {
     
     // Class to store list of Person
@@ -48,3 +50,4 @@ private:
     int   _personCount;
 };
 
+}

@@ -6,14 +6,14 @@ using namespace std;
 namespace elections {
 
 	Person::Person(const String& name, int id, int year, const District* district) :
-		_name(name), _id(id), _birth_year(year), _district(district),
-		_vote(nullptr), _is_candidate(nullptr)
+		_name(name), _id(id), _birthYear(year), _district(district),
+		_vote(nullptr), _isCandidate(nullptr)
 	{
 	}
 
 	Person::Person(const Person& p) :
-		_name(p._name), _id(p._id), _birth_year(p._birth_year), _district(p._district),
-		_vote(p._vote), _is_candidate(p._is_candidate)
+		_name(p._name), _id(p._id), _birthYear(p._birthYear), _district(p._district),
+		_vote(p._vote), _isCandidate(p._isCandidate)
 	{
 	}
 
@@ -27,12 +27,12 @@ namespace elections {
 
 	bool Person::setAsCandidate(const Party* p)
 	{
-		_is_candidate = p;
+		_isCandidate = p;
 		return true;
 	}
 	bool Person::isCandidate() const
 	{
-		return _is_candidate != nullptr;
+		return _isCandidate != nullptr;
 	}
 
 	bool Person::isVoted() const
