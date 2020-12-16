@@ -21,6 +21,8 @@ public:
 	// return District according to the id received
 	// Notice: get(1) return District No.1
 	District& get(int id);
+  const District& get(int id) const;
+  
     int getLength() const { return _logSize; }
     void setLength(int new_size);
     

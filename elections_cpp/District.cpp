@@ -5,49 +5,49 @@ namespace elections {
 
 	int District::total_districts = 0;
 
-	District::District(String name, int number_of_candidates) :
-		_id(++total_districts), _name(name), _number_of_candidates(number_of_candidates)
+	District::District(String name, int numberOfCandidates) :
+		_id(++total_districts), _name(name), _numberOfCandidates(numberOfCandidates)
 	{
 	}
 
 	District::District(const District& d) :
-		_id(d._id), _name(d._name), _number_of_candidates(d._number_of_candidates),
-		_votes_by_parties(Party::total_parties), _candidate_partition(Party::total_parties)
+		_id(d._id), _name(d._name), _numberOfCandidates(d._numberOfCandidates),
+		_votesByParties(Party::total_parties), _candidatePartition(Party::total_parties)
 	{
-		_number_of_voters = d.get_number_of_voters();
+		_numberOfVoters = d.getNumberOfVoters();
 	}
 
 	District::~District() {
 	}
 
-	float District::calc_voters_percentage() const
+	float District::calcVotersPercentage() const
 	{
-		int citizen_number = get_citizens_number();
-		if (citizen_number == 0)
+		int citizenNumber = getCitizensNumber();
+		if (citizenNumber == 0)
 		{
 			// division by zero error!
 			return 0;
 		}
-		return _number_of_voters / static_cast<float>(citizen_number) * 100;
+		return _numberOfVoters / static_cast<float>(citizenNumber) * 100;
 	}
 
-	float District::calc_party_percent_in_votes(int party_id) const
+	float District::calcPartyPercentInVotes(int party_id) const
 	{
-		if (_number_of_voters == 0)
+		if (_numberOfVoters == 0)
 		{
 			// division by zero error!
 			return 0;
 		}
-		return (_votes_by_parties[party_id - 1] / static_cast<float>(_number_of_voters)) * 100;
+		return (_votesByParties[party_id - 1] / static_cast<float>(_numberOfVoters)) * 100;
 	}
 
-	int District::calc_final_sum_of_candidates_from_party(int party_id) const {
-		if (_number_of_voters == 0)
+	int District::calcFinalSumOfCandidatesFromParty(int party_id) const {
+		if (_numberOfVoters == 0)
 		{
 			// division by zero error!
 			return 0;
 		}
-		int res = static_cast<int>((_votes_by_parties[party_id - 1] / static_cast<float>(_number_of_voters)) * _number_of_candidates);
+		int res = static_cast<int>((_votesByParties[party_id - 1] / static_cast<float>(_numberOfVoters)) * _numberOfCandidates);
 		return res;
 	}
 
@@ -66,43 +66,43 @@ namespace elections {
 	}
 
 	ostream& operator<<(ostream& os, const District& d) {
-		os << "District ID: " << d._id << " | Name: " << d._name << " | Number of candidates: " << d._number_of_candidates;
+		os << "District ID: " << d._id << " | Name: " << d._name << " | Number of candidates: " << d._numberOfCandidates;
 		return os;
 	}
 
 	bool District::vote(int party_id) {
-		_votes_by_parties[party_id - 1]++;
-		_number_of_voters++;
+		_votesByParties[party_id - 1]++;
+		_numberOfVoters++;
 		return true;
 	}
 
-	bool District::set_number_of_candidates(int number_of_candidates) {
-		_number_of_candidates = number_of_candidates;
+	bool District::setNumberOfCandidates(int numberOfCandidates) {
+		_numberOfCandidates = numberOfCandidates;
 		return true;
 	}
 
-	bool District::add_party_to_district()
+	bool District::addPartyToDistrict()
 	{
-		return _votes_by_parties.add() && _candidate_partition.add();
+		return _votesByParties.add() && _candidatePartition.add();
 	}
 
 
-	int District::eval_partition() {
-		int parties_num = _votes_by_parties.get_length(), count = 0;
+	int District::evalPartition() {
+		int parties_num = _votesByParties.get_length(), count = 0;
 
 		for (int i = 0; i < parties_num; i++)
 		{
-			_candidate_partition[i] = calc_final_sum_of_candidates_from_party(i + 1);
-			count += _candidate_partition[i];
+			_candidatePartition[i] = calcFinalSumOfCandidatesFromParty(i + 1);
+			count += _candidatePartition[i];
 		}
 
-		if (_number_of_candidates > count) {
-			int i = _votes_by_parties.get_max();
-			_candidate_partition[i] += _number_of_candidates - count;
+		if (_numberOfCandidates > count) {
+			int i = _votesByParties.get_max();
+			_candidatePartition[i] += _numberOfCandidates - count;
 		}
 
-		_winner_party = _candidate_partition.get_max() + 1;
-		return _winner_party;
+		_winnerParty = _candidatePartition.get_max() + 1;
+		return _winnerParty;
 	}
 
 }

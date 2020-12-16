@@ -20,16 +20,19 @@ bool PartyArray::resize(int new_size) {
 	int copy = _logSize <= new_size ? _logSize : new_size;
 	for (int i = 0; i < copy; ++i)
 		temp[i] = _arr[i];
-
-	for (int j = copy; j < _logSize; j++) {
+  for (int j = copy; j < _logSize; j++) {
 		delete _arr[j];
-	}
-
-	delete[] _arr;
+  }
+  	delete[] _arr;
 	_arr = temp;
 	this->_pysSize = new_size;
 	return true;
 }
+
+	const Party& PartyArray::get(int id) const {
+		check_valid_idx(id - 1);
+		return *_arr[id - 1];
+	}
 
 Party& PartyArray::get(int id) {
 	check_valid_idx(id - 1);

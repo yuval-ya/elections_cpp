@@ -29,7 +29,7 @@ public:
     Node* getTail() { return _tail; }
     PersonPtr getPersonPtr(int idnum);
     const Person& getPerson(int idnum) const;
-    int getPersonNumber() const { return _person_count; }
+    int getPersonNumber() const { return _personCount; }
     void printList() const;
 	void printList(int count) const;
     bool isEmpty() const;
@@ -45,5 +45,6 @@ public:
 private:
     Node* _head;
     Node* _tail;
-    int   _person_count;
+    int   _personCount;
 };
+

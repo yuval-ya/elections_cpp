@@ -1,7 +1,7 @@
 #pragma once
 #include "Party.h"
 #include <ostream>
-
+  
 class PartyArray
 {
 	// A Dynamic Array of Party Pointers.
@@ -22,6 +22,8 @@ public:
 	// return Party according to the id received
 	// Notice: get(1) return Party No.1
 	Party& get(int id);
+  const Party& get(int id) const;
+  
 	int getLength() const { return _logSize; }
 
 	bool set(int idx, Party* d);
@@ -29,7 +31,7 @@ public:
 	
 	// add new Party to the array in the next empty cell
 	const Party& add(const Party& d);                       //////////////////////////***************** change return value
-
+  
 	// add new cell for District in each Party in the array
 	bool addDistrictToParty();
 
@@ -45,3 +47,4 @@ public:
 	Party& operator[](int idx); 
 	const Party& operator[](int idx) const; 
 };
+

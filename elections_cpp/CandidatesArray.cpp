@@ -39,6 +39,11 @@ namespace elections {
 		return *_arr[district_id - 1];
 	}
 
+	const PersonList& CandidatesArray::get(int district_id) const {
+		check_valid_idx(district_id - 1);
+		return *_arr[district_id - 1];
+	}
+
 	bool CandidatesArray::add() {
 		if (_log_size == _pys_size) {
 			resize(_log_size * 2 + 1);
@@ -68,7 +73,7 @@ namespace elections {
 	ostream& operator<<(ostream& os, const CandidatesArray& c_arr) {
 		int size = c_arr.get_length();
 		for (int i = 0; i < size; i++) {
-			if (c_arr[i].get_person_number() > 0) {
+			if (c_arr[i].getPersonNumber() > 0) {
 				os << "District No." << (i + 1) << " :" << endl;
 				os << c_arr[i] << endl;
 			}

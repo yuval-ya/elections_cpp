@@ -12,8 +12,12 @@ DistrictArray::~DistrictArray() {
 	{
 		delete _arr[i];
 	}
-	delete[] _arr;
-}
+  
+const District& DistrictArray::get(int id) const{
+	checkValidIdx(id - 1);
+	return *_arr[id - 1];
+	}
+
 void DistrictArray::resize(int new_size) {
 	
 	District** temp = new District*[new_size];
@@ -48,7 +52,7 @@ void DistrictArray::add(const District& d) {
 	_arr[_logSize] = new District(d);
 	++_logSize;
 }
-void DistrictArray::set_length(int new_size) {
+void DistrictArray::setLength(int new_size) {
 	if (new_size > _pysSize) {
 		resize(new_size);
 	}
@@ -79,8 +83,10 @@ void DistrictArray::addPartyToDistrict() {
 	}
 }
 
+
 void DistrictArray::checkValidIdx(int idx) const {
 	if (idx >= _logSize || idx < 0) {
 		exit(1); // index error
+
 	}
 }
