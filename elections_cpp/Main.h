@@ -4,13 +4,13 @@
 
 const int MAX_SIZE = 100;
 
-void start(Elections& election);
-bool options(Elections& election, int choice);
-bool new_district(Elections& election);
-bool new_party(Elections& election);
-bool new_citizen(Elections& election);
-bool set_citizen_as_candidate(Elections& election);
-bool vote(Elections& election);
-void print_statistics(Elections& election);
-void print_results(Elections& election);
-void finish(Elections& election);
+void start(elections::Elections& election);
+bool options(elections::Elections& election, int choice);
+bool new_district(elections::Elections& election);
+bool new_party(elections::Elections& election);
+bool new_citizen(elections::Elections& election);
+bool set_citizen_as_candidate(elections::Elections& election);
+bool vote(elections::Elections& election);
+void print_statistics(elections::Elections& election);
+void print_results(elections::Elections& election);
+void finish(elections::Elections& election);

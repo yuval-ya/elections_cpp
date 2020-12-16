@@ -3,6 +3,7 @@ using namespace std;
 
 #include "Main.h" 
 #include "Elections.h"
+using namespace elections;
 
 int main(void) {
 	Elections election;

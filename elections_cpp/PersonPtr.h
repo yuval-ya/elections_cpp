@@ -9,28 +9,30 @@
 #pragma once
 #include "Person.h"
 
-class PersonPtr
-{
-    
-    // Smart pointer to Person
-    
-    private:
-        Person* _p;
-        int*    _r;
-        void release();
-    public:
-        PersonPtr();
-        PersonPtr(const String&, int idnum, int year, const District* district);
-        PersonPtr(const PersonPtr&);
-        PersonPtr(Person*);
-        ~PersonPtr();
+namespace elections {
+	class PersonPtr
+	{
 
-        PersonPtr& operator=(PersonPtr&);
-        bool operator==(Person* pnt) const;
+		// Smart pointer to Person
+
+	private:
+		Person* _p;
+		int*    _r;
+		void release();
+	public:
+		PersonPtr();
+		PersonPtr(const String&, int idnum, int year, const District* district);
+		PersonPtr(const PersonPtr&);
+		PersonPtr(Person*);
+		~PersonPtr();
+
+		PersonPtr& operator=(PersonPtr&);
+		bool operator==(Person* pnt) const;
 		bool operator!=(Person* pnt) const;
-        Person* operator->() { return _p; }
-        Person& operator*() { return *_p; }
-    
-        const Person* operator->() const { return _p; }
-        const Person& operator*() const { return *_p; }
-};
+		Person* operator->() { return _p; }
+		Person& operator*() { return *_p; }
+
+		const Person* operator->() const { return _p; }
+		const Person& operator*() const { return *_p; }
+	};
+}

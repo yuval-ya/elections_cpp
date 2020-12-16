@@ -4,12 +4,12 @@
 
 class String
 {
-    
-    // Class to store a string
-    
+
+	// Class to store a string
+
 private:
 	char * _str;
-    long int _len;
+	long int _len;
 public:
 	String(const char *str);
 	String(const String&);
@@ -19,7 +19,7 @@ public:
     long int getLen() const { return _len; }
 	bool set(const char *str);
 
-    String& operator=(String&);
+	String& operator=(String&);
 	friend std::ostream& operator<<(std::ostream& os, const String& str);
 };
 

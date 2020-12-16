@@ -32,12 +32,12 @@ void DistrictArray::resize(int new_size) {
 }
 
 District& DistrictArray::get(int id) {
-	check_valid_idx(id - 1);
+	checkValidIdx(id - 1);
 	return *_arr[id - 1];
 }
 
 void DistrictArray::set(int idx, District* d) {
-	check_valid_idx(idx);
+	checkValidIdx(idx);
 	_arr[idx] = d;
 }
 void DistrictArray::add(const District& d) {
