@@ -3,10 +3,9 @@
 #include "PartyArray.h"
 #include "DistrictArray.h"
 
-namespace elections {
-	class Elections
-	{
-		// A class representing a Election round
+class Elections
+{
+	// A class representing a Election round
 
 	private:
 		int				_day,
@@ -61,6 +60,3 @@ namespace elections {
 		// The array is sorted by the order of votes each party received (the winnig party in index 0) 
 		Party** getSortedPartiesArr(int& size);
 	};
-
-
-}

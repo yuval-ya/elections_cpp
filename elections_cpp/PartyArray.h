@@ -1,49 +1,50 @@
 #pragma once
 #include "Party.h"
 #include <ostream>
-namespace elections {
-	class PartyArray
-	{
-		// A Dynamic Array of Party Pointers.
-		// Used to store Parties by division into party id (index in the array - 1)
+  
+class PartyArray
+{
+	// A Dynamic Array of Party Pointers.
+	// Used to store Parties by division into party id (index in the array - 1)
 
-	private:
-		Party** _arr;
-		int _log_size;
-		int _pys_size;
+private:
+	Party** _arr;
+	int _logSize;
+	int _pysSize;
+	
+	bool resize(int new_size);
+	bool checkValidIdx(int idx) const;
+public:
+    PartyArray(int size = 0);
+	PartyArray(const PartyArray&) = delete;
+	~PartyArray();
 
-		bool resize(int new_size);
-		bool check_valid_idx(int idx) const;
-	public:
-		PartyArray(int size = 0);
-		PartyArray(const PartyArray&) = delete;
-		~PartyArray();
+	// return Party according to the id received
+	// Notice: get(1) return Party No.1
+	Party& get(int id);
+  const Party& get(int id) const;
+  
+	int getLength() const { return _logSize; }
 
-		// return Party according to the id received
-		// Notice: get(1) return Party No.1
-		Party& get(int id);
-		const Party& get(int id) const;
-		int get_length() const { return _log_size; }
+	bool set(int idx, Party* d);
+	bool setLength(int new_size);
+	
+	// add new Party to the array in the next empty cell
+	const Party& add(const Party& d);                       //////////////////////////***************** change return value
+  
+	// add new cell for District in each Party in the array
+	bool addDistrictToParty();
 
-		bool set(int idx, Party* d);
-		bool set_length(int new_size);
+	void print() const;
+    
+    // Sorting a pointer to Party array according to the total number of candidates
+    // the party received in the election (implementaion of mergeSort)
+    static void mergeSort(Party** arr,int l,int r);
+    static void merge(Party** arr, int l, int m, int r);
 
-		// add new Party to the array in the next empty cell
-		const Party& add(const Party& d);                       //////////////////////////***************** change return value
+	// return Party according to the index received
+	// Notice: arr[0] = Party No.1
+	Party& operator[](int idx); 
+	const Party& operator[](int idx) const; 
+};
 
-		// add new cell for District in each Party in the array
-		bool add_district_to_party();
-
-		void print() const;
-
-		// Sorting a pointer to Party array according to the total number of candidates
-		// the party received in the election (implementaion of mergeSort)
-		static void mergeSort(Party** arr, int l, int r);
-		static void merge(Party** arr, int l, int m, int r);
-
-		// return Party according to the index received
-		// Notice: arr[0] = Party No.1
-		Party& operator[](int idx);
-		const Party& operator[](int idx) const;
-	};
-}
