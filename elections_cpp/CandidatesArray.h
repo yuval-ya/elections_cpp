@@ -8,11 +8,11 @@ class CandidatesArray
 
 private:
 	PersonList** _arr;
-	int _log_size;
-	int _pys_size;
+	int _logSize;
+	int _pysSize;
 	
 	bool resize(int new_size);
-	bool check_valid_idx(int idx) const;
+	bool checkValidIdx(int idx) const;
 public:
 	CandidatesArray(int size = 0);
 	CandidatesArray(const CandidatesArray&) = delete;
@@ -25,8 +25,8 @@ public:
 	// add empty list to the next empty cell
 	bool add();
 
-	int get_length() const { return _log_size; }
-	bool set_length(int new_size);
+	int getLength() const { return _logSize; }
+	bool setLength(int new_size);
 
 	// return list of candidates according to the index received
 	// Notice: arr[0] = PersonList No.1

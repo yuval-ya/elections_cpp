@@ -8,11 +8,11 @@ class DistrictArray
 
 private:
 	District** _arr;
-	int _log_size;
-	int _pys_size;
+	int _logSize;
+	int _pysSize;
 	
 	void resize(int new_size);
-	void check_valid_idx(int idx) const;
+	void checkValidIdx(int idx) const;
 public:
     DistrictArray(int size = 0);
 	DistrictArray(const DistrictArray&) = delete;
@@ -20,14 +20,13 @@ public:
 
 	// return District according to the id received
 	// Notice: get(1) return District No.1
-	District& get(int id); 
+	District& get(int id);
+    int getLength() const { return _logSize; }
+    void setLength(int new_size);
+    
 	void set(int idx, District* d);
-
 	// add new District to the array in the next empty cell
 	void add(const District& d);
-
-	int get_length() const { return _log_size; }
-	void set_length(int new_size);
 	void print() const;
 
 	// return District according to the index received
@@ -36,6 +35,6 @@ public:
 	const District& operator[](int idx) const;
 
 	// add new cell for Party in each District in the array
-	void add_party_to_district();
+	void addPartyToDistrict();
 };
 

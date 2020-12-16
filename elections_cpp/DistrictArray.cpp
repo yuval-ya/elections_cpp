@@ -4,11 +4,11 @@ using namespace std;
 
 
 DistrictArray::DistrictArray(int size) : 
-	_arr(new District*[size]), _log_size(size), _pys_size(size){
+	_arr(new District*[size]), _logSize(size), _pysSize(size){
 }
 
 DistrictArray::~DistrictArray() {
-	for (int i = 0; i < _log_size; i++)
+	for (int i = 0; i < _logSize; i++)
 	{
 		delete _arr[i];
 	}
@@ -18,17 +18,17 @@ void DistrictArray::resize(int new_size) {
 	
 	District** temp = new District*[new_size];
 
-	int copy = _log_size <= new_size ? _log_size : new_size;
+	int copy = _logSize <= new_size ? _logSize : new_size;
 	for (int i = 0; i < copy; ++i)
 		temp[i] = _arr[i];
 
-	for (int j = copy; j < _log_size; j++) {
+	for (int j = copy; j < _logSize; j++) {
 		delete _arr[j];
 	}
 
 	delete[] _arr;
 	_arr = temp;
-	this->_pys_size = new_size;
+	this->_pysSize = new_size;
 }
 
 District& DistrictArray::get(int id) {
@@ -41,46 +41,46 @@ void DistrictArray::set(int idx, District* d) {
 	_arr[idx] = d;
 }
 void DistrictArray::add(const District& d) {
-	if (_log_size == _pys_size) {
-		resize(_log_size * 2 + 1);
+	if (_logSize == _pysSize) {
+		resize(_logSize * 2 + 1);
 	}
 
-	_arr[_log_size] = new District(d);
-	++_log_size;
+	_arr[_logSize] = new District(d);
+	++_logSize;
 }
 void DistrictArray::set_length(int new_size) {
-	if (new_size > _pys_size) {
+	if (new_size > _pysSize) {
 		resize(new_size);
 	}
-	_log_size = new_size;
+	_logSize = new_size;
 }
 
 District& DistrictArray::operator[](int idx) {
-	check_valid_idx(idx);
+	checkValidIdx(idx);
 	return *_arr[idx];
 }
 
 const District& DistrictArray::operator[](int idx) const {
-	check_valid_idx(idx);
+	checkValidIdx(idx);
 	return *_arr[idx];
 }
 
 void DistrictArray::print() const {
-	for (int i = 0; i < _log_size; i++)
+	for (int i = 0; i < _logSize; i++)
 	{
 		cout << *_arr[i] << endl;
 	}
 }
 
-void DistrictArray::add_party_to_district() {
-	for (int i = 0; i < _log_size; i++)
+void DistrictArray::addPartyToDistrict() {
+	for (int i = 0; i < _logSize; i++)
 	{
-		_arr[i]->add_party_to_district();
+		_arr[i]->addPartyToDistrict();
 	}
 }
 
-void DistrictArray::check_valid_idx(int idx) const {
-	if (idx >= _log_size || idx < 0) {
+void DistrictArray::checkValidIdx(int idx) const {
+	if (idx >= _logSize || idx < 0) {
 		exit(1); // index error
 	}
 }

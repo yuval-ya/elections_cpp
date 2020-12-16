@@ -4,11 +4,11 @@ using namespace std;
 
 
 PartyArray::PartyArray(int size) :
-	_arr(new Party*[size]), _log_size(size), _pys_size(size){
+	_arr(new Party*[size]), _logSize(size), _pysSize(size){
 }
 
 PartyArray::~PartyArray() {
-	for (int i = 0; i < _log_size; i++)
+	for (int i = 0; i < _logSize; i++)
 	{
 		delete _arr[i];
 	}
@@ -17,17 +17,17 @@ PartyArray::~PartyArray() {
 bool PartyArray::resize(int new_size) {
 	Party** temp = new Party*[new_size];
 
-	int copy = _log_size <= new_size ? _log_size : new_size;
+	int copy = _logSize <= new_size ? _logSize : new_size;
 	for (int i = 0; i < copy; ++i)
 		temp[i] = _arr[i];
 
-	for (int j = copy; j < _log_size; j++) {
+	for (int j = copy; j < _logSize; j++) {
 		delete _arr[j];
 	}
 
 	delete[] _arr;
 	_arr = temp;
-	this->_pys_size = new_size;
+	this->_pysSize = new_size;
 	return true;
 }
 
@@ -45,20 +45,20 @@ bool PartyArray::set(int idx, Party* d) {
 }
 
 const Party& PartyArray::add(const Party& d) {
-	if (_log_size == _pys_size) {
-		resize(_log_size * 2 + 1);
+	if (_logSize == _pysSize) {
+		resize(_logSize * 2 + 1);
 	}
 
-	_arr[_log_size] = new Party(d);
-	++_log_size;
-	return *_arr[_log_size - 1];
+	_arr[_logSize] = new Party(d);
+	++_logSize;
+	return *_arr[_logSize - 1];
 }
 
-bool PartyArray::set_length(int new_size) {
-	if (new_size > _pys_size) {
+bool PartyArray::setLength(int new_size) {
+	if (new_size > _pysSize) {
 		resize(new_size);
 	}
-	_log_size = new_size;
+	_logSize = new_size;
 	return true;
 }
 
@@ -73,23 +73,23 @@ const Party& PartyArray::operator[](int idx) const {
 }
 
 void PartyArray::print() const {
-	for (int i = 0; i < _log_size; i++)
+	for (int i = 0; i < _logSize; i++)
 	{
 		cout << *_arr[i] << endl;
 		cout << _arr[i]->get_candidates_array() << endl;
 	}
 }
 
-bool PartyArray::add_district_to_party() {
-	for (int i = 0; i < _log_size; i++)
+bool PartyArray::addDistrictToParty() {
+	for (int i = 0; i < _logSize; i++)
 	{
-		_arr[i]->add_district_to_candidates_arr();
+		_arr[i]->addDistrictToCandidatesArr();
 	}
 	return true;
 }
 
-bool PartyArray::check_valid_idx(int idx) const {
-	if (idx >= _log_size || idx < 0) {
+bool PartyArray::checkValidIdx(int idx) const {
+	if (idx >= _logSize || idx < 0) {
 		exit(1); // index error
 	}
 	return true;

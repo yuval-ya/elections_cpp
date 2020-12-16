@@ -16,7 +16,7 @@ public:
 	~String();
 
 	const char* get() const { return _str; }
-    long int get_len() const { return _len; }
+    long int getLen() const { return _len; }
 	bool set(const char *str);
 
     String& operator=(String&);

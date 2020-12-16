@@ -2,7 +2,7 @@
 #include <iostream>
 
 DynamicArray::DynamicArray(int size)
-	: _arr(new int[size]), _log_size(size), _pys_size(size)
+	: _arr(new int[size]), _logSize(size), _pysSize(size)
 {
 	for (int i = 0; i < size; i++){
 		_arr[i] = 0;
@@ -23,32 +23,32 @@ bool DynamicArray::set(int idx, int val)
 void DynamicArray::resize(int new_size)
 {
 	int* temp = new int[new_size];
-	int copy = _log_size <= new_size ? _log_size : new_size;
+	int copy = _logSize <= new_size ? _logSize : new_size;
 	for (int i = 0; i < copy; ++i)
 		temp[i] = _arr[i];
 
 	delete[] _arr;
 
 	_arr = temp;
-	this->_pys_size = new_size;
+	this->_pysSize = new_size;
 }
 
-void DynamicArray::set_length(int new_size) {
-	if (new_size > _pys_size) {
+void DynamicArray::setLength(int new_size) {
+	if (new_size > _pysSize) {
 		resize(new_size);
 	}
-	_log_size = new_size;
+	_logSize = new_size;
 }
 
 
 bool DynamicArray::add(int val)
 {
-	if (_log_size == _pys_size) {
-		resize(_log_size * 2 + 1);
+	if (_logSize == _pysSize) {
+		resize(_logSize * 2 + 1);
 	}
 
-	_arr[_log_size] = val;
-	++_log_size;
+	_arr[_logSize] = val;
+	++_logSize;
     return true;
 }
 
@@ -58,10 +58,10 @@ int DynamicArray::get(int id) const{
 }
 
 int DynamicArray::get_max() const {
-	if (_log_size == 0) return -1;
+	if (_logSize == 0) return -1;
 
 	int max_val = _arr[0], max_idx = 0;
-	for (int i = 1; i < _log_size; i++) {
+	for (int i = 1; i < _logSize; i++) {
 		if (_arr[i] > max_val) {
 			max_val = _arr[i];
 			max_idx = i;
@@ -83,7 +83,7 @@ const int& DynamicArray::operator[](int idx) const
 }
 
 void DynamicArray::check_valid_idx(int idx) const {
-	if (idx >= _log_size || idx < 0) {
+	if (idx >= _logSize || idx < 0) {
 		exit(1); // index error
 	}
 }

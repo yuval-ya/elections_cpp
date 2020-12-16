@@ -6,8 +6,8 @@ class DynamicArray
 	
 private:
 	int* _arr;
-	int _log_size;
-	int _pys_size;
+	int _logSize;
+	int _pysSize;
 	
 	void resize(int new_size);
 	void check_valid_idx(int idx) const;
@@ -21,8 +21,8 @@ public:
     bool set(int idx, int val);
 	bool add(int val = 0);
 
-	int get_length() const { return _log_size; }
-	void set_length(int new_size);
+	int getLength() const { return _logSize; }
+	void setLength(int new_size);
 
 	int& operator[](int idx); //return value by index (arr[idx])
 	const int& operator[](int idx) const;

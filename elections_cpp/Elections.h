@@ -52,5 +52,3 @@ public:
 	// The array is sorted by the order of votes each party received (the winnig party in index 0) 
 	Party** get_sorted_parties_arr(int& size);
 };
-
-

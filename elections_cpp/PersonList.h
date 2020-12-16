@@ -29,7 +29,7 @@ public:
     Node* getTail() { return _tail; }
     PersonPtr getPersonPtr(int idnum);
     const Person& getPerson(int idnum) const;
-    int get_person_number() const { return _person_count; }
+    int getPersonNumber() const { return _person_count; }
     void printList() const;
 	void printList(int count) const;
     bool isEmpty() const;

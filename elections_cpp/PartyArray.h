@@ -9,11 +9,11 @@ class PartyArray
 
 private:
 	Party** _arr;
-	int _log_size;
-	int _pys_size;
+	int _logSize;
+	int _pysSize;
 	
 	bool resize(int new_size);
-	bool check_valid_idx(int idx) const;
+	bool checkValidIdx(int idx) const;
 public:
     PartyArray(int size = 0);
 	PartyArray(const PartyArray&) = delete;
@@ -22,16 +22,16 @@ public:
 	// return Party according to the id received
 	// Notice: get(1) return Party No.1
 	Party& get(int id);
-	int get_length() const { return _log_size; }
+	int getLength() const { return _logSize; }
 
 	bool set(int idx, Party* d);
-	bool set_length(int new_size);
+	bool setLength(int new_size);
 	
 	// add new Party to the array in the next empty cell
 	const Party& add(const Party& d);                       //////////////////////////***************** change return value
 
 	// add new cell for District in each Party in the array
-	bool add_district_to_party();
+	bool addDistrictToParty();
 
 	void print() const;
     
