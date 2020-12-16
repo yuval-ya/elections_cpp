@@ -10,12 +10,11 @@ namespace elections {
 	{
 		// A class representing a District in the elections
 
-	private:
+	protected:
 		const int		_id;
 		String			_name;
 		int				_numberOfCandidates;
-		int				_numberOfVoters = 0,
-						_winnerParty = 0;
+        int				_numberOfVoters;
 		PersonList		_voters;
 		DynamicArray	_votesByParties;
 		DynamicArray	_candidatePartition;
@@ -34,7 +33,6 @@ namespace elections {
 		int getCitizensNumber() const { return _voters.getPersonNumber(); }
 		int getPartyVotes(int party_id) const { return _votesByParties[party_id - 1]; }
 		int getPartyCandidatesNum(int party_id) const { return _candidatePartition[party_id - 1]; }
-		int getWinnerParty() const { return _winnerParty; }
 
 		bool setNumberOfCandidates(int numberOfCandidates);
         bool setName(String name) { _name = name; return true; }
@@ -49,10 +47,13 @@ namespace elections {
 		// candidates in the district
 		int calcFinalSumOfCandidatesFromParty(int party_id) const;
 
-		// Calculates the partition of candidates in the district according to the percentage of 
-		// votes for each party
-		int evalPartition();
-
+        
+		// Calculates the partition of candidates in the district
+        virtual const DynamicArray& evalPartition();
+        //
+        virtual const PersonList& getElectionResult() const = 0;
+        
+        
 		bool vote(int party_id);
 
 		// Adds a new party for voting and calculation

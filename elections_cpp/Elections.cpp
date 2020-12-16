@@ -1,3 +1,4 @@
+#include <typeinfo>
 #include "Elections.h"
 
 namespace elections {
@@ -19,8 +20,8 @@ namespace elections {
 
 	bool Elections::addDistrict(String name, int number_of_candidates)
 	{
-		District new_distric(name, number_of_candidates);
-		_districts.add(new_distric);
+		District newDistric(name, number_of_candidates);
+		_districts.add(newDistric);
 		_parties.addDistrictToParty();
 		return true;
 	}
@@ -95,6 +96,7 @@ namespace elections {
 		return person->setVote(&(_parties.get(party_id)));
 	}
 
+
 	bool Elections::finalEvaluation() {
 		int numOfDistricts = _districts.getLength();
 		int numOfParties = _parties.getLength();
@@ -106,11 +108,23 @@ namespace elections {
 
 		for (int i = 0; i < numOfDistricts; i++)
 		{
-			int winningPartyInDistrict = _districts[i].evalPartition();
-
+            District& district = _districts[i];
+			const DynamicArray& candidatePartitionArr = district.evalPartition();
+            
+            if (typeid(district) == typeid(UnifiedDistrict)) {
+                int winningParty = candidatePartitionArr.getMax();
+                _parties[winningParty - 1].addTotalCandidates(_districts[i].getNumberOfCandidates());
+            }
+            else if (typeid(district) == typeid(DevidedDistrict)){
+                
+                for (int i = 0; i < candidatePartitionArr.getLength(); i++){
+                    _parties[i].addTotalCandidates(candidatePartitionArr[i]);
+                }
+            }
+ 
+            
 			// The winning party gets the number of candidates in the current district
-
-			_parties[winningPartyInDistrict - 1].addTotalCandidates(_districts[i].getNumberOfCandidates());
+			//_parties[winningPartyInDistrict - 1].addTotalCandidates(_districts[i].getNumberOfCandidates());
 		}
 		return true;
 	}

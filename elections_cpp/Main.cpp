@@ -158,8 +158,10 @@ void printStatistics(Elections& election) {
 	for (int i = 1; i <= numOfDistricts; i++)
 	{
 		const District& district = election.getDistrict(i);
-		int winnerPartyInDistrict = district.getWinnerParty();
-        const Person& winningCandidate = election.getParty(winnerPartyInDistrict).getCandidate();
+		
+        
+    
+        // const PersonList& winningCandidate = district.get;
 
 		cout << "============================================ " << endl;
 		cout << district << endl << "Winning candidate: " << winningCandidate << endl;

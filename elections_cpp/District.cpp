@@ -6,7 +6,7 @@ namespace elections {
 	int District::totalDistricts = 0;
 
 	District::District(String name, int numberOfCandidates) :
-		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates)
+		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0)
 	{
 	}
 
@@ -86,23 +86,20 @@ namespace elections {
 		return _votesByParties.add() && _candidatePartition.add();
 	}
 
+    const DynamicArray& District::evalPartition()
+    {
+        int parties_num = _votesByParties.getLength(), count = 0;
 
-	int District::evalPartition() {
-		int parties_num = _votesByParties.getLength(), count = 0;
+        for (int i = 0; i < parties_num; i++) {
+            _candidatePartition[i] = calcFinalSumOfCandidatesFromParty(i + 1);
+            count += _candidatePartition[i];
+        }
 
-		for (int i = 0; i < parties_num; i++)
-		{
-			_candidatePartition[i] = calcFinalSumOfCandidatesFromParty(i + 1);
-			count += _candidatePartition[i];
-		}
-
-		if (_numberOfCandidates > count) {
-			int i = _votesByParties.getMax();
-			_candidatePartition[i] += _numberOfCandidates - count;
-		}
-
-		_winnerParty = _candidatePartition.getMax() + 1;
-		return _winnerParty;
-	}
-
+        if (_numberOfCandidates > count) {
+            int i = _votesByParties.getMax();
+            _candidatePartition[i] += _numberOfCandidates - count;
+        }
+        
+        return _candidatePartition;
+    }
 }

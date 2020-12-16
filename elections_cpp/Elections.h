@@ -2,6 +2,8 @@
 #include "PersonList.h"
 #include "PartyArray.h"
 #include "DistrictArray.h"
+#include "UnifiedDistrict.h"
+#include "DividedDistrict.h"
 
 namespace elections {
 
