@@ -16,13 +16,16 @@ private:
     PersonList _winnerCandidatesList;
 public:
     DividedDistrict(String name, int numberOfCandidates);
-    ~DividedDistrict();
     DividedDistrict(const DividedDistrict&);
-    
+    ~DividedDistrict();
+
+	PersonList& getWinnerCandidatesList() { return _winnerCandidatesList; }
     const PersonList& getWinnerCandidatesList() const { return _winnerCandidatesList; }
     
     virtual const DynamicArray& evalPartition();
+	virtual const String type() const { return "Divided"; }
 
+	//ostream& operator<<(ostream& os, const DividedDistrict& d)
 };
 
 

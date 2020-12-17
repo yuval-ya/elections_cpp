@@ -19,14 +19,16 @@ public:
     UnifiedDistrict(String name, int numberOfCandidates);
     ~UnifiedDistrict();
     UnifiedDistrict(const UnifiedDistrict&);
-    
-    
+       
     const Person& getWinnerCandidate() const { return *_winnerCandidate; }
     
     virtual const DynamicArray& evalPartition();
 
-    
     bool setWinnerCandidate(PersonPtr p) { _winnerCandidate = p; return true; }
+	
+	virtual const String type() const { return "Unified"; }
+
+	//ostream& operator<<(ostream& os, const UnifiedDistrict& d)
 };
 
 

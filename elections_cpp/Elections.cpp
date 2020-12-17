@@ -115,16 +115,13 @@ namespace elections {
                 int winningParty = candidatePartitionArr.getMax();
                 _parties[winningParty - 1].addTotalCandidates(_districts[i].getNumberOfCandidates());
             }
-            else if (typeid(district) == typeid(DevidedDistrict)){
+            else if (typeid(district) == typeid(DividedDistrict)){
                 
                 for (int i = 0; i < candidatePartitionArr.getLength(); i++){
                     _parties[i].addTotalCandidates(candidatePartitionArr[i]);
                 }
             }
- 
-            
-			// The winning party gets the number of candidates in the current district
-			//_parties[winningPartyInDistrict - 1].addTotalCandidates(_districts[i].getNumberOfCandidates());
+
 		}
 		return true;
 	}

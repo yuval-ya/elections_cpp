@@ -24,7 +24,7 @@ public:
 	// return Party according to the id received
 	// Notice: get(1) return Party No.1
 	Party& get(int id);
-  const Party& get(int id) const;
+	const Party& get(int id) const;
   
 	int getLength() const { return _logSize; }
 

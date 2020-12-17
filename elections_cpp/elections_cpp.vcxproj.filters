@@ -54,6 +54,15 @@
     <ClCompile Include="DynamicArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DividedDistrict.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnifiedDistrict.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PartyDataArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Person.h">
@@ -93,6 +102,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DividedDistrict.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnifiedDistrict.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PartyDataArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -51,7 +51,7 @@ void DistrictArray::add(const District& d) {
 	if (_logSize == _pysSize) {
 		resize(_logSize * 2 + 1);
 	}
-
+	
 	_arr[_logSize] = new District(d);
 	++_logSize;
 }

@@ -28,6 +28,7 @@ public:
 	const String& getName() const { return _name; }
 	const PersonList& getCandidatesListFromDistrict(int district_id) const { return _candidates[district_id - 1]; }
 	const CandidatesArray& getCandidatesArray() const { return _candidates; }
+	PersonPtr getCandidatePtr() { return _firstCandidate; }
     const Person& getCandidate() const { return *_firstCandidate; }
     int getTotalCandidates() const { return _totalCandidates; }
     int getTotalVotes() const { return _totalVotes; }

@@ -66,7 +66,8 @@ namespace elections {
 	}
 
 	ostream& operator<<(ostream& os, const District& d) {
-		os << "District ID: " << d._id << " | Name: " << d._name << " | Number of candidates: " << d._numberOfCandidates;
+		os << "District ID: " << d._id << " | Name: " << d._name;
+		os << " | Number of candidates: " << d._numberOfCandidates << " | Type: " << d.type();
 		return os;
 	}
 

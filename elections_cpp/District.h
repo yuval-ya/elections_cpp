@@ -52,7 +52,7 @@ namespace elections {
         virtual const DynamicArray& evalPartition();
         //
         virtual const PersonList& getElectionResult() const = 0;
-        
+		virtual const String type() const = 0;
         
 		bool vote(int party_id);
 
