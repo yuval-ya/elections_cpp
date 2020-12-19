@@ -32,7 +32,7 @@ public:
 	bool setLength(int new_size);
 	
 	// add new Party to the array in the next empty cell
-	const Party& add(const Party& d);                       //////////////////////////***************** change return value
+	Party& add(const Party& d);
   
 	// add new cell for District in each Party in the array
 	bool addDistrictToParty();

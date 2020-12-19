@@ -8,7 +8,6 @@
 
 #include <ostream>
 #include "DividedDistrict.h"
-
 using namespace std;
 
 namespace elections {
@@ -21,15 +20,28 @@ DividedDistrict::DividedDistrict(const DividedDistrict& other) : District(other)
 DividedDistrict::~DividedDistrict() {
 }
 
-const DynamicArray& DividedDistrict::evalPartition(){
+void DividedDistrict::evalPartition(){
     District::evalPartition();
     
-	// sort _candidatePartition
-	// add candidates to _winnerCandidatesList by order
+    for (int i = 0; i < _partiesData.getLength() ; i++){
+        int num_candidates = _partiesData[i].candidates;
+        _partiesData[i].party->addTotalCandidates(num_candidates);
+    }
     
-     return _candidatePartition;
+//    PartyDataArray temp = _partiesData;
+//    // temp.sort;
+//    for (int i= 0; i < temp.getLength(); i ++){
+//        _chosenCandidates.addPerson(temp[i].party->getCandidatePtr());
+//    }
 }
 
-
+ostream& DividedDistrict::showWinners(ostream& out) const{
+    for(int i = 0; i < _partiesData.getLength() && _partiesData[i].candidates > 0; i++){
+        out << _partiesData[i].party->getCandidate();
+        out << " with " << _partiesData[i].candidates << " candidates" <<endl;
+    }
+    return out;
+}
 
 }
+

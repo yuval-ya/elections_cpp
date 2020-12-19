@@ -1,4 +1,5 @@
 #include "District.h"
+#include <iostream>
 using namespace std;
 
 namespace elections {
@@ -6,13 +7,12 @@ namespace elections {
 	int District::totalDistricts = 0;
 
 	District::District(String name, int numberOfCandidates) :
-		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0)
+		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0),     _partiesData(Party::totalParties)
 	{
 	}
 
 	District::District(const District& d) :
-		_id(d._id), _name(d._name), _numberOfCandidates(d._numberOfCandidates),
-		_votesByParties(Party::totalParties), _candidatePartition(Party::totalParties)
+		_id(d._id), _name(d._name), _numberOfCandidates(d._numberOfCandidates), _partiesData(d._partiesData)
 	{
 		_numberOfVoters = d.getNumberOfVoters();
 	}
@@ -38,41 +38,29 @@ namespace elections {
 			// division by zero error!
 			return 0;
 		}
-		return (_votesByParties[party_id - 1] / static_cast<float>(_numberOfVoters)) * 100;
+		return (_partiesData.get(party_id).votes / static_cast<float>(_numberOfVoters)) * 100;
 	}
 
-	int District::calcFinalSumOfCandidatesFromParty(int party_id) const {
+	int District::calcFinalSumOfCandidatesFromParty(int idx) const {
 		if (_numberOfVoters == 0)
 		{
 			// division by zero error!
 			return 0;
 		}
-		int res = static_cast<int>((_votesByParties[party_id - 1] / static_cast<float>(_numberOfVoters)) * _numberOfCandidates);
+		int res = static_cast<int>((_partiesData[idx].votes / static_cast<float>(_numberOfVoters)) * _numberOfCandidates);
 		return res;
 	}
 
-	PersonPtr District::addPerson(const Person& p) {
-		return _voters.addPerson(p);
-	}
-	const Person& District::addPerson(PersonPtr p) {
-		return _voters.addPerson(p);
-	}
-
-	PersonPtr District::getPersonPtr(int idnum) {
-		return _voters.getPersonPtr(idnum);
-	}
-	const Person& District::getPerson(int idnum) const {
-		return _voters.getPerson(idnum);
-	}
 
 	ostream& operator<<(ostream& os, const District& d) {
 		os << "District ID: " << d._id << " | Name: " << d._name;
-		os << " | Number of candidates: " << d._numberOfCandidates << " | Type: " << d.type();
+        os << " | Number of candidates: " << d._numberOfCandidates << " | Type: " ;
+        d.type(os);
 		return os;
 	}
 
 	bool District::vote(int party_id) {
-		_votesByParties[party_id - 1]++;
+		_partiesData.get(party_id).votes++;
 		_numberOfVoters++;
 		return true;
 	}
@@ -82,25 +70,22 @@ namespace elections {
 		return true;
 	}
 
-	bool District::addPartyToDistrict()
-	{
-		return _votesByParties.add() && _candidatePartition.add();
-	}
 
-    const DynamicArray& District::evalPartition()
+    void District::evalPartition()
     {
-        int parties_num = _votesByParties.getLength(), count = 0;
+        int parties_num = _partiesData.getLength(), count = 0;
 
         for (int i = 0; i < parties_num; i++) {
-            _candidatePartition[i] = calcFinalSumOfCandidatesFromParty(i + 1);
-            count += _candidatePartition[i];
+            _partiesData[i].candidates = calcFinalSumOfCandidatesFromParty(i);
+            count += _partiesData[i].candidates;
         }
 
         if (_numberOfCandidates > count) {
-            int i = _votesByParties.getMax();
-            _candidatePartition[i] += _numberOfCandidates - count;
+            int id = _partiesData.getPartyIdWithMaxVotes();
+            _partiesData.get(id).candidates += _numberOfCandidates - count;
         }
-        
-        return _candidatePartition;
+
+        _partiesData.sortArrayByCandidates();
+    
     }
 }

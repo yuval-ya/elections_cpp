@@ -11,10 +11,10 @@ using namespace elections;
 #include "Menu.h"
 
 
-int main(void) {
 
+int main(void) {    
 	{
-		Elections election;	
+		Elections election;
 
 		Menu::test(election);
 		start(election);
@@ -55,14 +55,16 @@ void start(Elections& election)
 }
 
 bool newDistrict(Elections& election) {
-	char name[MAX_SIZE];
-	int candidates_num;
-	cout << "Enter district name: ";
-	cin.ignore();
-	cin.getline(name, MAX_SIZE);
-	cout << "Enter number of candidates: ";
-	cin >> candidates_num;
-	return election.addDistrict(name, candidates_num);
+    char name[MAX_SIZE];
+    int candidates_num, type;
+    cout << "Enter district name: ";
+    cin.ignore();
+    cin.getline(name, MAX_SIZE);
+    cout << "Enter district type: (0 for Divided, 1 for Unified) ";
+    cin >> type;
+    cout << "\nEnter number of candidates: ";
+    cin >> candidates_num;
+    return election.addDistrict(name, candidates_num, type);
 }
 
 bool newParty(Elections& election) {
@@ -157,27 +159,26 @@ void printStatistics(Elections& election) {
 
 	for (int i = 1; i <= numOfDistricts; i++)
 	{
-		const District& district = election.getDistrict(i);
-		
-        
-    
-        // const PersonList& winningCandidate = district.get;
+		const District& district = election.getDistricts().get(i);
+		    
+//        const PersonList& winningCandidate = district.getChosenCandidates();
 
 		cout << "============================================ " << endl;
-		cout << district << endl << "Winning candidate: " << winningCandidate << endl;
+        cout << district << endl << "Winning candidates: "<< endl;
+        district.showWinners(cout);
 
 		for (int j = 1; j <= numOfParties; j++)
 		{
-			const Party& party = election.getParty(j);
+			const Party& party = election.getParties().get(j);
 			int numOfCandidatesFromParty = district.getPartyCandidatesNum(j);
-			const PersonList& candidateLst = party.getCandidatesListFromDistrict(i);
+			const PersonList& candidateList = party.getCandidatesListFromDistrict(i);
 
 			cout << "\nParty No." << j << endl;
-			if (candidateLst.getPersonNumber() < numOfCandidatesFromParty)
+			if (candidateList.getPersonNumber() < numOfCandidatesFromParty)
 			{	//There are not enough candidates from this district
 				cout << "*** There are not enough candidates in the party to district" << i << " ***" << endl;
 			}
-			candidateLst.printList(numOfCandidatesFromParty);
+			candidateList.printList(numOfCandidatesFromParty);
 			cout << "Total votes - " << district.getPartyVotes(j) << endl;
 			cout << "Percentage of votes - " << district.calcPartyPercentInVotes(j) << endl;
 		}

@@ -22,7 +22,8 @@ namespace elections {
 
 	int Person::getDistrictID() const
 	{
-		return _district->getId();
+        int id = _district->getId();
+        return id;
 	}
 
 	bool Person::setAsCandidate(const Party* p)

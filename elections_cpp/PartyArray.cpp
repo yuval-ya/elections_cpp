@@ -6,98 +6,130 @@ namespace elections {
 
 
 PartyArray::PartyArray(int size) :
-	_arr(new Party*[size]), _logSize(size), _pysSize(size){
+_arr(new Party*[size]), _logSize(size), _pysSize(size){
 }
 
 PartyArray::~PartyArray() {
-	for (int i = 0; i < _logSize; i++)
-	{
-		delete _arr[i];
-	}
-	delete[] _arr;
+    for (int i = 0; i < _logSize; i++)
+    {
+        delete _arr[i];
+    }
+    delete[] _arr;
 }
+
 bool PartyArray::resize(int new_size) {
-	Party** temp = new Party*[new_size];
-
-	int copy = _logSize <= new_size ? _logSize : new_size;
-	for (int i = 0; i < copy; ++i)
-		temp[i] = _arr[i];
-  for (int j = copy; j < _logSize; j++) {
-		delete _arr[j];
-  }
-  	delete[] _arr;
-	_arr = temp;
-	this->_pysSize = new_size;
-	return true;
+    Party** temp = new Party*[new_size];
+    
+    int copy = _logSize <= new_size ? _logSize : new_size;
+    for (int i = 0; i < copy; ++i)
+        temp[i] = _arr[i];
+    for (int j = copy; j < _logSize; j++) {
+        delete _arr[j];
+    }
+    delete[] _arr;
+    _arr = temp;
+    this->_pysSize = new_size;
+    return true;
 }
 
-	const Party& PartyArray::get(int id) const {
-		checkValidIdx(id - 1);
-		return *_arr[id - 1];
-	}
+const Party& PartyArray::get(int id) const {
+    checkValidIdx(id - 1);
+    
+    Party* p = nullptr;
+
+    if (_arr[id - 1]->getId() == id)
+        p = _arr[id - 1];
+
+    for (int i = 0; i < _logSize && !p; i++)
+    {
+        if (_arr[i]->getId() == id)
+            p = _arr[i];
+    }
+    
+    if (p == nullptr)
+        exit(1);
+        
+    return *p;
+}
 
 Party& PartyArray::get(int id) {
-	checkValidIdx(id - 1);
-	return *_arr[id - 1];
+    checkValidIdx(id - 1);
+    
+    Party* p = nullptr;
+
+    if (_arr[id - 1]->getId() == id)
+        p = _arr[id - 1];
+
+    for (int i = 0; i < _logSize && !p; i++)
+    {
+        if (_arr[i]->getId() == id)
+            p = _arr[i];
+    }
+    
+    if (p == nullptr)
+        exit(1);
+        
+    return *p;
 }
 
 bool PartyArray::set(int idx, Party* d) {
-	if (checkValidIdx(idx)) {
-		_arr[idx] = d;
-		return true;
-	}
-	return false;
+    if (checkValidIdx(idx)) {
+        _arr[idx] = d;
+        return true;
+    }
+    return false;
 }
 
-const Party& PartyArray::add(const Party& d) {
-	if (_logSize == _pysSize) {
-		resize(_logSize * 2 + 1);
-	}
-
-	_arr[_logSize] = new Party(d);
-	++_logSize;
-	return *_arr[_logSize - 1];
+Party& PartyArray::add(const Party& d) {
+    if (_logSize == _pysSize) {
+        resize(_logSize * 2 + 1);
+    }
+    
+    _arr[_logSize] = new Party(d);
+    ++_logSize;
+    return *_arr[_logSize - 1];
 }
+
 
 bool PartyArray::setLength(int new_size) {
-	if (new_size > _pysSize) {
-		resize(new_size);
-	}
-	_logSize = new_size;
-	return true;
+    if (new_size > _pysSize) {
+        resize(new_size);
+    }
+    _logSize = new_size;
+    return true;
 }
 
 Party& PartyArray::operator[](int idx) {
-	checkValidIdx(idx);
-	return *_arr[idx];
+    checkValidIdx(idx);
+    return *_arr[idx];
 }
 
 const Party& PartyArray::operator[](int idx) const {
-	checkValidIdx(idx);
-	return *_arr[idx];
+    checkValidIdx(idx);
+    return *_arr[idx];
 }
 
 void PartyArray::print() const {
-	for (int i = 0; i < _logSize; i++)
-	{
-		cout << *_arr[i] << endl;
-		cout << _arr[i]->getCandidatesArray() << endl;
-	}
+    for (int i = 0; i < _logSize; i++)
+    {
+        cout << *_arr[i] << endl;
+        cout << _arr[i]->getCandidatesArray() << endl;
+    }
 }
 
 bool PartyArray::addDistrictToParty() {
-	for (int i = 0; i < _logSize; i++)
-	{
-		_arr[i]->addDistrictToCandidatesArr();
-	}
-	return true;
+    for (int i = 0; i < _logSize; i++)
+    {
+        _arr[i]->addDistrictToCandidatesArr();
+    }
+    return true;
 }
 
 bool PartyArray::checkValidIdx(int idx) const {
-	if (idx >= _logSize || idx < 0) {
-		exit(1); // index error
-	}
-	return true;
+    if (idx >= _logSize || idx < 0) {
+        exit(1); // index error
+    }
+    return true;
 }
 
 
@@ -118,7 +150,7 @@ void PartyArray::merge(Party** arr, int l, int m, int r)
     
     int k = l;
     i = j = 0;
-
+    
     while (i < n1 && j < n2) {
         if (L[i]->getTotalCandidates() >= R[j]->getTotalCandidates())
         {
@@ -131,19 +163,19 @@ void PartyArray::merge(Party** arr, int l, int m, int r)
         }
         k++;
     }
- 
+    
     while (i < n1) {
         arr[k] = L[i];
         i++;
         k++;
     }
-
+    
     while (j < n2) {
         arr[k] = R[j];
         j++;
         k++;
     }
-
+    
     delete[] L;
     delete[] R;
 }

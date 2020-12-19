@@ -12,18 +12,18 @@
 namespace elections {
 
 class DividedDistrict : public District {
+    
 private:
-    PersonList _winnerCandidatesList;
 public:
     DividedDistrict(String name, int numberOfCandidates);
     DividedDistrict(const DividedDistrict&);
-    ~DividedDistrict();
-
-	PersonList& getWinnerCandidatesList() { return _winnerCandidatesList; }
-    const PersonList& getWinnerCandidatesList() const { return _winnerCandidatesList; }
+    virtual ~DividedDistrict();
     
-    virtual const DynamicArray& evalPartition();
-	virtual const String type() const { return "Divided"; }
+    virtual void evalPartition();
+    
+	virtual void type(std::ostream& os) const { os << "Divided" ;}
+
+    virtual std::ostream& showWinners(std::ostream& os) const;
 
 	//ostream& operator<<(ostream& os, const DividedDistrict& d)
 };

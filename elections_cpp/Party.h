@@ -1,9 +1,9 @@
 #pragma once
 #include "String.h"
 #include "CandidatesArray.h"
-#include "District.h"
 
 namespace elections {
+class District;
 
 class Party
 {
@@ -13,8 +13,8 @@ private:
 	const int			_id;
 	String				_name;
     PersonPtr		    _firstCandidate;
-	int					_totalCandidates = 0,
-						_totalVotes = 0;
+	int					_totalCandidates,
+						_totalVotes;
 	CandidatesArray		_candidates;
 	
 public:
@@ -26,7 +26,7 @@ public:
 
 	int getId() const { return _id; }
 	const String& getName() const { return _name; }
-	const PersonList& getCandidatesListFromDistrict(int district_id) const { return _candidates[district_id - 1]; }
+	const PersonList& getCandidatesListFromDistrict(int district_id) const { return _candidates.get(district_id); }
 	const CandidatesArray& getCandidatesArray() const { return _candidates; }
 	PersonPtr getCandidatePtr() { return _firstCandidate; }
     const Person& getCandidate() const { return *_firstCandidate; }

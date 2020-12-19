@@ -15,10 +15,6 @@ DistrictArray::~DistrictArray() {
 	}
 }
 
-const District& DistrictArray::get(int id) const {
-	checkValidIdx(id - 1);
-	return *_arr[id - 1];
-}
 
 void DistrictArray::resize(int new_size) {
 	
@@ -37,9 +33,44 @@ void DistrictArray::resize(int new_size) {
 	this->_pysSize = new_size;
 }
 
+const District& DistrictArray::get(int id) const {
+    checkValidIdx(id - 1);
+    
+    District* p = nullptr;
+    
+    if (_arr[id - 1]->getId() == id)
+        p = _arr[id - 1];
+    
+    for (int i = 0; i < _logSize && !p; i++)
+    {
+        if (_arr[i]->getId() == id)
+            p = _arr[i];
+    }
+    
+    if (p == nullptr)
+        exit(1);
+    
+    return *p;
+}
+
 District& DistrictArray::get(int id) {
-	checkValidIdx(id - 1);
-	return *_arr[id - 1];
+    checkValidIdx(id - 1);
+    
+    District* p = nullptr;
+
+    if (_arr[id - 1]->getId() == id)
+        p = _arr[id - 1];
+
+    for (int i = 0; i < _logSize && !p; i++)
+    {
+        if (_arr[i]->getId() == id)
+            p = _arr[i];
+    }
+    
+    if (p == nullptr)
+        exit(1);
+        
+    return *p;
 }
 
 void DistrictArray::set(int idx, District* d) {
@@ -47,13 +78,18 @@ void DistrictArray::set(int idx, District* d) {
 	_arr[idx] = d;
 }
     
-void DistrictArray::add(const District& d) {
+District& DistrictArray::add(const District& d) {
 	if (_logSize == _pysSize) {
 		resize(_logSize * 2 + 1);
 	}
 	
-	_arr[_logSize] = new District(d);
+    if (typeid(d) == typeid(UnifiedDistrict))
+        _arr[_logSize] = new UnifiedDistrict(dynamic_cast<const UnifiedDistrict&>(d));
+    else if (typeid(d) == typeid(DividedDistrict))
+         _arr[_logSize] = new DividedDistrict(dynamic_cast<const DividedDistrict&>(d));
+    
 	++_logSize;
+    return *_arr[_logSize - 1];
 }
 void DistrictArray::setLength(int new_size) {
 	if (new_size > _pysSize) {
@@ -79,10 +115,10 @@ void DistrictArray::print() const {
 	}
 }
 
-void DistrictArray::addPartyToDistrict() {
+void DistrictArray::addPartyToDistrict(Party* p) {
 	for (int i = 0; i < _logSize; i++)
 	{
-		_arr[i]->addPartyToDistrict();
+		_arr[i]->getPartiesData().add(p);
 	}
 }
 

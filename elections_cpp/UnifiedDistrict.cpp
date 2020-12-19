@@ -14,19 +14,26 @@ namespace elections {
 
 UnifiedDistrict::UnifiedDistrict(String name, int numberOfCandidates) : District(name, numberOfCandidates) {}
 
-UnifiedDistrict::UnifiedDistrict(const UnifiedDistrict& other) : District(other), _winnerCandidate(other._winnerCandidate) {}
+UnifiedDistrict::UnifiedDistrict(const UnifiedDistrict& other) : District(other) {}
 
 UnifiedDistrict::~UnifiedDistrict() {
 }
 
-const DynamicArray& UnifiedDistrict::evalPartition(){
-    District::evalPartition();
+void UnifiedDistrict::evalPartition(){
+    District::evalPartition(); // sort the array
+
+    _partiesData[0].party->addTotalCandidates(_numberOfCandidates);
     
-    // get the max from _candidatePartition and put the candidate in PersonPtr _winnerCandidate
+//    PersonPtr candidate = _partiesData.get(id).party->getCandidatePtr();
+//    _chosenCandidates.addPerson(candidate);
     
-     return _candidatePartition;
 }
 
+ostream& UnifiedDistrict::showWinners(ostream& out) const {
+    out << _partiesData[0].party->getCandidate();
+    out << "    with " << _partiesData[0].candidates << "candidates" <<endl;
+    return out;
+}
 
 }
 

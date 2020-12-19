@@ -14,19 +14,14 @@ namespace elections {
 class UnifiedDistrict : public District {
     
 private:
-    PersonPtr _winnerCandidate;
 public:
     UnifiedDistrict(String name, int numberOfCandidates);
-    ~UnifiedDistrict();
     UnifiedDistrict(const UnifiedDistrict&);
-       
-    const Person& getWinnerCandidate() const { return *_winnerCandidate; }
-    
-    virtual const DynamicArray& evalPartition();
+    virtual ~UnifiedDistrict();
 
-    bool setWinnerCandidate(PersonPtr p) { _winnerCandidate = p; return true; }
-	
-	virtual const String type() const { return "Unified"; }
+    virtual void evalPartition();
+	virtual void type(std::ostream& os) const { os << "Unified"; }
+    virtual std::ostream& showWinners(std::ostream&) const;
 
 	//ostream& operator<<(ostream& os, const UnifiedDistrict& d)
 };

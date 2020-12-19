@@ -1,4 +1,5 @@
 #include "Party.h"
+#include "District.h"
 using namespace std;
 
 namespace elections {
@@ -6,7 +7,7 @@ namespace elections {
 int Party::totalParties = 0;
 
 Party::Party(const String& name, PersonPtr candidate) :
-	_id(++totalParties), _name(name), _firstCandidate(candidate)
+	_id(++totalParties), _name(name), _firstCandidate(candidate), _totalCandidates(0), _totalVotes(0)
 {
 }
 
