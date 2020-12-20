@@ -7,7 +7,7 @@ namespace elections {
 	int District::totalDistricts = 0;
 
 	District::District(String name, int numberOfCandidates) :
-		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0),     _partiesData(Party::totalParties)
+		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0), _partiesData(Party::totalParties)
 	{
 	}
 
@@ -74,7 +74,6 @@ namespace elections {
     void District::evalPartition()
     {
         int parties_num = _partiesData.getLength(), count = 0;
-
         for (int i = 0; i < parties_num; i++) {
             _partiesData[i].candidates = calcFinalSumOfCandidatesFromParty(i);
             count += _partiesData[i].candidates;
@@ -84,8 +83,6 @@ namespace elections {
             int id = _partiesData.getPartyIdWithMaxVotes();
             _partiesData.get(id).candidates += _numberOfCandidates - count;
         }
-
         _partiesData.sortArrayByCandidates();
-    
     }
 }

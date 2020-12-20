@@ -37,9 +37,16 @@ namespace elections {
 	{
 		election.addDistrict("A", 5, 0);
 		election.addDistrict("B", 10, 0);
-		election.addDistrict("C", 3, 0);
 
 		election.addPerson("yuval", 1, 1996, 1);
+		election.addPerson("oded", 11, 1996, 2);
+
+		election.addParty("LIKUD", 1);
+		election.addParty("AVODA", 11);
+
+		election.addDistrict("C", 3, 0);
+
+		/*election.addPerson("yuval", 1, 1996, 1);*/
 		election.addPerson("tamir", 2, 1994, 1);
 		election.addPerson("ohad", 3, 1996, 1);
 		election.addPerson("nir", 4, 1994, 1);
@@ -49,7 +56,7 @@ namespace elections {
 		election.addPerson("omer", 8, 1997, 1);
 		election.addPerson("hadar", 9, 1998, 1);
 		election.addPerson("adi", 10, 1992, 1);
-		election.addPerson("oded", 11, 1996, 2);
+		/*election.addPerson("oded", 11, 1996, 2);*/
 		election.addPerson("gal", 12, 1996, 2);
 		election.addPerson("shaked", 13, 1996, 2);
 		election.addPerson("mali", 14, 1996, 2);
@@ -70,8 +77,8 @@ namespace elections {
 		election.addPerson("mali", 29, 1996, 3);
 		election.addPerson("zohar", 30, 1996, 3);
 
-		election.addParty("LIKUD", 1);
-		election.addParty("AVODA", 11);
+		//election.addParty("LIKUD", 1);
+		//election.addParty("AVODA", 11);
 		election.addParty("LIBRMAN", 21);
 
 		election.addPersonAsCandidate(2, 1, 1);

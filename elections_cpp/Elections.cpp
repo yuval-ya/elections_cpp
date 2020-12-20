@@ -3,26 +3,14 @@
 
 namespace elections {
 
-Elections::Elections() {
-    setDate(1, 1, 1);
-    
-}
-
-Elections::Elections(int day, int month, int year)
+Elections::Elections(const Date& date): _date(date)
 {
-    setDate(year, month, day);
+}
+
+Elections::~Elections() {
 }
 
 
-bool Elections::setDate(int year, int month, int day) {
-    if (year < 1 || year > 2022 || month < 1 || month > 12 || day < 1 || day > 31) {
-        return false;
-    }
-    _year = year;
-    _month = month;
-    _day = day;
-    return true;
-}
 
 bool Elections::addDistrict(String name, int number_of_candidates, int type)
 {
@@ -90,31 +78,19 @@ bool Elections::addPersonAsCandidate(int person_id, int party_id, int district_i
     return false;
 }
 
-void Elections::printVoters() const
-{
-    _voters.printList();
-}
-
-void Elections::printDistricts() const
-{
-    _districts.print();
-}
-
-void Elections::printParties() const
-{
-    _parties.print();
-}
-
 bool Elections::vote(int person_id, int party_id)
 {
     PersonPtr person = _voters.getPersonPtr(person_id);
     if (person == nullptr || person->isVoted() || party_id > _parties.getLength()) {
         return false;
     }
+
     int district_id = person->getDistrictID();
     _districts.get(district_id).vote(party_id);
-    _parties.get(party_id).addTotalVotes(1);
-    return person->setVote(&(_parties.get(party_id)));
+
+	Party& party = _parties.get(party_id);
+	party.addTotalVotes(1);
+    return person->setVote(&party);
 }
 
 
@@ -123,19 +99,13 @@ bool Elections::finalEvaluation() {
     int numOfParties = _parties.getLength();
     
     for (int i = 0; i < numOfParties; i++)
-    {
         _parties[i].setTotalCandidates(0);
-    }
     
     for (int i = 0; i < numOfDistricts; i++)
-    {
-        District& district = _districts[i];
-        district.evalPartition();
-    }
+        _districts[i].evalPartition();
     
     return true;
 }
-
 
 
 Party** Elections::getSortedPartiesArr(int& size) {
@@ -143,9 +113,8 @@ Party** Elections::getSortedPartiesArr(int& size) {
     Party** res = new Party*[numOfParties];
     
     for (int i = 0; i < numOfParties; i++)
-    {
         res[i] = &_parties[i];
-    }
+
     PartyArray::mergeSort(res, 0, numOfParties - 1);
     size = numOfParties;
     return res;

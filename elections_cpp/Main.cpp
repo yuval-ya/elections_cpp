@@ -1,24 +1,71 @@
 //#define _CRTDB_MAP_ALLOC
 //#include <crtdbg.h>
 
-#include <iostream>
-using namespace std;
-
 #include "Main.h" 
 #include "Elections.h"
-using namespace elections;
-
+#include "SimpleElections.h"
 #include "Menu.h"
+
+using namespace elections;
+using namespace std;
+
 
 
 
 int main(void) {    
-	{
-		Elections election;
+	
+	int option;
+	cout << endl << "Elections Manager -" << endl;
+	cout << endl << "Choose an option:" << endl;
+	cout << "1.Create new elections round." << endl;
+	cout << "2.Load an existing round of elections." << endl;
+	cout << "3.Exit." << endl;
+	cin >> option;
 
-		Menu::test(election);
-		start(election);
+	if (option == 1)
+	{
+		int roundType;
+		Date date;
+
+		cout << "Choose the type of the elections (1 for Regular , 2 for Simple): ";
+		cin >> roundType;
+		cout << "Enter the date of the elections (day-month-year): ";
+		cin >> date;
+
+		if (roundType == 1) {
+			Elections election(date);
+			Menu::test(election);
+			start(election);
+		}
+		else if (roundType == 2) {
+			int numOfCandidates;
+			cout << "Enter the number of candidates that will be in the election: ";
+			cin >> numOfCandidates;
+			SimpleElections election(numOfCandidates, date);
+			Menu::test(election);
+			start(election);
+		}
+		else {
+			cout << "Wrong Input!" << endl;
+		}
 	}
+	else if (option == 2)
+	{
+		char name[MAX_SIZE];
+		cout << "Enter file name: ";
+		cin >> name;
+
+		// load
+
+	}
+	else if(option != 3)
+	{
+		cout << "Wrong Input!" << endl;
+	}
+
+	cout << "Bye!" << endl;
+
+
 //	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 //	_CrtDumpMemoryLeaks();
     return 0;
@@ -27,12 +74,6 @@ int main(void) {
 void start(Elections& election)
 {
 	int choice = 1;
-	int year, month, day;
-	do {
-		cout << "Enter election's date (year,month,day): " << endl;
-		cin >> year >> month >> day;
-	} while (!election.setDate(year, month, day));
-
 	while (choice != 10) {
 		cout << "\nMain menu - choose an option:" << endl;
 		cout << "1.Add District." << endl;
@@ -44,7 +85,9 @@ void start(Elections& election)
 		cout << "7.Print all Parties." << endl;
 		cout << "8.Vote." << endl;
 		cout << "9.Show Election results." << endl;
-		cout << "10.Exit.\n" << endl;
+		cout << "10.Exit." << endl;
+		cout << "11.Save elections to file." << endl;
+		cout << "12.Load elections from file.\n" << endl;
 
 		cin >> choice;
 		if (!options(election, choice)) {
@@ -130,13 +173,13 @@ bool options(Elections& election, int choice)
 		flag = setCitizenAsCandidate(election);
 		break;
 	case 5:
-		election.printDistricts();
+		election.getDistricts().print();
 		break;
 	case 6:
-		election.printVoters();
+		election.getVoters().printList();
 		break;
 	case 7:
-		election.printParties();
+		election.getParties().print();
 		break;
 	case 8:
 		flag = vote(election);
@@ -157,13 +200,13 @@ void printStatistics(Elections& election) {
 	int numOfDistricts = election.getDistricts().getLength();
 	int numOfParties = election.getParties().getLength();
 
+	cout << endl << "Elections Date: " << election.getDate() << endl << endl;
+
 	for (int i = 1; i <= numOfDistricts; i++)
 	{
 		const District& district = election.getDistricts().get(i);
-		    
-//        const PersonList& winningCandidate = district.getChosenCandidates();
 
-		cout << "============================================ " << endl;
+		cout << "------------------- District No." << i << " -------------------" << endl;
         cout << district << endl << "Winning candidates: "<< endl;
         district.showWinners(cout);
 

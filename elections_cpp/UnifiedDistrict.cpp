@@ -21,17 +21,12 @@ UnifiedDistrict::~UnifiedDistrict() {
 
 void UnifiedDistrict::evalPartition(){
     District::evalPartition(); // sort the array
-
-    _partiesData[0].party->addTotalCandidates(_numberOfCandidates);
-    
-//    PersonPtr candidate = _partiesData.get(id).party->getCandidatePtr();
-//    _chosenCandidates.addPerson(candidate);
-    
+    _partiesData[0].party->addTotalCandidates(_numberOfCandidates);  
 }
 
 ostream& UnifiedDistrict::showWinners(ostream& out) const {
-    out << _partiesData[0].party->getCandidate();
-    out << "    with " << _partiesData[0].candidates << "candidates" <<endl;
+    out << "First candidate of Party No." << _partiesData[0].party->getId() << ": "<< _partiesData[0].party->getCandidate();
+    out << " with " << _partiesData[0].candidates << "candidates " <<endl;
     return out;
 }
 

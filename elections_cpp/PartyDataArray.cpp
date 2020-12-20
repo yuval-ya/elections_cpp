@@ -5,7 +5,8 @@ using namespace std;
 namespace elections {
 
 PartyDataArray::PartyDataArray(int size) :
-_arr(new Tuple*[size]), _logSize(size), _pysSize(size){
+_arr(new Tuple*[size]), _logSize(0), _pysSize(size){
+
 }
 
 PartyDataArray::~PartyDataArray() {

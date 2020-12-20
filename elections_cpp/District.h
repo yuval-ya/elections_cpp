@@ -15,7 +15,6 @@ namespace elections {
 		int				_numberOfCandidates;
         int				_numberOfVoters;
 		PersonList		_voters;
-        //PersonList      _chosenCandidates;
         PartyDataArray  _partiesData;
 	public:
 		static int totalDistricts;
@@ -31,8 +30,6 @@ namespace elections {
 		int getCitizensNumber() const { return _voters.getPersonNumber(); }
 		int getPartyVotes(int party_id) const { return _partiesData.get(party_id).votes; }
 		int getPartyCandidatesNum(int party_id) const { return _partiesData.get(party_id).candidates; }
-//        PersonList& getChosenCandidates() { return _chosenCandidates; }
-//        const PersonList& getChosenCandidates() const { return _chosenCandidates; }
         const PartyDataArray& getPartiesData() const { return _partiesData; }
         PartyDataArray& getPartiesData() { return _partiesData; }
         PersonList& getVoters() { return _voters; }
