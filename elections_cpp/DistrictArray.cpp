@@ -5,7 +5,7 @@ using namespace std;
 namespace elections {
 
 DistrictArray::DistrictArray(int size) : 
-	_arr(new District*[size]), _logSize(size), _pysSize(size){
+	_arr(new District*[size]), _logSize(0), _pysSize(size){
 }
 
 DistrictArray::~DistrictArray() {
@@ -17,7 +17,6 @@ DistrictArray::~DistrictArray() {
 
 
 void DistrictArray::resize(int new_size) {
-	
 	District** temp = new District*[new_size];
 
 	int copy = _logSize <= new_size ? _logSize : new_size;
@@ -33,13 +32,8 @@ void DistrictArray::resize(int new_size) {
 	this->_pysSize = new_size;
 }
 
-const District& DistrictArray::get(int id) const {
-    checkValidIdx(id - 1);
-    
+const District& DistrictArray::get(int id) const {  
     District* p = nullptr;
-    
-    if (_arr[id - 1]->getId() == id)
-        p = _arr[id - 1];
     
     for (int i = 0; i < _logSize && !p; i++)
     {
@@ -53,13 +47,8 @@ const District& DistrictArray::get(int id) const {
     return *p;
 }
 
-District& DistrictArray::get(int id) {
-    checkValidIdx(id - 1);
-    
+District& DistrictArray::get(int id) {    
     District* p = nullptr;
-
-    if (_arr[id - 1]->getId() == id)
-        p = _arr[id - 1];
 
     for (int i = 0; i < _logSize && !p; i++)
     {
@@ -69,7 +58,7 @@ District& DistrictArray::get(int id) {
     
     if (p == nullptr)
         exit(1);
-        
+
     return *p;
 }
 

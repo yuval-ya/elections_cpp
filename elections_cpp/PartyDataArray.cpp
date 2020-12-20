@@ -6,7 +6,6 @@ namespace elections {
 
 PartyDataArray::PartyDataArray(int size) :
 _arr(new Tuple*[size]), _logSize(0), _pysSize(size){
-
 }
 
 PartyDataArray::~PartyDataArray() {
@@ -38,14 +37,9 @@ bool PartyDataArray::resize(int new_size) {
     return true;
 }
 
-PartyDataArray::Tuple& PartyDataArray::get(int id) {
-    checkValidIdx(id - 1);
-    
+PartyDataArray::Tuple& PartyDataArray::get(int id) {  
     Tuple* p = nullptr;
-    
-    if (_arr[id - 1]->party->getId() == id)
-        p = _arr[id - 1];
-    
+
     for (int i = 0; i < _logSize && !p; i++)
     {
         if (_arr[i]->party->getId() == id)
@@ -59,12 +53,7 @@ PartyDataArray::Tuple& PartyDataArray::get(int id) {
 }
 
 const PartyDataArray::Tuple& PartyDataArray::get(int id) const {
-    checkValidIdx(id - 1);
-    
     Tuple* p = nullptr;
-    
-    if (_arr[id - 1]->party->getId() == id)
-        p = _arr[id - 1];
     
     for (int i = 0; i < _logSize && !p; i++)
     {

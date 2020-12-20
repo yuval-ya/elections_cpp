@@ -10,7 +10,7 @@ class Party
 	// A class representing a Party in the elections
 
 private:
-	const int			_id;
+	int					_id;
 	String				_name;
     PersonPtr		    _firstCandidate;
 	int					_totalCandidates,
@@ -26,21 +26,18 @@ public:
 
 	int getId() const { return _id; }
 	const String& getName() const { return _name; }
-	const PersonList& getCandidatesListFromDistrict(int district_id) const { return _candidates.get(district_id); }
+	CandidatesArray& getCandidatesArray() { return _candidates; }
 	const CandidatesArray& getCandidatesArray() const { return _candidates; }
 	PersonPtr getCandidatePtr() { return _firstCandidate; }
+	Person& getCandidate() { return *_firstCandidate; }
     const Person& getCandidate() const { return *_firstCandidate; }
     int getTotalCandidates() const { return _totalCandidates; }
     int getTotalVotes() const { return _totalVotes; }
 
+	bool setName(const String& name);
+	bool setId(int id);
     bool setTotalCandidates(int val);
     bool setFirstCandidate(PersonPtr candidate);
-
-	// add a new candidate to the candidate list according to the district id
-	void addCandidate(PersonPtr p, int district_id);
-
-	// add a new empty list to Candidates Array
-	void addDistrictToCandidatesArr();
 
 	// add value to the total number of candidates the party get in the elections 
 	void addTotalCandidates(int val) { _totalCandidates += val; }

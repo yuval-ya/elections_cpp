@@ -6,7 +6,7 @@ namespace elections {
 
 
 PartyArray::PartyArray(int size) :
-_arr(new Party*[size]), _logSize(size), _pysSize(size){
+_arr(new Party*[size]), _logSize(0), _pysSize(size){
 }
 
 PartyArray::~PartyArray() {
@@ -32,13 +32,8 @@ bool PartyArray::resize(int new_size) {
     return true;
 }
 
-const Party& PartyArray::get(int id) const {
-    checkValidIdx(id - 1);
-    
+const Party& PartyArray::get(int id) const {    
     Party* p = nullptr;
-
-    if (_arr[id - 1]->getId() == id)
-        p = _arr[id - 1];
 
     for (int i = 0; i < _logSize && !p; i++)
     {
@@ -117,10 +112,10 @@ void PartyArray::print() const {
     }
 }
 
-bool PartyArray::addDistrictToParty() {
+bool PartyArray::addDistrictToParty(const District* district) {
     for (int i = 0; i < _logSize; i++)
     {
-        _arr[i]->addDistrictToCandidatesArr();
+		_arr[i]->getCandidatesArray().add(district);
     }
     return true;
 }

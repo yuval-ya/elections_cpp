@@ -10,8 +10,6 @@ using namespace elections;
 using namespace std;
 
 
-
-
 int main(void) {    
 	
 	int option;
@@ -202,28 +200,28 @@ void printStatistics(Elections& election) {
 
 	cout << endl << "Elections Date: " << election.getDate() << endl << endl;
 
-	for (int i = 1; i <= numOfDistricts; i++)
+	for (int i = 0; i < numOfDistricts; i++)
 	{
-		const District& district = election.getDistricts().get(i);
+		const District& district = election.getDistricts()[i];
 
-		cout << "------------------- District No." << i << " -------------------" << endl;
+		cout << "------------------- District No." << (i+1) << " -------------------" << endl;
         cout << district << endl << "Winning candidates: "<< endl;
         district.showWinners(cout);
 
-		for (int j = 1; j <= numOfParties; j++)
+		for (int j = 0; j < numOfParties; j++)
 		{
-			const Party& party = election.getParties().get(j);
-			int numOfCandidatesFromParty = district.getPartyCandidatesNum(j);
-			const PersonList& candidateList = party.getCandidatesListFromDistrict(i);
+			const Party& party = election.getParties()[j];
+			int numOfCandidatesFromParty = district.getPartyCandidatesNum(party.getId());
+			const PersonList& candidateList = party.getCandidatesArray().get(district.getId());
 
-			cout << "\nParty No." << j << endl;
+			cout << "\nParty ID " << party.getId() << endl;
 			if (candidateList.getPersonNumber() < numOfCandidatesFromParty)
 			{	//There are not enough candidates from this district
 				cout << "*** There are not enough candidates in the party to district" << i << " ***" << endl;
 			}
 			candidateList.printList(numOfCandidatesFromParty);
-			cout << "Total votes - " << district.getPartyVotes(j) << endl;
-			cout << "Percentage of votes - " << district.calcPartyPercentInVotes(j) << endl;
+			cout << "Total votes - " << district.getPartyVotes(party.getId()) << endl;
+			cout << "Percentage of votes - " << district.calcPartyPercentInVotes(party.getId()) << endl;
 		}
 		cout << "\nPercentage of votes in the district: " << district.calcVotersPercentage() << endl << endl;
 	}

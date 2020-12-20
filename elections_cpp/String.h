@@ -20,6 +20,6 @@ public:
 
 	int foo() { return 1; }
 
-	String& operator=(String&);
+	String& operator=(const String&);
 	friend std::ostream& operator<<(std::ostream& os, const String& str);
 };

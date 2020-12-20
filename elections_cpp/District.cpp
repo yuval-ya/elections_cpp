@@ -6,7 +6,7 @@ namespace elections {
 
 	int District::totalDistricts = 0;
 
-	District::District(String name, int numberOfCandidates) :
+	District::District(const String& name, int numberOfCandidates) :
 		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0), _partiesData(Party::totalParties)
 	{
 	}
@@ -70,6 +70,16 @@ namespace elections {
 		return true;
 	}
 
+	bool District::setName(const String& name)
+	{
+		_name = name;
+		return true;
+	}
+
+	bool District::setId(int id) {
+		_id = id;
+		return true;
+	}
 
     void District::evalPartition()
     {

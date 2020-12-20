@@ -19,6 +19,7 @@ namespace elections {
 		const District*		_district;
 		const Party*		_vote;
 		const Party*		_isCandidate;
+
 	public:
 		Person(const String&, int id, int year, const District* district);
 		Person(const Person& p);
@@ -28,6 +29,11 @@ namespace elections {
 		int getID() const { return _id; };
 		int getYear() const { return _birthYear; };
 		int getDistrictID() const;
+
+		bool setName(const String& name);
+		bool setId(int id);
+		bool setBirthYear(int birthYear);
+		bool setDistrict(const District* district);
 
 		// set the citizen as a candidate of a party by adding the pointer to the party
 		bool setAsCandidate(const Party* p);

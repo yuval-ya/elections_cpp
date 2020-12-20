@@ -20,11 +20,33 @@ namespace elections {
 	Person::~Person() {
 	}
 
+	bool Person::setName(const String& name)
+	{
+		_name = name;
+		return true;
+	}
+
+	bool Person::setId(int id) {
+		_id = id;
+		return true;
+	}
+	bool Person::setBirthYear(int birthYear) {
+		_birthYear = birthYear;
+		return true;
+	}
+
+	bool Person::setDistrict(const District* district) {
+		_district = district;
+		return true;
+	}
+
 	int Person::getDistrictID() const
 	{
         int id = _district->getId();
         return id;
 	}
+
+
 
 	bool Person::setAsCandidate(const Party* p)
 	{

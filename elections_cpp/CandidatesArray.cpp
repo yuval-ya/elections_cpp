@@ -1,12 +1,12 @@
 #include "CandidatesArray.h"
 using namespace std;
 
+# include "District.h"
+
 namespace elections {
 
-CandidatesArray::CandidatesArray(int size) : _arr(new PersonList*[size]), _logSize(size), _pysSize(size)
+CandidatesArray::CandidatesArray(int size) : _arr(new Tuple*[size]), _logSize(0), _pysSize(size)
 {
-    for (int i = 0; i < size; i++)
-        _arr[i] = new PersonList;
 }
 
 CandidatesArray::~CandidatesArray() {
@@ -16,9 +16,10 @@ CandidatesArray::~CandidatesArray() {
     }
     delete[] _arr;
 }
+
 bool CandidatesArray::resize(int new_size) {
 
-    PersonList** temp = new PersonList*[new_size];
+    Tuple** temp = new Tuple*[new_size];
 
     int copy = _logSize <= new_size ? _logSize : new_size;
     for (int i = 0; i < copy; ++i)
@@ -35,21 +36,43 @@ bool CandidatesArray::resize(int new_size) {
 }
 
 PersonList& CandidatesArray::get(int district_id) {
-    checkValidIdx(district_id - 1);
-    return *_arr[district_id - 1];
+	Tuple* p = nullptr;
+
+	for (int i = 0; i < _logSize && !p; i++)
+	{
+		if (_arr[i]->district->getId() == district_id)
+			p = _arr[i];
+	}
+
+	if (p == nullptr)
+		exit(1);
+
+	return p->candidateList;
 }
 
 const PersonList& CandidatesArray::get(int district_id) const {
-    checkValidIdx(district_id - 1);
-    return *_arr[district_id - 1];
+	Tuple* p = nullptr;
+
+	for (int i = 0; i < _logSize && !p; i++)
+	{
+		if (_arr[i]->district->getId() == district_id)
+			p = _arr[i];
+	}
+
+	if (p == nullptr)
+		exit(1);
+
+	return p->candidateList;
 }
 
-bool CandidatesArray::add() {
+bool CandidatesArray::add(const District* district) {
     if (_logSize == _pysSize) {
         resize(_logSize * 2 + 1);
     }
-    _arr[_logSize] = new PersonList();
+    _arr[_logSize] = new Tuple;
+	_arr[_logSize]->district = district;
     _logSize++;
+
     return true;
 }
 bool CandidatesArray::setLength(int new_size) {
@@ -60,12 +83,12 @@ bool CandidatesArray::setLength(int new_size) {
     return true;
 }
 
-PersonList& CandidatesArray::operator[](int idx) {
+CandidatesArray::Tuple& CandidatesArray::operator[](int idx) {
     checkValidIdx(idx);
     return *_arr[idx];
 }
 
-const PersonList& CandidatesArray::operator[](int idx) const {
+const CandidatesArray::Tuple& CandidatesArray::operator[](int idx) const {
     checkValidIdx(idx);
     return *_arr[idx];
 }
@@ -73,9 +96,9 @@ const PersonList& CandidatesArray::operator[](int idx) const {
 ostream& operator<<(ostream& os, const CandidatesArray& c_arr) {
     int size = c_arr.getLength();
     for (int i = 0; i < size; i++) {
-        if (c_arr[i].getPersonNumber() > 0) {
-            os << "District No." << (i + 1) << " :" << endl;
-            os << c_arr[i] << endl;
+        if (c_arr[i].candidateList.getPersonNumber() > 0) {
+            os << "District No." << c_arr[i].district->getId() << " :" << endl;
+            os << c_arr[i].candidateList << endl;
         }
     }
     return os;

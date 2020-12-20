@@ -39,7 +39,7 @@ bool String::set(const char *str) {
     return true;
 }
 
-String& String::operator=(String& other){
+String& String::operator=(const String& other){
     if (this != &other) {
         if (_str)
             delete[] _str;

@@ -9,7 +9,12 @@ class CandidatesArray
 	// Used to store lists of candidates by division into districts (index in the array)
 
 private:
-	PersonList** _arr;
+	struct Tuple {
+		const District* district;
+		PersonList candidateList;
+	};
+
+	Tuple** _arr;
 	int _logSize;
 	int _pysSize;
 	
@@ -26,15 +31,15 @@ public:
     const PersonList& get(int district_id) const;
   
 	// add empty list to the next empty cell
-	bool add();
+	bool add(const District* district);
 
 	int getLength() const { return _logSize; }
 	bool setLength(int new_size);
 
 	// return list of candidates according to the index received
 	// Notice: arr[0] = PersonList No.1
-	PersonList& operator[](int idx);
-	const PersonList& operator[](int idx) const;
+	Tuple& operator[](int idx);
+	const Tuple& operator[](int idx) const;
 
 	friend std::ostream& operator<<(std::ostream& os, const CandidatesArray& c_arr);
 };

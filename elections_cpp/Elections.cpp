@@ -31,7 +31,7 @@ bool Elections::addDistrict(String name, int number_of_candidates, int type)
         newDistrict->getPartiesData().add(&_parties[i]);
     }
     
-    _parties.addDistrictToParty();
+    _parties.addDistrictToParty(newDistrict);
     return true;
 }
 
@@ -57,6 +57,11 @@ bool Elections::addParty(String name, int candidate_id)
     Party& p = _parties.add(new_party);
     _districts.addPartyToDistrict(&p);
     candidate->setAsCandidate(&p);
+
+	for (int i = 0; i < _districts.getLength(); i++) {
+		p.getCandidatesArray().add(&_districts[i]);
+	}
+
     return true;
 }
 
@@ -70,7 +75,7 @@ bool Elections::addPersonAsCandidate(int person_id, int party_id, int district_i
         if (candidate != nullptr && !candidate->isCandidate())
         {
             Party& party = _parties.get(party_id);
-            party.addCandidate(candidate, district_id);
+			party.getCandidatesArray().get(district_id).addPerson(candidate);
             candidate->setAsCandidate(&party);
             return true;
         }

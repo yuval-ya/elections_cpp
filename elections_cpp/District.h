@@ -11,15 +11,18 @@ namespace elections {
 
 	protected:
         String          _name;
-		const int		_id;
+		int				_id;
 		int				_numberOfCandidates;
         int				_numberOfVoters;
 		PersonList		_voters;
         PartyDataArray  _partiesData;
+		// candidates Array
+		PersonList		_chosenCandidates;
+
 	public:
 		static int totalDistricts;
-
-		District(String name, int number_of_candidates);
+		
+		District(const String& name, int number_of_candidates);
 		District(const District&);
 		virtual ~District();
 
@@ -30,13 +33,16 @@ namespace elections {
 		int getCitizensNumber() const { return _voters.getPersonNumber(); }
 		int getPartyVotes(int party_id) const { return _partiesData.get(party_id).votes; }
 		int getPartyCandidatesNum(int party_id) const { return _partiesData.get(party_id).candidates; }
-        const PartyDataArray& getPartiesData() const { return _partiesData; }
-        PartyDataArray& getPartiesData() { return _partiesData; }
+		PartyDataArray& getPartiesData() { return _partiesData; }
+		const PartyDataArray& getPartiesData() const { return _partiesData; }   
         PersonList& getVoters() { return _voters; }
         const PersonList& getVoters() const { return _voters; }
+		PersonList& getChosenCandidates() { return _chosenCandidates; }
+		const PersonList& getChosenCandidates() const { return _chosenCandidates; }
 
 		bool setNumberOfCandidates(int numberOfCandidates);
-        bool setName(String name) { _name = name; return true; }
+		bool setName(const String& name);
+		bool setId(int id);
 
 		// Calculation of the percentage of votes in the whole district
 		float calcVotersPercentage() const;

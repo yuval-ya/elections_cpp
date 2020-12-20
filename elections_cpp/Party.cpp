@@ -22,6 +22,17 @@ Party::~Party() {
 	
 }
 
+bool Party::setName(const String& name)
+{
+	_name = name;
+	return true;
+}
+
+bool Party::setId(int id) {
+	_id = id;
+	return true;
+}
+
 bool Party::setTotalCandidates(int val)
 {
     _totalCandidates = val;
@@ -34,19 +45,9 @@ bool Party::setFirstCandidate(PersonPtr candidate)
     return true;
 }
 
-void Party::addCandidate(PersonPtr p, int district_id) {
-	_candidates.get(district_id).addPerson(p);
-}
-
-
 ostream& operator<<(ostream& os, const Party& p) {
 	os << "Party ID: " << p._id << " | Name: " << p._name << " | First candidate ID: " << p._firstCandidate->getID();
 	return os;
-}
-
-void Party::addDistrictToCandidatesArr()
-{
-	_candidates.add();
 }
 
 }

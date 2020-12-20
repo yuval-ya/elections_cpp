@@ -35,7 +35,7 @@ public:
 	Party& add(const Party& d);
   
 	// add new cell for District in each Party in the array
-	bool addDistrictToParty();
+	bool addDistrictToParty(const District* district);
 
 	void print() const;
     

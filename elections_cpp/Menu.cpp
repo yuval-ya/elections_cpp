@@ -35,8 +35,8 @@ namespace elections {
 
 	void Menu::test(Elections& election)
 	{
-		election.addDistrict("A", 5, 0);
-		election.addDistrict("B", 10, 0);
+		election.addDistrict("A", 5, 1);
+		election.addDistrict("B", 10, 1);
 
 		election.addPerson("yuval", 1, 1996, 1);
 		election.addPerson("oded", 11, 1996, 2);
@@ -139,6 +139,8 @@ namespace elections {
 		election.vote(28, 1);
 		election.vote(29, 2);
 		election.vote(30, 1);
+
+		election.getDistricts()[0].setId(10);
 
 	}
 //

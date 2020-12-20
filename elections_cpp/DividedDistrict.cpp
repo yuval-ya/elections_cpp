@@ -26,13 +26,15 @@ void DividedDistrict::evalPartition(){
     for (int i = 0; i < _partiesData.getLength() ; i++){
         int num_candidates = _partiesData[i].candidates;
         _partiesData[i].party->addTotalCandidates(num_candidates);
+		_chosenCandidates.addPerson(_partiesData[i].party->getCandidatePtr());
     }
 }
 
 ostream& DividedDistrict::showWinners(ostream& out) const{
     for(int i = 0; i < _partiesData.getLength() && _partiesData[i].candidates > 0; i++){
-		out << "First candidate of Party No." << _partiesData[i].party->getId() << ": " << _partiesData[i].party->getCandidate();
-        out << " with " << _partiesData[i].candidates << " candidates" <<endl;
+		out << "First candidate of Party No." << _partiesData[i].party->getId() << ": ";
+		out << _partiesData[i].party->getCandidate() << " with " ;
+        out << _partiesData[i].candidates << " candidates" <<endl;
     }
     return out;
 }
