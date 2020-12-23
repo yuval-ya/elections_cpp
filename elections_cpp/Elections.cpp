@@ -12,21 +12,32 @@ Elections::~Elections() {
 
 
 
-bool Elections::addDistrict(String name, int number_of_candidates, int type)
+bool Elections::addDistrict(String name, int number_of_candidates, DistrictType type)
 {
     District* newDistrict;
     
-    if (type == 0){
-        DividedDistrict dDistrict(name, number_of_candidates);
-        newDistrict = &_districts.add(dDistrict);
-    }
-    else if (type == 1){
-        UnifiedDistrict uDistrict(name, number_of_candidates);
-        newDistrict = &_districts.add(uDistrict);
-    }
-    else
+    if (number_of_candidates < 0)
         return false;
     
+    switch (type) {
+        case DistrictType::DIVIDED:
+            {
+                DividedDistrict dDistrict(name, number_of_candidates);
+                newDistrict = &_districts.add(dDistrict);
+            }
+            break;
+        case DistrictType::UNIFIED:
+            {
+                UnifiedDistrict uDistrict(name, number_of_candidates);
+                newDistrict = &_districts.add(uDistrict);
+            }
+            break;
+            
+        default:
+            return false;
+            break;
+    }
+ 
     for (int i = 0; i < _parties.getLength(); i++){
         newDistrict->getPartiesData().add(&_parties[i]);
     }

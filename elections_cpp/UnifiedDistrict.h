@@ -20,10 +20,11 @@ public:
     virtual ~UnifiedDistrict();
 
     virtual void evalPartition();
+    
 	virtual void type(std::ostream& os) const { os << "Unified"; }
+    
     virtual std::ostream& showWinners(std::ostream&) const;
 
-	//ostream& operator<<(ostream& os, const UnifiedDistrict& d)
 };
 
 

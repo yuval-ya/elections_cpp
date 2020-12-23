@@ -3,9 +3,14 @@
 
 class Date
 {
+
 private:
 	int	_day, _month, _year;
-
+    static const int MAX_DAY, MIN_DAY, MAX_MONTH, MIN_MONTH, MIN_YEAR, MAX_YEAR;
+    
+    static bool checkYear(int);
+    static bool checkMonth(int);
+    static bool checkDay(int);
 public:
 	Date();
 	Date(int day, int month, int year);

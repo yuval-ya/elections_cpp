@@ -13,7 +13,7 @@ namespace elections {
 	SimpleElections::~SimpleElections() {
 	}
 
-	bool SimpleElections::addDistrict(String name, int number_of_candidates, int type) {
+	bool SimpleElections::addDistrict(String name, int number_of_candidates, DistrictType type) {
 		cout << "\nNo district can be added to this type of election." << endl;
 		return false;
 	}

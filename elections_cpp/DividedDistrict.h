@@ -25,7 +25,6 @@ public:
 
     virtual std::ostream& showWinners(std::ostream& os) const;
 
-	//ostream& operator<<(ostream& os, const DividedDistrict& d)
 };
 
 

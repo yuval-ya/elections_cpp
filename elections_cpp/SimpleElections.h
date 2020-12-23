@@ -14,7 +14,7 @@ namespace elections {
 		const District& getDistrict() const { return _districts[0]; }
 		District& getDistrict() { return _districts[0]; }
 
-		virtual bool addDistrict(String name, int number_of_candidates, int type) override;
+		virtual bool addDistrict(String name, int number_of_candidates, DistrictType type) override;
 
 		// add a new person to the voters list and to the district he belongs
 		virtual bool addPerson(String name, int id, int birth_year, int distric_id = 1) override;

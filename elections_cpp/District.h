@@ -5,6 +5,8 @@
 
 namespace elections {
 
+    enum class DistrictType { DIVIDED = 1, UNIFIED };
+
 	class District
 	{
 		// A class representing a District in the elections
@@ -16,7 +18,6 @@ namespace elections {
         int				_numberOfVoters;
 		PersonList		_voters;
         PartyDataArray  _partiesData;
-		// candidates Array
 		PersonList		_chosenCandidates;
 
 	public:
@@ -43,6 +44,8 @@ namespace elections {
 		bool setNumberOfCandidates(int numberOfCandidates);
 		bool setName(const String& name);
 		bool setId(int id);
+        
+        bool vote(int party_id);
 
 		// Calculation of the percentage of votes in the whole district
 		float calcVotersPercentage() const;
@@ -61,8 +64,6 @@ namespace elections {
         
 		virtual void type(std::ostream&) const = 0;
         
-		bool vote(int party_id);
-
 		friend std::ostream& operator<<(std::ostream& os, const District& d);
 	};
 }

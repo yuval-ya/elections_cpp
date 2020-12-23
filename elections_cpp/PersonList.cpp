@@ -25,6 +25,19 @@ namespace elections {
 		}
 	}
 
+
+    void PersonList::print(int count) const
+    {
+        Node* curr = _head;
+            
+        for (int i = 0; (i < count || count == -1) && curr != nullptr; i++)
+        {
+            cout << *(curr->person_p) << endl;
+            curr = curr->next;
+        }
+    }
+
+
 	PersonPtr PersonList::addPerson(const Person& p)
 	{
 		PersonPtr person_p = new Person(p);
@@ -44,6 +57,7 @@ namespace elections {
 		_personCount++;
 		return person_p;
 	}
+
 
 	const Person& PersonList::addPerson(PersonPtr p) {
 		Node* newnode = new Node();
@@ -68,7 +82,6 @@ namespace elections {
 	}
 
 
-
 	PersonPtr PersonList::getPersonPtr(int idnum) {
 		Node* curr = _head;
 		PersonPtr res = nullptr;
@@ -82,6 +95,7 @@ namespace elections {
 
 		return res;
 	}
+
 
 	const Person& PersonList::getPerson(int idnum) const {
 		Node* curr = _head;
@@ -100,26 +114,28 @@ namespace elections {
 		return *res;
 	}
 
-	void PersonList::printList() const
-	{
-		Node* curr = _head;
 
-		while (curr != nullptr) {
-			cout << *(curr->person_p) << endl;
-			curr = curr->next;
-		}
-	}
-	void PersonList::printList(int count) const
-	{
-		Node* curr = _head;
-		for (int i = 0; i < count && curr != nullptr; i++)
-		{
-			cout << *(curr->person_p) << endl;
-			curr = curr->next;
-		}
-	}
+const PersonList& PersonList::operator=(const PersonList& other)
+{
+    if (&other != this){
+        Node* curr = _head;
+        Node* temp;
 
-
+        while (curr != nullptr) {
+            temp = curr;
+            curr = curr->next;
+            delete temp;
+        }
+        
+        curr = other._head;
+        while(curr != nullptr){
+            this->addPerson(curr->person_p);
+            curr = curr->next;
+        }
+    }
+    
+    return *this;
+}
 	ostream& operator<<(ostream& os, const PersonList& p_lst) {
 		PersonList::Node* curr = p_lst._head;
 
@@ -129,6 +145,5 @@ namespace elections {
 		}
 		return os;
 	}
-
 
 }

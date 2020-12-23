@@ -8,7 +8,9 @@ namespace elections {
 
 	District::District(const String& name, int numberOfCandidates) :
 		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0), _partiesData(Party::totalParties)
-	{
+	{        
+//        if (numberOfCandidates < 1)
+//            throw;
 	}
 
 	District::District(const District& d) :

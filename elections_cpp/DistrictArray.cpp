@@ -42,7 +42,7 @@ const District& DistrictArray::get(int id) const {
     }
     
     if (p == nullptr)
-        exit(1);
+        exit(1);  // Handle Error 
     
     return *p;
 }
@@ -57,7 +57,7 @@ District& DistrictArray::get(int id) {
     }
     
     if (p == nullptr)
-        exit(1);
+        exit(1);  // Handle Error
 
     return *p;
 }

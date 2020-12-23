@@ -8,6 +8,8 @@
 
 namespace elections {
 
+enum class ElectionsType { RERGULAR = 1, SIMPLE };
+
 class Elections
 {
     // A class representing a Election round
@@ -35,7 +37,7 @@ public:
     PartyArray& getParties() { return _parties; }
     
     // add new district to the elections; type : 0 = DividedDistrict, 1 = UnifiedDistrict
-    virtual bool addDistrict(String name, int number_of_candidates, int type);
+    virtual bool addDistrict(String name, int number_of_candidates, DistrictType type);
     
     // add a new person to the voters list and to the district he belongs
     virtual bool addPerson(String name, int id, int birth_year, int distric_id);

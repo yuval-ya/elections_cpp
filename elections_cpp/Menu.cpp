@@ -35,8 +35,8 @@ namespace elections {
 
 	void Menu::test(Elections& election)
 	{
-		election.addDistrict("A", 5, 1);
-		election.addDistrict("B", 10, 1);
+		election.addDistrict("A", 5, DistrictType::UNIFIED);
+		election.addDistrict("B", 10, DistrictType::UNIFIED);
 
 		election.addPerson("yuval", 1, 1996, 1);
 		election.addPerson("oded", 11, 1996, 2);
@@ -44,7 +44,7 @@ namespace elections {
 		election.addParty("LIKUD", 1);
 		election.addParty("AVODA", 11);
 
-		election.addDistrict("C", 3, 0);
+		election.addDistrict("C", 3, DistrictType::UNIFIED);
 
 		/*election.addPerson("yuval", 1, 1996, 1);*/
 		election.addPerson("tamir", 2, 1994, 1);
