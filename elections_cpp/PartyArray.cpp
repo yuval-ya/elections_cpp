@@ -10,11 +10,16 @@ _arr(new Party*[size]), _logSize(0), _pysSize(size){
 }
 
 PartyArray::~PartyArray() {
-    for (int i = 0; i < _logSize; i++)
-    {
-        delete _arr[i];
-    }
+
     delete[] _arr;
+}
+
+void PartyArray::makeEmpty() {
+	for (int i = 0; i < _logSize; i++)
+	{
+		delete _arr[i];
+	}
+	_logSize = 0;
 }
 
 bool PartyArray::resize(int new_size) {
@@ -67,20 +72,20 @@ Party& PartyArray::get(int id) {
     return *p;
 }
 
-bool PartyArray::set(int idx, Party* d) {
+bool PartyArray::set(int idx, Party* p) {
     if (checkValidIdx(idx)) {
-        _arr[idx] = d;
+        _arr[idx] = p;
         return true;
     }
     return false;
 }
 
-Party& PartyArray::add(const Party& d) {
+Party& PartyArray::add(Party* party) {
     if (_logSize == _pysSize) {
         resize(_logSize * 2 + 1);
     }
     
-    _arr[_logSize] = new Party(d);
+	_arr[_logSize] = party;
     ++_logSize;
     return *_arr[_logSize - 1];
 }

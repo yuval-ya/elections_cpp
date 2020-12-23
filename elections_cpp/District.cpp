@@ -8,15 +8,19 @@ namespace elections {
 
 	District::District(const String& name, int numberOfCandidates) :
 		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0), _partiesData(Party::totalParties)
-	{        
-//        if (numberOfCandidates < 1)
-//            throw;
+	{
 	}
 
-	District::District(const District& d) :
-		_id(d._id), _name(d._name), _numberOfCandidates(d._numberOfCandidates), _partiesData(d._partiesData)
+	District::District(const District& other) :
+		_id(other._id), _name(other._name), _numberOfCandidates(other._numberOfCandidates),
+		_numberOfVoters(other._numberOfVoters), _partiesData(other._partiesData)
 	{
-		_numberOfVoters = d.getNumberOfVoters();
+	}
+
+	District::District(istream& in)
+	{
+		totalDistricts++;
+		load(in);
 	}
 
 	District::~District() {
@@ -56,8 +60,8 @@ namespace elections {
 
 	ostream& operator<<(ostream& os, const District& d) {
 		os << "District ID: " << d._id << " | Name: " << d._name;
-        os << " | Number of candidates: " << d._numberOfCandidates << " | Type: " ;
-        d.type(os);
+		os << " | Number of candidates: " << d._numberOfCandidates << " | Type: ";
+		d.type(os);
 		return os;
 	}
 
@@ -83,18 +87,34 @@ namespace elections {
 		return true;
 	}
 
-    void District::evalPartition()
-    {
-        int parties_num = _partiesData.getLength(), count = 0;
-        for (int i = 0; i < parties_num; i++) {
-            _partiesData[i].candidates = calcFinalSumOfCandidatesFromParty(i);
-            count += _partiesData[i].candidates;
-        }
+	void District::evalPartition()
+	{
+		int parties_num = _partiesData.getLength(), count = 0;
+		for (int i = 0; i < parties_num; i++) {
+			_partiesData[i].candidates = calcFinalSumOfCandidatesFromParty(i);
+			count += _partiesData[i].candidates;
+		}
 
-        if (_numberOfCandidates > count) {
-            int id = _partiesData.getPartyIdWithMaxVotes();
-            _partiesData.get(id).candidates += _numberOfCandidates - count;
-        }
-        _partiesData.sortArrayByCandidates();
-    }
+		if (_numberOfCandidates > count) {
+			int id = _partiesData.getPartyIdWithMaxVotes();
+			_partiesData.get(id).candidates += _numberOfCandidates - count;
+		}
+		_partiesData.sortArrayByCandidates();
+	}
+
+	bool District::save(ostream& out) const{
+		out.write(rcastcc(&_id), sizeof(_id));
+		_name.save(out);
+		out.write(rcastcc(&_numberOfCandidates), sizeof(_numberOfCandidates));
+		out.write(rcastcc(&_numberOfVoters), sizeof(_numberOfVoters));
+		return true;
+	}
+
+	bool District::load(istream& in) {
+		in.read(rcastc(&_id), sizeof(_id));
+		_name.load(in);
+		in.read(rcastc(&_numberOfCandidates), sizeof(_numberOfCandidates));
+		in.read(rcastc(&_numberOfVoters), sizeof(_numberOfVoters));
+		return true;
+	}
 }

@@ -7,7 +7,8 @@ namespace elections {
 int Party::totalParties = 0;
 
 Party::Party(const String& name, PersonPtr candidate) :
-	_id(++totalParties), _name(name), _firstCandidate(candidate), _totalCandidates(0), _totalVotes(0)
+	_id(++totalParties), _name(name), _firstCandidate(candidate), _totalCandidates(0), _totalVotes(0),
+	_candidates(District::totalDistricts)
 {
 }
 

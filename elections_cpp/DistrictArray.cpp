@@ -8,13 +8,19 @@ DistrictArray::DistrictArray(int size) :
 	_arr(new District*[size]), _logSize(0), _pysSize(size){
 }
 
-DistrictArray::~DistrictArray() {
-	for (int i = 0; i < _logSize; i++)
-	{
-		delete _arr[i];
-	}
+DistrictArray::DistrictArray(std::istream& in): _arr(nullptr), _logSize(0), _pysSize(0) {
+	load(in);
 }
 
+DistrictArray::~DistrictArray() {
+	delete[] _arr;
+}
+
+void DistrictArray::makeEmpty() {
+	for (int i = 0; i < _logSize; i++)
+		delete _arr[i];
+	_logSize = 0;
+}
 
 void DistrictArray::resize(int new_size) {
 	District** temp = new District*[new_size];
@@ -67,19 +73,31 @@ void DistrictArray::set(int idx, District* d) {
 	_arr[idx] = d;
 }
     
-District& DistrictArray::add(const District& d) {
+//District& DistrictArray::add(const District& d) {
+//	if (_logSize == _pysSize) {
+//		resize(_logSize * 2 + 1);
+//	}
+//	
+//    if (typeid(d) == typeid(UnifiedDistrict))
+//        _arr[_logSize] = new UnifiedDistrict(dynamic_cast<const UnifiedDistrict&>(d));
+//    else if (typeid(d) == typeid(DividedDistrict))
+//         _arr[_logSize] = new DividedDistrict(dynamic_cast<const DividedDistrict&>(d));
+//    
+//	++_logSize;
+//    return *_arr[_logSize - 1];
+//}
+
+District& DistrictArray::add(District* district) {
 	if (_logSize == _pysSize) {
 		resize(_logSize * 2 + 1);
 	}
-	
-    if (typeid(d) == typeid(UnifiedDistrict))
-        _arr[_logSize] = new UnifiedDistrict(dynamic_cast<const UnifiedDistrict&>(d));
-    else if (typeid(d) == typeid(DividedDistrict))
-         _arr[_logSize] = new DividedDistrict(dynamic_cast<const DividedDistrict&>(d));
-    
+
+	_arr[_logSize] = district;
+
 	++_logSize;
-    return *_arr[_logSize - 1];
+	return *_arr[_logSize - 1];
 }
+
 void DistrictArray::setLength(int new_size) {
 	if (new_size > _pysSize) {
 		resize(new_size);
@@ -116,6 +134,23 @@ void DistrictArray::checkValidIdx(int idx) const {
 	if (idx >= _logSize || idx < 0) {
 		exit(1); // index error
 
+	}
+}
+
+void DistrictArray::save(std::ostream& out) const{
+	out.write(rcastcc(&_logSize), sizeof(_logSize));
+	for (int i = 0; i < _logSize; i++) {
+		DistrictLoader::save(out, _arr[i]);
+	}
+}
+void DistrictArray::load(std::istream& in) {
+	makeEmpty();
+	int newSize;
+	in.read(rcastc(&newSize), sizeof(newSize));
+	resize(newSize);
+
+	for (int i = 0; i < newSize; i++) {
+		add(DistrictLoader::load(in));
 	}
 }
 

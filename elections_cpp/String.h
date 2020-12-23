@@ -1,6 +1,9 @@
 #pragma once
 #include <cstring>
-#include <ostream>
+#include <iostream>
+
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
 
 class String
 {
@@ -18,7 +21,8 @@ public:
     long int getLen() const { return _len; }
 	bool set(const char *str);
 
-	int foo() { return 1; }
+	bool load(std::istream& in);
+	bool save(std::ostream& out) const;
 
 	String& operator=(const String&);
 	friend std::ostream& operator<<(std::ostream& os, const String& str);

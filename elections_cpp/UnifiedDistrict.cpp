@@ -6,15 +6,20 @@
 //  Copyright © 2020 Tamir Houri 205668627 & Yuval Yakovskind 316550524. All rights reserved.
 //
 
-#include <ostream>
+#include <iostream>
 #include "UnifiedDistrict.h"
 using namespace std;
 
 namespace elections {
 
-UnifiedDistrict::UnifiedDistrict(String name, int numberOfCandidates) : District(name, numberOfCandidates) {}
+UnifiedDistrict::UnifiedDistrict(String name, int numberOfCandidates) : District(name, numberOfCandidates) {
+}
 
-UnifiedDistrict::UnifiedDistrict(const UnifiedDistrict& other) : District(other) {}
+UnifiedDistrict::UnifiedDistrict(const UnifiedDistrict& other) : District(other) {
+}
+
+UnifiedDistrict::UnifiedDistrict(istream& in) : District(in) {
+}
 
 UnifiedDistrict::~UnifiedDistrict() {
 }

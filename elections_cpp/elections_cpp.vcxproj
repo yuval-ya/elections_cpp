@@ -127,9 +127,11 @@
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="District.cpp" />
     <ClCompile Include="DistrictArray.cpp" />
+    <ClCompile Include="DistrictLoader.cpp" />
     <ClCompile Include="DividedDistrict.cpp" />
     <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="Elections.cpp" />
+    <ClCompile Include="ElectionsLoader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Party.cpp" />
@@ -147,9 +149,11 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="District.h" />
     <ClInclude Include="DistrictArray.h" />
+    <ClInclude Include="DistrictLoader.h" />
     <ClInclude Include="DividedDistrict.h" />
     <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="Elections.h" />
+    <ClInclude Include="ElectionsLoader.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Party.h" />

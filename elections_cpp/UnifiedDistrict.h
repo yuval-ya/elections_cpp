@@ -7,7 +7,9 @@
 //
 
 #pragma once
+#include <iostream>
 #include "District.h"
+
 
 namespace elections {
 
@@ -17,6 +19,7 @@ private:
 public:
     UnifiedDistrict(String name, int numberOfCandidates);
     UnifiedDistrict(const UnifiedDistrict&);
+	UnifiedDistrict(std::istream& in);
     virtual ~UnifiedDistrict();
 
     virtual void evalPartition();

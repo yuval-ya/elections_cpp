@@ -1,16 +1,25 @@
-//#define _CRTDB_MAP_ALLOC
-//#include <crtdbg.h>
+#define _CRTDB_MAP_ALLOC
+#include <crtdbg.h>
 
 #include "Main.h" 
 #include "Elections.h"
 #include "SimpleElections.h"
 #include "Menu.h"
+#include <fstream>
 
 using namespace elections;
 using namespace std;
 
 int main(void) {    
-    
+
+	//
+	//ifstream infile;
+	//infile.open("test", ios::binary);
+	//DistrictArray dist(infile);
+	//infile.close();
+	//dist.print();
+
+
     int option;
     cout << endl << "Elections Manager -" << endl;
     cout << endl << "Choose an option:" << endl;
@@ -74,14 +83,21 @@ int main(void) {
     }
     cout << "Bye!" << endl;
     
-    //	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //	_CrtDumpMemoryLeaks();
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtDumpMemoryLeaks();
     return 0;
 }
 
 
 void start(Elections& election)
 {
+
+	//ofstream outfile;
+	//outfile.open("test", ios::binary);
+	//election.getDistricts().save(outfile);
+	//outfile.close();
+
+
     int choice = 1;
     while (choice != 10) {
         cout << "\nMain menu - choose an option:" << endl;
@@ -99,8 +115,10 @@ void start(Elections& election)
         cout << "12.Load elections from file.\n" << endl;
         
         cin >> choice;
-        if (!options(election, static_cast<EelectionsMenu>(choice))) {
-            cout << "\nOops! Something went wrong\nplease try again" << endl;
+		if(choice < 1 || choice > 12)
+			cout << endl << "Wrong input" << endl << "please try again" << endl;
+        else if (!options(election, static_cast<EelectionsMenu>(choice))) {
+            cout << endl << "Oops! Something went wrong" << endl << "please try again" << endl;
         }
         cin.ignore();
     }

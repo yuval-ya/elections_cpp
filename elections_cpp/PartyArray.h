@@ -26,13 +26,15 @@ public:
 	Party& get(int id);
 	const Party& get(int id) const;
   
+	void makeEmpty();
+
 	int getLength() const { return _logSize; }
 
-	bool set(int idx, Party* d);
+	bool set(int idx, Party* p);
 	bool setLength(int new_size);
 	
 	// add new Party to the array in the next empty cell
-	Party& add(const Party& d);
+	Party& add(Party* party);
   
 	// add new cell for District in each Party in the array
 	bool addDistrictToParty(const District* district);

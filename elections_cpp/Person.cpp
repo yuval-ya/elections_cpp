@@ -17,6 +17,21 @@ namespace elections {
 	{
 	}
 
+	Person::Person(istream& in) :
+		_district(nullptr), _vote(nullptr), _isCandidate(nullptr)
+	{
+		load(in);
+	}
+
+	Person::Person(istream& in, int& districtID, int& vote, int& candidate) :
+		_district(nullptr), _vote(nullptr), _isCandidate(nullptr)
+	{
+		load(in);
+		in.read(rcastc(&districtID), sizeof(districtID));
+		in.read(rcastc(&vote), sizeof(vote));
+		in.read(rcastc(&candidate), sizeof(candidate));
+	}
+
 	Person::~Person() {
 	}
 
@@ -76,4 +91,28 @@ namespace elections {
 		return os;
 	}
 
+	bool Person::load(std::istream& in) {
+		in.read(rcastc(&_id), sizeof(_id));
+		_name.load(in);
+		in.read(rcastc(&_birthYear), sizeof(_birthYear));
+		return true;
+	}
+	bool Person::save(std::ostream& out) const {
+		int district, vote = 0, candidate = 0;
+
+		district = _district->getId();
+		if (isVoted())
+			vote = _vote->getId();
+		if (isCandidate())
+			candidate = _isCandidate->getId();
+
+		out.write(rcastcc(&_id), sizeof(_id));
+		_name.save(out);
+		out.write(rcastcc(&_birthYear), sizeof(_birthYear));
+		out.write(rcastcc(&district), sizeof(district));
+		out.write(rcastcc(&vote), sizeof(vote));
+		out.write(rcastcc(&candidate), sizeof(candidate));
+
+		return true;
+	}
 }
