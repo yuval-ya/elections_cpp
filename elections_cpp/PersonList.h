@@ -12,6 +12,8 @@
 
 namespace elections {
 
+enum class saveMode { SAVE_ID, SAVE_ALL };
+
 class PersonList {
     
     // Class to store list of Person
@@ -51,11 +53,15 @@ public:
 
 	//bool load(std::istream& in);     // delete ????
 	bool save(std::ostream& out) const;
-    
+    bool saveID(std::ostream& out) const;
+
 private:
     Node* _head;
     Node* _tail;
     int   _personCount;
+
+    bool saveHelper(std::ostream& out, saveMode) const;
+
 };
 
 }

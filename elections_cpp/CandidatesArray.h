@@ -5,9 +5,9 @@ namespace elections {
 
 class CandidatesArray
 {
+
 	// A Dynamic Array of PersonList Pointers.
 	// Used to store lists of candidates by division into districts (index in the array)
-
 private:
 	struct Tuple {
 		const District* district;
@@ -44,5 +44,9 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const CandidatesArray& c_arr);
 };
 
+// len(3), 
+// districtID, numofcandidates, id, id, id....., id,
+// districtID, numofcandidates, id, id....., id,
+// districtID, numofcandidates, id, id, id....., id,
 
 }

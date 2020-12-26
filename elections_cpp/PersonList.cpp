@@ -11,6 +11,7 @@ using namespace std;
 
 namespace elections {
 
+
 	PersonList::PersonList() : _head(nullptr), _tail(nullptr), _personCount(0) {
 	}
 
@@ -149,24 +150,35 @@ const PersonList& PersonList::operator=(const PersonList& other)
 		return os;
 	}
 
-	//bool PersonList::load(std::istream& in) {
-	//	int numOfPerson;
-	//	in.read(rcastc(&numOfPerson), sizeof(numOfPerson));
-	//	for (int i = 0; i < numOfPerson; i++) {
-	//		PersonPtr person = new Person(in);
-	//		addPerson(person); 
-	//	}
-	//}
+
 	bool PersonList::save(std::ostream& out) const {
+		return saveHelper(out, saveMode::SAVE_ALL);
+	}
+
+	bool PersonList::saveID(std::ostream& out) const {
+		return saveHelper(out, saveMode::SAVE_ID);
+	}
+
+		bool PersonList::saveHelper(std::ostream& out, saveMode mode) const {
 		out.write(rcastcc(&_personCount), sizeof(_personCount));
 		
 		Node* curr = _head;
 		while (curr != nullptr) {
 			PersonPtr person = curr->person_p;
-			person->save(out);
+
+			switch (mode)
+			{
+			case saveMode::SAVE_ID:
+				int id = person->getID();
+				out.write(rcastcc(&id), sizeof(id));	
+				break;
+			case saveMode::SAVE_ALL:
+				person->save(out);
+				break;
+			}
+
 			curr = curr->next;
 		}
 		return true;
 	}
-
 }

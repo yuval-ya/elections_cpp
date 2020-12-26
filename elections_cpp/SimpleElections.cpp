@@ -12,10 +12,6 @@ namespace elections {
 	}
 
 	SimpleElections::SimpleElections(std::istream& in) : Elections(in) {
-		// 
-		//
-		//
-		//
 	}
 
 	SimpleElections::~SimpleElections() {
