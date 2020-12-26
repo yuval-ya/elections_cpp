@@ -12,7 +12,7 @@ using namespace std;
 
 namespace elections {
 
-UnifiedDistrict::UnifiedDistrict(String name, int numberOfCandidates) : District(name, numberOfCandidates) {
+UnifiedDistrict::UnifiedDistrict(const String& name, int numberOfCandidates) : District(name, numberOfCandidates) {
 }
 
 UnifiedDistrict::UnifiedDistrict(const UnifiedDistrict& other) : District(other) {

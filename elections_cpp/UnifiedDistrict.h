@@ -17,7 +17,7 @@ class UnifiedDistrict : public District {
     
 private:
 public:
-    UnifiedDistrict(String name, int numberOfCandidates);
+    UnifiedDistrict(const String& name, int numberOfCandidates);
     UnifiedDistrict(const UnifiedDistrict&);
 	UnifiedDistrict(std::istream& in);
     virtual ~UnifiedDistrict();

@@ -16,7 +16,7 @@ class DividedDistrict : public District {
     
 private:
 public:
-    DividedDistrict(String name, int numberOfCandidates);
+    DividedDistrict(const String& name, int numberOfCandidates);
     DividedDistrict(const DividedDistrict&);
 	DividedDistrict(std::istream& in);
     virtual ~DividedDistrict();
