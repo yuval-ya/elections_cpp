@@ -97,6 +97,7 @@ namespace elections {
 		in.read(rcastc(&_birthYear), sizeof(_birthYear));
 		return true;
 	}
+
 	bool Person::save(std::ostream& out) const {
 		int district, vote = 0, candidate = 0;
 

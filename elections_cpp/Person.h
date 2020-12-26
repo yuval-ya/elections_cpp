@@ -9,7 +9,6 @@ namespace elections {
 
 	class Person
 	{
-
 		// A class representing a citizen in the elections
 
 	private:

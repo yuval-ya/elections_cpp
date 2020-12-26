@@ -5,11 +5,12 @@ namespace elections {
 
 	class SimpleElections : public Elections
 	{
+		// A class representing a simple elections round
 
 	public:
 		SimpleElections(int numOfCandidates, const Date& date);
 		SimpleElections(const Elections&) = delete;
-		SimpleElections(std::istream& in);	// implement!!!
+		SimpleElections(std::istream& in);
 		virtual ~SimpleElections();
 
 		const District& getDistrict() const { return _districts[0]; }

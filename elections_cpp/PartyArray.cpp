@@ -191,4 +191,11 @@ void PartyArray::mergeSort(Party** arr,int l,int r){
     merge(arr,l,m,r);
 }
 
+void PartyArray::save(std::ostream& out) const {
+	out.write(rcastcc(&_logSize), sizeof(_logSize));
+	for (int i = 0; i < _logSize; i++) {
+		_arr[i]->save(out);
+	}
+}
+
 }

@@ -1,6 +1,9 @@
 #pragma once
-#include "SimpleElections.h"
+#include <iostream>
+#include "ElectionsRoundLoader.h"
+
 namespace elections {
+
 
 class ElectionsLoader
 {

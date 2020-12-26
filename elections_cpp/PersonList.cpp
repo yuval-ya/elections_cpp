@@ -42,28 +42,6 @@ namespace elections {
         }
     }
 
-
-	//PersonPtr PersonList::addPerson(const Person& p)
-	//{
-	//	PersonPtr person_p = new Person(p);
-
-	//	Node* newnode = new Node();
-	//	newnode->person_p = person_p;
-
-	//	if (_head == nullptr) {
-	//		_head = _tail = newnode;
-	//	}
-	//	else
-	//	{
-	//		_tail->next = newnode;
-	//		_tail = _tail->next;
-	//	}
-
-	//	_personCount++;
-	//	return person_p;
-	//}
-
-
 	const Person& PersonList::addPerson(PersonPtr p) {
 		Node* newnode = new Node();
 		newnode->person_p = p;
@@ -169,8 +147,10 @@ const PersonList& PersonList::operator=(const PersonList& other)
 			switch (mode)
 			{
 			case saveMode::SAVE_ID:
-				int id = person->getID();
-				out.write(rcastcc(&id), sizeof(id));	
+				{
+					int id = person->getID();
+					out.write(rcastcc(&id), sizeof(id));	
+				}
 				break;
 			case saveMode::SAVE_ALL:
 				person->save(out);

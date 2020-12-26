@@ -1,8 +1,7 @@
 #define _CRTDB_MAP_ALLOC
-//#include <crtdbg.h>
+#include <crtdbg.h>
 
 #include "Main.h" 
-#include "Elections.h"
 #include "ElectionsLoader.h"
 #include "SimpleElections.h"
 #include "Menu.h"
@@ -12,24 +11,16 @@ using namespace elections;
 using namespace std;
 
 int main(void) {    
+	Elections* electionsRound = nullptr;
 
-	
-	// ifstream infile;
-	// infile.open("test", ios::binary);
-    // Elections* e = new Elections(infile);
-	// infile.close();
-    // start(*e);
-    // delete e;
-
-
-    int option;
+	int option;
     cout << endl << "Elections Manager -" << endl;
     cout << endl << "Choose an option:" << endl;
     cout << "1.Create new elections round." << endl;
     cout << "2.Load an existing round of elections." << endl;
     cout << "3.Exit." << endl;
     cin >> option;
-    
+	
     switch (static_cast<MainMenu>(option)) {
         case MainMenu::NEW:
         {
@@ -47,9 +38,8 @@ int main(void) {
             {
                 case ElectionsType::RERGULAR:
                 {
-                    Elections election(date);
-                    Menu::test(election);
-                    start(election);
+					electionsRound = new Elections(date);
+					start(electionsRound);
                 }
                     break;
                 case ElectionsType::SIMPLE:
@@ -57,25 +47,21 @@ int main(void) {
                     int numOfCandidates;
                     cout << "Enter the number of candidates that will be in the election: ";
                     cin >> numOfCandidates;
-                    SimpleElections election(numOfCandidates, date);
-                    Menu::test(election);
-                    start(election);
+					electionsRound = new SimpleElections(numOfCandidates, date);
+					start(electionsRound);
                 }
                     break;
                 default:
                     cout << "Wrong Input!" << endl;
                     break;
             }
-            
         }
             break;
         case MainMenu::LOAD:
-        {
-            char name[MAX_SIZE];
-            cout << "Enter file name: ";
-            cin >> name;
-            // load
-        }
+		{
+			electionsRound = loadElections();
+			start(electionsRound);
+		}
             break;
         case MainMenu::EXIT:
             break;
@@ -84,22 +70,16 @@ int main(void) {
             break;
     }
     cout << "Bye!" << endl;
-    
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtDumpMemoryLeaks();
+
+    delete electionsRound;
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtDumpMemoryLeaks();
     return 0;
 }
 
 
-void start(Elections& election)
+void start(Elections* election)
 {
-
-	// ofstream outfile;
-	// outfile.open("test", ios::binary);
-	// election.save(outfile);
-    // outfile.close();
-
-
     int choice = 1;
     while (choice != 10) {
         cout << "\nMain menu - choose an option:" << endl;
@@ -119,11 +99,23 @@ void start(Elections& election)
         cin >> choice;
 		if(choice < 1 || choice > 12)
 			cout << endl << "Wrong input" << endl << "please try again" << endl;
-        else if (!options(election, static_cast<EelectionsMenu>(choice))) {
+        else if (!options(election, static_cast<ElectionsMenu>(choice))) {
             cout << endl << "Oops! Something went wrong" << endl << "please try again" << endl;
         }
         cin.ignore();
     }
+}
+
+Elections* loadElections()
+{
+	char name[MAX_SIZE];
+	cout << "Enter file name: ";
+	cin >> name;
+	ifstream infile;
+	infile.open(name, ios::binary);
+	Elections* electionsRound = ElectionsLoader::load(infile);
+	infile.close();
+	return electionsRound;
 }
 
 bool newDistrict(Elections& election) {
@@ -187,42 +179,45 @@ bool vote(Elections& election) {
     return election.vote(id, party_id);
 }
 
-bool options(Elections& election, EelectionsMenu choice)
+bool options(Elections* election, ElectionsMenu choice)
 {
     bool flag = true;
     switch (choice) {
-        case EelectionsMenu::ADD_DISTRICT:
-            flag = newDistrict(election);
+        case ElectionsMenu::ADD_DISTRICT:
+            flag = newDistrict(*election);
             break;
-        case EelectionsMenu::ADD_CITIZEN:
-            flag = newCitizen(election);
+        case ElectionsMenu::ADD_CITIZEN:
+            flag = newCitizen(*election);
             break;
-        case EelectionsMenu::ADD_PARTY:
-            flag = newParty(election);
+        case ElectionsMenu::ADD_PARTY:
+            flag = newParty(*election);
             break;
-        case EelectionsMenu::ADD_CANDIDATE:
-            flag = setCitizenAsCandidate(election);
+        case ElectionsMenu::ADD_CANDIDATE:
+            flag = setCitizenAsCandidate(*election);
             break;
-        case EelectionsMenu::PRINT_DISTRICTS:
-            election.getDistricts().print();
+        case ElectionsMenu::PRINT_DISTRICTS:
+            election->getDistricts().print();
             break;
-        case EelectionsMenu::PRINT_CITIZENS:
-            election.getVoters().print();
+        case ElectionsMenu::PRINT_CITIZENS:
+            election->getVoters().print();
             break;
-        case EelectionsMenu::PRINT_PARTIES:
-            election.getParties().print();
+        case ElectionsMenu::PRINT_PARTIES:
+            election->getParties().print();
             break;
-        case EelectionsMenu::VOTE:
-            flag = vote(election);
+        case ElectionsMenu::VOTE:
+            flag = vote(*election);
             break;
-        case EelectionsMenu::RESULTS:
-            finish(election);
+        case ElectionsMenu::RESULTS:
+            finish(*election);
             break;
-        case EelectionsMenu::EXIT:
+        case ElectionsMenu::EXIT:
             break;
-        case EelectionsMenu::SAVE:
+        case ElectionsMenu::SAVE:
+			flag = saveToFile(*election);
             break;
-        case EelectionsMenu::LOAD:
+        case ElectionsMenu::LOAD:
+			delete election;
+			election = loadElections();
             break;
         default:
             flag = false;
@@ -231,6 +226,18 @@ bool options(Elections& election, EelectionsMenu choice)
     return flag;
 }
 
+bool saveToFile(Elections& election)
+{
+	char name[MAX_SIZE];
+	cout << "Enter file name: ";
+	cin >> name;
+
+	ofstream outfile;
+	outfile.open(name, ios::binary);
+	ElectionsLoader::save(outfile, &election);
+	outfile.close();
+	return true;
+}
 void printStatistics(Elections& election) {
     int numOfDistricts = election.getDistricts().getLength();
     int numOfParties = election.getParties().getLength();
@@ -252,7 +259,7 @@ void printStatistics(Elections& election) {
             const PersonList& candidateList = party.getCandidatesArray().get(district.getId());
             
             cout << "\nParty ID " << party.getId() << endl;
-            if (candidateList.getPersonNumber() < numOfCandidatesFromParty)
+            if (candidateList.getPersonCount() < numOfCandidatesFromParty)
             {	//There are not enough candidates from this district
                 cout << "*** There are not enough candidates in the party to district" << i << " ***" << endl;
             }

@@ -5,7 +5,7 @@
 #include "DistrictArray.h"
 #include "UnifiedDistrict.h"
 #include "DividedDistrict.h"
-#include "PersonListLoader.h"
+#include "VotesList.h"
 
 namespace elections {
 
@@ -13,18 +13,19 @@ enum class ElectionsType { RERGULAR = 1, SIMPLE };
 
 class Elections
 {
-    // A class representing a Election round
+    // A class representing an Elections round
     
 protected:
 	Date			_date;
     PersonList		_voters;
     DistrictArray	_districts;
     PartyArray		_parties;
+	VotesList		_votes;
 
 public:
 	Elections(const Date&);
     Elections(const Elections&) = delete;
-	Elections(std::istream& in);		// implement!!!
+	Elections(std::istream& in);
 	virtual ~Elections();
 
 	bool setDate(const Date& date) { _date = date; return true; }
@@ -37,6 +38,8 @@ public:
     PersonList& getVoters() { return _voters; }
     const PartyArray& getParties() const { return _parties; }
     PartyArray& getParties() { return _parties; }
+	const VotesList& getVotes() const { return _votes; }
+	VotesList& getVotes() { return _votes; }
     
     // add new district to the elections; type : 0 = DividedDistrict, 1 = UnifiedDistrict
     virtual bool addDistrict(const String& name, int number_of_candidates, DistrictType type);

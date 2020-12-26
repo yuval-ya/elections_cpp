@@ -17,7 +17,7 @@ namespace elections {
 	{
 	}
 
-	District::District(istream& in)
+	District::District(istream& in) : _numberOfVoters(0)
 	{
 		totalDistricts++;
 		load(in);
@@ -106,7 +106,6 @@ namespace elections {
 		out.write(rcastcc(&_id), sizeof(_id));
 		_name.save(out);
 		out.write(rcastcc(&_numberOfCandidates), sizeof(_numberOfCandidates));
-		out.write(rcastcc(&_numberOfVoters), sizeof(_numberOfVoters));
 		return true;
 	}
 
@@ -114,7 +113,6 @@ namespace elections {
 		in.read(rcastc(&_id), sizeof(_id));
 		_name.load(in);
 		in.read(rcastc(&_numberOfCandidates), sizeof(_numberOfCandidates));
-		in.read(rcastc(&_numberOfVoters), sizeof(_numberOfVoters));
 		return true;
 	}
 }

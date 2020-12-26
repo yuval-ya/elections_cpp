@@ -1,20 +1,22 @@
 #include <iostream>
 #include <typeinfo>
 #include "Elections.h"
+#include "ElectionsRoundLoader.h"
 
 namespace elections {
 
 Elections::Elections(const Date& date): _date(date)
 {
 }
-Elections::Elections(std::istream& in) : _date(in), _districts(in) {
-    PersonListLoader::load(in, _voters, _districts);
+Elections::Elections(std::istream& in){
+	load(in);
 }
 
 Elections::~Elections() {
 	_districts.makeEmpty();
 	_parties.makeEmpty();
 }
+
 
 
 
@@ -57,6 +59,7 @@ bool Elections::addPerson(const String& name, int id, int birth_year, int distri
     district.getVoters().addPerson(newPerson);
     return true;
 }
+
 
 bool Elections::addParty(const String& name, int candidate_id)
 {
@@ -106,6 +109,7 @@ bool Elections::vote(int person_id, int party_id)
 
 	Party& party = _parties.get(party_id);
 	party.addTotalVotes(1);
+	_votes.addVote(person, &party);
     return person->setVote(&party);
 }
 
@@ -141,10 +145,10 @@ Party** Elections::getSortedPartiesArr(int& size) {
 
 bool Elections::load(std::istream& in) {
 	_date.load(in);
-	_districts.load(in);
-	//PersoListLoader(_districts,_voters
-	//_parties.load(in);
-	//_voteSystem.load(in);
+	ElectionsRoundLoader::loadDistricts(in, *this);
+	ElectionsRoundLoader::loadVoters(in, *this);
+	ElectionsRoundLoader::loadParties(in, *this);
+	ElectionsRoundLoader::loadVotes(in, *this);
 	return true;
 }
 
@@ -152,8 +156,9 @@ bool Elections::save(std::ostream& out) const {
 	_date.save(out);
 	_districts.save(out);
 	_voters.save(out);
-	//_parties.save(out);
-	//_voteSystem.save(out);
+	_parties.save(out);
+	_votes.save(out);
+	std::cout << _votes << std::endl;
 	return true;
 }
 

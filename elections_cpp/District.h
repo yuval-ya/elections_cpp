@@ -33,7 +33,7 @@ namespace elections {
 		const String& getName() const { return _name; }
 		int getNumberOfCandidates() const { return _numberOfCandidates; }
 		int getNumberOfVoters() const { return _numberOfVoters; }
-		int getCitizensNumber() const { return _voters.getPersonNumber(); }
+		int getCitizensNumber() const { return _voters.getPersonCount(); }
 		int getPartyVotes(int party_id) const { return _partiesData.get(party_id).votes; }
 		int getPartyCandidatesNum(int party_id) const { return _partiesData.get(party_id).candidates; }
 		PartyDataArray& getPartiesData() { return _partiesData; }

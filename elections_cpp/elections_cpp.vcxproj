@@ -129,9 +129,9 @@
     <ClCompile Include="DistrictArray.cpp" />
     <ClCompile Include="DistrictLoader.cpp" />
     <ClCompile Include="DividedDistrict.cpp" />
-    <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="Elections.cpp" />
     <ClCompile Include="ElectionsLoader.cpp" />
+    <ClCompile Include="ElectionsRoundLoader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Party.cpp" />
@@ -143,6 +143,7 @@
     <ClCompile Include="SimpleElections.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="UnifiedDistrict.cpp" />
+    <ClCompile Include="VotesList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CandidatesArray.h" />
@@ -151,9 +152,9 @@
     <ClInclude Include="DistrictArray.h" />
     <ClInclude Include="DistrictLoader.h" />
     <ClInclude Include="DividedDistrict.h" />
-    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="Elections.h" />
     <ClInclude Include="ElectionsLoader.h" />
+    <ClInclude Include="ElectionsRoundLoader.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Party.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="SimpleElections.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="UnifiedDistrict.h" />
+    <ClInclude Include="VotesList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

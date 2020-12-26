@@ -1,4 +1,5 @@
 #include "ElectionsLoader.h"
+#include "SimpleElections.h"
 #include <typeinfo>
 
 namespace elections {
@@ -19,7 +20,6 @@ namespace elections {
 			return nullptr;
 			break;
 		}
-
 	}
 
 	bool ElectionsLoader::save(std::ostream& out, Elections* elections) {
