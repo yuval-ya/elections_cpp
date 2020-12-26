@@ -1,6 +1,7 @@
 #pragma once
 #include "String.h"
 #include "CandidatesArray.h"
+#include "CandidatesArrayLoader.h"
 
 namespace elections {
 class District;
@@ -42,6 +43,9 @@ public:
 	// add value to the total number of candidates the party get in the elections 
 	void addTotalCandidates(int val) { _totalCandidates += val; }
 	void addTotalVotes(int val) { _totalVotes += val; }
+
+	bool load(std::istream& in);
+	bool save(std::ostream& out) const;
 
 	friend std::ostream& operator<<(std::ostream& os, const Party& p);
 };

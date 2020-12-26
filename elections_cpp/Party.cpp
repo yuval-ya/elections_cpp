@@ -46,6 +46,21 @@ bool Party::setFirstCandidate(PersonPtr candidate)
     return true;
 }
 
+bool Party::load(istream& in) {
+
+}
+
+bool Party::save(ostream& out) const {
+	int firstCandidateID = _firstCandidate->getID();
+
+	out.write(rcastcc(&_id), sizeof(_id));
+	_name.save(out);
+	out.write(rcastcc(&firstCandidateID), sizeof(firstCandidateID));
+	out.write(rcastcc(&_totalCandidates), sizeof(_totalCandidates));
+	out.write(rcastcc(&_totalVotes), sizeof(_totalVotes));
+	CandidatesArrayLoader::save(out, _candidates);
+}
+
 ostream& operator<<(ostream& os, const Party& p) {
 	os << "Party ID: " << p._id << " | Name: " << p._name << " | First candidate ID: " << p._firstCandidate->getID();
 	return os;
