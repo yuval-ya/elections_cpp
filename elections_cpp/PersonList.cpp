@@ -164,6 +164,7 @@ const PersonList& PersonList::operator=(const PersonList& other)
 		while (curr != nullptr) {
 			PersonPtr person = curr->person_p;
 			person->save(out);
+			curr = curr->next;
 		}
 		return true;
 	}

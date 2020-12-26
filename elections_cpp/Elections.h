@@ -5,6 +5,7 @@
 #include "DistrictArray.h"
 #include "UnifiedDistrict.h"
 #include "DividedDistrict.h"
+#include "PersonListLoader.h"
 
 namespace elections {
 

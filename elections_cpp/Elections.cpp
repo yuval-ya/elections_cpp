@@ -1,17 +1,14 @@
+#include <iostream>
 #include <typeinfo>
 #include "Elections.h"
-#include <iostream>
 
 namespace elections {
 
 Elections::Elections(const Date& date): _date(date)
 {
 }
-Elections::Elections(std::istream& in) {
-	// 
-	//
-	//
-	//
+Elections::Elections(std::istream& in) : _date(in), _districts(in) {
+    PersonListLoader::load(in, _voters, _districts);
 }
 
 Elections::~Elections() {
@@ -143,9 +140,8 @@ Party** Elections::getSortedPartiesArr(int& size) {
 
 
 bool Elections::load(std::istream& in) {
-	//_date.load(in);
+	_date.load(in);
 	_districts.load(in);
-	//_voters.load(in);
 	//PersoListLoader(_districts,_voters
 	//_parties.load(in);
 	//_voteSystem.load(in);
@@ -153,9 +149,9 @@ bool Elections::load(std::istream& in) {
 }
 
 bool Elections::save(std::ostream& out) const {
-	//_date.save(out);
+	_date.save(out);
 	_districts.save(out);
-	//_voters.save(out);
+	_voters.save(out);
 	//_parties.save(out);
 	//_voteSystem.save(out);
 	return true;

@@ -3,6 +3,7 @@
 
 #include "Main.h" 
 #include "Elections.h"
+#include "ElectionsLoader.h"
 #include "SimpleElections.h"
 #include "Menu.h"
 #include <fstream>
@@ -12,12 +13,13 @@ using namespace std;
 
 int main(void) {    
 
-	//
-	//ifstream infile;
-	//infile.open("test", ios::binary);
-	//DistrictArray dist(infile);
-	//infile.close();
-	//dist.print();
+	
+	// ifstream infile;
+	// infile.open("test", ios::binary);
+    // Elections* e = new Elections(infile);
+	// infile.close();
+    // start(*e);
+    // delete e;
 
 
     int option;
@@ -92,10 +94,10 @@ int main(void) {
 void start(Elections& election)
 {
 
-	//ofstream outfile;
-	//outfile.open("test", ios::binary);
-	//election.getDistricts().save(outfile);
-	//outfile.close();
+	// ofstream outfile;
+	// outfile.open("test", ios::binary);
+	// election.save(outfile);
+    // outfile.close();
 
 
     int choice = 1;
