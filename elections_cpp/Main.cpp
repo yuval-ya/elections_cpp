@@ -1,11 +1,6 @@
 #define _CRTDB_MAP_ALLOC
 #include <crtdbg.h>
-
 #include "Main.h" 
-#include "ElectionsLoader.h"
-#include "SimpleElections.h"
-#include "Menu.h"
-#include <fstream>
 
 using namespace elections;
 using namespace std;

@@ -1,6 +1,5 @@
 #include <typeinfo>
 #include "ElectionsLoader.h"
-#include "SimpleElections.h"
 
 namespace elections {
 
