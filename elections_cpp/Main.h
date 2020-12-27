@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Elections.h"
+#include "ElectionsLoader.h"
+#include "Menu.h"
+#include <fstream>
+
 
 enum class ElectionsMenu { ADD_DISTRICT = 1, ADD_CITIZEN, ADD_PARTY, ADD_CANDIDATE, PRINT_DISTRICTS, PRINT_CITIZENS, PRINT_PARTIES, VOTE, RESULTS, EXIT, SAVE, LOAD };
 
