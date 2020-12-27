@@ -115,9 +115,17 @@ bool CandidatesArray::checkValidIdx(int idx) const {
 bool CandidatesArray::save(ostream& out) const{
 
 	out.write(rcastcc(&_logSize), sizeof(_logSize));
+	if (!out.good()) {
+		std::cout << "Error writing" << std::endl;
+		exit(-1);
+	}
 	for (int i = 0; i < _logSize; i++) {
 		int districtID = _arr[i]->district->getId();
 		out.write(rcastcc(&districtID), sizeof(districtID));
+		if (!out.good()) {
+			std::cout << "Error writing" << std::endl;
+			exit(-1);
+		}
 		_arr[i]->candidateList.saveID(out);
 	}
 	return true;

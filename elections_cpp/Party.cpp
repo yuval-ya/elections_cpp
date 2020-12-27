@@ -57,7 +57,10 @@ bool Party::load(istream& in, int& firstCandidateID) {
 	_name.load(in);
 	in.read(rcastc(&firstCandidateID), sizeof(firstCandidateID));
 	in.read(rcastc(&_totalCandidates), sizeof(_totalCandidates));
-
+	if (!in.good()) {
+		std::cout << "Error reading" << std::endl;
+		exit(-1);
+	}
 	return true;
 }
 
@@ -68,6 +71,10 @@ bool Party::save(ostream& out) const {
 	_name.save(out);
 	out.write(rcastcc(&firstCandidateID), sizeof(firstCandidateID));
 	out.write(rcastcc(&_totalCandidates), sizeof(_totalCandidates));
+	if (!out.good()) {
+		std::cout << "Error writing" << std::endl;
+		exit(-1);
+	}
 	_candidates.save(out);
 	return true;
 }

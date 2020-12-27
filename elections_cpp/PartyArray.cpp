@@ -193,6 +193,10 @@ void PartyArray::mergeSort(Party** arr,int l,int r){
 
 void PartyArray::save(std::ostream& out) const {
 	out.write(rcastcc(&_logSize), sizeof(_logSize));
+	if (!out.good()) {
+		std::cout << "Error writing" << std::endl;
+		exit(-1);
+	}
 	for (int i = 0; i < _logSize; i++) {
 		_arr[i]->save(out);
 	}

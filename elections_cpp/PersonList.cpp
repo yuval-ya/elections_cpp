@@ -149,7 +149,11 @@ const PersonList& PersonList::operator=(const PersonList& other)
 			case saveMode::SAVE_ID:
 				{
 					int id = person->getID();
-					out.write(rcastcc(&id), sizeof(id));	
+					out.write(rcastcc(&id), sizeof(id));
+					if (!out.good()) {
+						std::cout << "Error writing" << std::endl;
+						exit(-1);
+					}
 				}
 				break;
 			case saveMode::SAVE_ALL:

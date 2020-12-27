@@ -47,8 +47,7 @@ void mainMenu()
 	}
 
 	if (electionsRound) {
-		//Menu::test(*electionsRound);  ///////////////////***********************************************
-		start(electionsRound);
+		start(&electionsRound);
 		delete electionsRound;
 	}
 }
@@ -89,7 +88,24 @@ Elections* createNewRound()
 
 }
 
-void start(Elections* election)
+Elections* loadElections()
+{
+	char name[MAX_SIZE];
+	cout << "Enter file name: ";
+	cin >> name;
+	ifstream infile;
+	infile.open(name, ios::binary);
+	if (!infile) {
+		cout << "An error occurred while opening the file" << endl;
+		exit(-1);
+	}
+	Elections* electionsRound = ElectionsLoader::load(infile);
+	infile.close();
+	return electionsRound;
+}
+
+
+void start(Elections** election)
 {
     int choice = 1;
     while (choice != 10) {
@@ -118,66 +134,58 @@ void start(Elections* election)
 }
 
 
-bool options(Elections* election, ElectionsMenu choice)
+bool options(Elections** election, ElectionsMenu choice)
 {
+	Elections& e = **election;
 	bool flag = true;
 	switch (choice) {
 	case ElectionsMenu::ADD_DISTRICT:
-		flag = newDistrict(*election);
+		if (typeid(e) == typeid(SimpleElections))
+			cout << "Can't add district to simple elections." << endl;
+		else
+			flag = newDistrict(e);
 		break;
 	case ElectionsMenu::ADD_CITIZEN:
-		flag = newCitizen(*election);
+		flag = newCitizen(e);
 		break;
 	case ElectionsMenu::ADD_PARTY:
-		flag = newParty(*election);
+		flag = newParty(e);
 		break;
 	case ElectionsMenu::ADD_CANDIDATE:
-		flag = setCitizenAsCandidate(*election);
+		flag = setCitizenAsCandidate(e);
 		break;
 	case ElectionsMenu::PRINT_DISTRICTS:
-		if (typeid(election) == typeid(SimpleElections))
+		if (typeid(e) == typeid(SimpleElections))
 			cout << "There are no districts in simple elections." << endl;
 		else
-			election->getDistricts().print();
+			e.getDistricts().print();
 		break;
 	case ElectionsMenu::PRINT_CITIZENS:
-		election->getVoters().print();
+		e.getVoters().print();
 		break;
 	case ElectionsMenu::PRINT_PARTIES:
-		election->getParties().print();
+		e.getParties().print();
 		break;
 	case ElectionsMenu::VOTE:
-		flag = vote(*election);
+		flag = vote(e);
 		break;
 	case ElectionsMenu::RESULTS:
-		finish(*election);
+		finish(e);
 		break;
 	case ElectionsMenu::EXIT:
 		break;
 	case ElectionsMenu::SAVE:
-		flag = saveToFile(*election);
+		flag = saveToFile(e);
 		break;
 	case ElectionsMenu::LOAD:
-		delete election;
-		election = loadElections();
+		delete *election;
+		*election = loadElections();
 		break;
 	default:
 		flag = false;
 		break;
 	}
 	return flag;
-}
-
-Elections* loadElections()
-{
-	char name[MAX_SIZE];
-	cout << "Enter file name: ";
-	cin >> name;
-	ifstream infile;
-	infile.open(name, ios::binary);
-	Elections* electionsRound = ElectionsLoader::load(infile);
-	infile.close();
-	return electionsRound;
 }
 
 bool newDistrict(Elections& election) {
@@ -254,6 +262,12 @@ bool saveToFile(Elections& election)
 
 	ofstream outfile;
 	outfile.open(name, ios::binary);
+
+	if (!outfile) {
+		cout << "An error occurred while opening the file" << endl;
+		exit(-1);
+	}
+
 	ElectionsLoader::save(outfile, &election);
 	outfile.close();
 	return true;

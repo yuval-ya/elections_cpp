@@ -106,6 +106,10 @@ namespace elections {
 		out.write(rcastcc(&_id), sizeof(_id));
 		_name.save(out);
 		out.write(rcastcc(&_numberOfCandidates), sizeof(_numberOfCandidates));
+		if (!out.good()) {
+			std::cout << "Error writing" << std::endl;
+			exit(-1);
+		}
 		return true;
 	}
 
@@ -113,6 +117,10 @@ namespace elections {
 		in.read(rcastc(&_id), sizeof(_id));
 		_name.load(in);
 		in.read(rcastc(&_numberOfCandidates), sizeof(_numberOfCandidates));
+		if (!in.good()) {
+			std::cout << "Error reading" << std::endl;
+			exit(-1);
+		}
 		return true;
 	}
 }

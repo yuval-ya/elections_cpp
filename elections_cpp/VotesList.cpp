@@ -97,6 +97,10 @@ namespace elections {
 
 			out.write(rcastcc(&personID), sizeof(personID));
 			out.write(rcastcc(&partyID), sizeof(partyID));
+			if (!out.good()) {
+				std::cout << "Error writing" << std::endl;
+				exit(-1);
+			}
 		}
 		return true;
 

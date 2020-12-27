@@ -6,7 +6,10 @@ namespace elections {
 	District* DistrictLoader::load(std::istream& in) {
 		DistrictType type;
 		in.read(rcastc(&type), sizeof(type));
-	
+		if (!in.good()) {
+			std::cout << "Error reading" << std::endl;
+			exit(-1);
+		}
 		switch (type)
 		{
 		case DistrictType::DIVIDED:
@@ -31,6 +34,10 @@ namespace elections {
 			return false;
 		
 		out.write(rcastcc(&type), sizeof(type));
+		if (!out.good()) {
+			std::cout << "Error writing" << std::endl;
+			exit(-1);
+		}
 		return district->save(out);
 
 	}

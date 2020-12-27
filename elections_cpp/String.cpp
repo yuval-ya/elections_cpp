@@ -67,11 +67,21 @@ bool String::load(istream& in) {
 	in.read(rcastc(_str), sizeof(char)*_len);
 	_str[_len] = '\0';
 
+	if (!in.good()) {
+		std::cout << "Error reading" << std::endl;
+		exit(-1);
+	}
+
 	return true;
 }
 
 bool String::save(ostream& out) const {
 	out.write(rcastcc(&_len), sizeof(_len));
 	out.write(rcastcc(_str), sizeof(char)*_len);
+
+	if (!out.good()) {
+		std::cout << "Error writing" << std::endl;
+		exit(-1);
+	}
 	return true;
 }

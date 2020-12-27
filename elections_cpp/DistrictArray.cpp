@@ -121,6 +121,10 @@ void DistrictArray::checkValidIdx(int idx) const {
 
 void DistrictArray::save(std::ostream& out) const{
 	out.write(rcastcc(&_logSize), sizeof(_logSize));
+	if (!out.good()) {
+		std::cout << "Error writing" << std::endl;
+		exit(-1);
+	}
 	for (int i = 0; i < _logSize; i++) {
 		DistrictLoader::save(out, _arr[i]);
 	}

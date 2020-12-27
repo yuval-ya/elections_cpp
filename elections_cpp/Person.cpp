@@ -30,6 +30,10 @@ namespace elections {
 		in.read(rcastc(&districtID), sizeof(districtID));
 		in.read(rcastc(&vote), sizeof(vote));
 		in.read(rcastc(&candidate), sizeof(candidate));
+		if (!in.good()) {
+			std::cout << "Error reading" << std::endl;
+			exit(-1);
+		}
 	}
 
 	Person::~Person() {
@@ -95,6 +99,10 @@ namespace elections {
 		in.read(rcastc(&_id), sizeof(_id));
 		_name.load(in);
 		in.read(rcastc(&_birthYear), sizeof(_birthYear));
+		if (!in.good()) {
+			std::cout << "Error reading" << std::endl;
+			exit(-1);
+		}
 		return true;
 	}
 
@@ -113,6 +121,11 @@ namespace elections {
 		out.write(rcastcc(&district), sizeof(district));
 		out.write(rcastcc(&vote), sizeof(vote));
 		out.write(rcastcc(&candidate), sizeof(candidate));
+
+		if (!out.good()) {
+			std::cout << "Error writing" << std::endl;
+			exit(-1);
+		}
 
 		return true;
 	}
