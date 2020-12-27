@@ -140,8 +140,6 @@ namespace elections {
 		election.vote(29, 2);
 		election.vote(30, 1);
 
-		election.getDistricts()[0].setId(10);
-
 	}
 //
 //

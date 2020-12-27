@@ -158,7 +158,6 @@ bool Elections::save(std::ostream& out) const {
 	_voters.save(out);
 	_parties.save(out);
 	_votes.save(out);
-	std::cout << _votes << std::endl;
 	return true;
 }
 

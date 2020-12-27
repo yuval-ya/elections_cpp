@@ -8,6 +8,9 @@ enum class MainMenu { NEW = 1, LOAD, EXIT };
 
 const int MAX_SIZE = 100;
 
+void mainMenu();
+elections::Elections* loadElections();
+elections::Elections* createNewRound();
 void start(elections::Elections* election);
 bool options(elections::Elections* election, ElectionsMenu choice);
 bool newDistrict(elections::Elections& election);
@@ -19,5 +22,5 @@ bool saveToFile(elections::Elections& election);
 void printStatistics(elections::Elections& election);
 void printResults(elections::Elections& election);
 void finish(elections::Elections& election);
-elections::Elections* loadElections();
+
 
