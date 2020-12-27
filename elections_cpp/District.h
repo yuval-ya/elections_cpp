@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "String.h"
 #include "PersonList.h"
 #include "PartyDataArray.h"
@@ -25,13 +26,14 @@ namespace elections {
 		
 		District(const String& name, int number_of_candidates);
 		District(const District&);
+		District(std::istream& in);
 		virtual ~District();
 
 		int getId() const { return _id; }
 		const String& getName() const { return _name; }
 		int getNumberOfCandidates() const { return _numberOfCandidates; }
 		int getNumberOfVoters() const { return _numberOfVoters; }
-		int getCitizensNumber() const { return _voters.getPersonNumber(); }
+		int getCitizensNumber() const { return _voters.getPersonCount(); }
 		int getPartyVotes(int party_id) const { return _partiesData.get(party_id).votes; }
 		int getPartyCandidatesNum(int party_id) const { return _partiesData.get(party_id).candidates; }
 		PartyDataArray& getPartiesData() { return _partiesData; }
@@ -63,6 +65,9 @@ namespace elections {
         virtual std::ostream& showWinners(std::ostream&) const = 0;
         
 		virtual void type(std::ostream&) const = 0;
+
+		bool save(std::ostream& out) const;
+		bool load(std::istream& in);
         
 		friend std::ostream& operator<<(std::ostream& os, const District& d);
 	};

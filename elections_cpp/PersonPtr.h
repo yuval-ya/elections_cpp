@@ -27,8 +27,8 @@ namespace elections {
 		~PersonPtr();
 
 		PersonPtr& operator=(PersonPtr&);
-		bool operator==(Person* pnt) const;
-		bool operator!=(Person* pnt) const;
+		bool operator==(PersonPtr pnt) const;
+		bool operator!=(PersonPtr pnt) const;
 		Person* operator->() { return _p; }
 		Person& operator*() { return *_p; }
 

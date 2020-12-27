@@ -1,6 +1,6 @@
 #pragma once
 #include "String.h"
-#include <ostream>
+#include <iostream>
 
 namespace elections {
 
@@ -9,12 +9,11 @@ namespace elections {
 
 	class Person
 	{
-
 		// A class representing a citizen in the elections
 
 	private:
-		String				_name;
 		int					_id;
+		String				_name;
 		int					_birthYear;
 		const District*		_district;
 		const Party*		_vote;
@@ -23,6 +22,8 @@ namespace elections {
 	public:
 		Person(const String&, int id, int year, const District* district);
 		Person(const Person& p);
+		Person(std::istream& in);
+		Person(std::istream& in, int& districtID, int& vote, int& candidate);
 		~Person();
 
 		const String& getName() const { return _name; }
@@ -48,6 +49,9 @@ namespace elections {
 		bool setVote(const Party* p);
 
 		friend std::ostream& operator<<(std::ostream& os, const Person& p);
+
+		bool load(std::istream& in);
+		bool save(std::ostream& out) const;
 
 	};
 

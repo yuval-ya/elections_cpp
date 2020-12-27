@@ -7,24 +7,28 @@
 //
 
 #pragma once
+#include <iostream>
 #include "District.h"
 
 namespace elections {
 
 class DividedDistrict : public District {
-    
-private:
+	
+	// A class representing a Divided District in the elections
+	// Inherit all District attributes
+
 public:
-    DividedDistrict(String name, int numberOfCandidates);
+    DividedDistrict(const String& name, int numberOfCandidates);
     DividedDistrict(const DividedDistrict&);
+	DividedDistrict(std::istream& in);
     virtual ~DividedDistrict();
     
+	// Calculates the partition of candidates in divided district
     virtual void evalPartition();
     
 	virtual void type(std::ostream& os) const { os << "Divided" ;}
 
     virtual std::ostream& showWinners(std::ostream& os) const;
-
 };
 
 

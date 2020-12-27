@@ -12,10 +12,14 @@ using namespace std;
 
 namespace elections {
 
-DividedDistrict::DividedDistrict(String name, int numberOfCandidates) : District(name, numberOfCandidates) {}
+DividedDistrict::DividedDistrict(const String& name, int numberOfCandidates) : District(name, numberOfCandidates) {
+}
 
-DividedDistrict::DividedDistrict(const DividedDistrict& other) : District(other) {}
+DividedDistrict::DividedDistrict(const DividedDistrict& other) : District(other) {
+}
 
+DividedDistrict::DividedDistrict(std::istream& in) : District(in) {
+}
 
 DividedDistrict::~DividedDistrict() {
 }

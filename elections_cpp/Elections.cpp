@@ -1,43 +1,45 @@
+#include <iostream>
 #include <typeinfo>
 #include "Elections.h"
+#include "ElectionsRoundLoader.h"
 
 namespace elections {
 
 Elections::Elections(const Date& date): _date(date)
 {
 }
+Elections::Elections(std::istream& in){
+	load(in);
+}
 
 Elections::~Elections() {
+	_districts.makeEmpty();
+	_parties.makeEmpty();
 }
 
 
 
-bool Elections::addDistrict(String name, int number_of_candidates, DistrictType type)
+
+bool Elections::addDistrict(const String& name, int number_of_candidates, DistrictType type)
 {
     District* newDistrict;
     
     if (number_of_candidates < 0)
         return false;
-    
+
     switch (type) {
         case DistrictType::DIVIDED:
-            {
-                DividedDistrict dDistrict(name, number_of_candidates);
-                newDistrict = &_districts.add(dDistrict);
-            }
-            break;
+				newDistrict = new DividedDistrict(name, number_of_candidates);
+			break;
         case DistrictType::UNIFIED:
-            {
-                UnifiedDistrict uDistrict(name, number_of_candidates);
-                newDistrict = &_districts.add(uDistrict);
-            }
+				newDistrict = new UnifiedDistrict(name, number_of_candidates);
             break;
-            
         default:
-            return false;
+				return false;
             break;
     }
- 
+
+	_districts.add(newDistrict);
     for (int i = 0; i < _parties.getLength(); i++){
         newDistrict->getPartiesData().add(&_parties[i]);
     }
@@ -46,31 +48,32 @@ bool Elections::addDistrict(String name, int number_of_candidates, DistrictType 
     return true;
 }
 
-bool Elections::addPerson(String name, int id, int birth_year, int distric_id)
+bool Elections::addPerson(const String& name, int id, int birth_year, int distric_id)
 {
     if (_voters.getPersonPtr(id) != nullptr || distric_id > _districts.getLength() || distric_id <= 0) {
         return false;
     }
     District& district = _districts.get(distric_id);
-    Person new_person(name, id, birth_year, &district);
-    PersonPtr person_ptr = _voters.addPerson(new_person);
-    district.getVoters().addPerson(person_ptr);
+	PersonPtr newPerson = new Person(name, id, birth_year, &district);
+	_voters.addPerson(newPerson);
+    district.getVoters().addPerson(newPerson);
     return true;
 }
 
-bool Elections::addParty(String name, int candidate_id)
+
+bool Elections::addParty(const String& name, int candidate_id)
 {
     PersonPtr candidate = _voters.getPersonPtr(candidate_id);
     if (candidate == nullptr || candidate->isCandidate()) {
         return false;
     }
-    Party new_party = Party(name, candidate);
-    Party& p = _parties.add(new_party);
-    _districts.addPartyToDistrict(&p);
-    candidate->setAsCandidate(&p);
+    Party* newParty = new Party(name, candidate);
+    _parties.add(newParty);
+    _districts.addPartyToDistrict(newParty);
+    candidate->setAsCandidate(newParty);
 
 	for (int i = 0; i < _districts.getLength(); i++) {
-		p.getCandidatesArray().add(&_districts[i]);
+		newParty->getCandidatesArray().add(&_districts[i]);
 	}
 
     return true;
@@ -106,6 +109,7 @@ bool Elections::vote(int person_id, int party_id)
 
 	Party& party = _parties.get(party_id);
 	party.addTotalVotes(1);
+	_votes.addVote(person, &party);
     return person->setVote(&party);
 }
 
@@ -135,5 +139,27 @@ Party** Elections::getSortedPartiesArr(int& size) {
     size = numOfParties;
     return res;
 }
+
+
+
+
+bool Elections::load(std::istream& in) {
+	_date.load(in);
+	ElectionsRoundLoader::loadDistricts(in, *this);
+	ElectionsRoundLoader::loadVoters(in, *this);
+	ElectionsRoundLoader::loadParties(in, *this);
+	ElectionsRoundLoader::loadVotes(in, *this);
+	return true;
+}
+
+bool Elections::save(std::ostream& out) const {
+	_date.save(out);
+	_districts.save(out);
+	_voters.save(out);
+	_parties.save(out);
+	_votes.save(out);
+	return true;
+}
+
 }
 

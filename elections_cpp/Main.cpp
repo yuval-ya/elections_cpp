@@ -1,86 +1,111 @@
-//#define _CRTDB_MAP_ALLOC
-//#include <crtdbg.h>
+#define _CRTDB_MAP_ALLOC
+#include <crtdbg.h>
 
 #include "Main.h" 
-#include "Elections.h"
+#include "ElectionsLoader.h"
 #include "SimpleElections.h"
 #include "Menu.h"
+#include <fstream>
 
 using namespace elections;
 using namespace std;
 
-int main(void) {    
-    
-    int option;
-    cout << endl << "Elections Manager -" << endl;
-    cout << endl << "Choose an option:" << endl;
-    cout << "1.Create new elections round." << endl;
-    cout << "2.Load an existing round of elections." << endl;
-    cout << "3.Exit." << endl;
-    cin >> option;
-    
-    switch (static_cast<MainMenu>(option)) {
-        case MainMenu::NEW:
-        {
-            int roundType;
-            Date date;
-            
-            cout << "Choose the type of the elections (" ;
-            cout << static_cast<int>(ElectionsType::RERGULAR) << " for Regular , ";
-            cout << static_cast<int>(ElectionsType::SIMPLE) <<" for Simple): ";
-            cin >> roundType;
-            cout << "Enter the date of the elections (day-month-year): ";
-            cin >> date;
-            
-            switch (static_cast<ElectionsType>(roundType))
-            {
-                case ElectionsType::RERGULAR:
-                {
-                    Elections election(date);
-                    Menu::test(election);
-                    start(election);
-                }
-                    break;
-                case ElectionsType::SIMPLE:
-                {
-                    int numOfCandidates;
-                    cout << "Enter the number of candidates that will be in the election: ";
-                    cin >> numOfCandidates;
-                    SimpleElections election(numOfCandidates, date);
-                    Menu::test(election);
-                    start(election);
-                }
-                    break;
-                default:
-                    cout << "Wrong Input!" << endl;
-                    break;
-            }
-            
-        }
-            break;
-        case MainMenu::LOAD:
-        {
-            char name[MAX_SIZE];
-            cout << "Enter file name: ";
-            cin >> name;
-            // load
-        }
-            break;
-        case MainMenu::EXIT:
-            break;
-        default:
-            cout << "Wrong Input!" << endl;
-            break;
-    }
+int main(void) {
+	
+	mainMenu();
     cout << "Bye!" << endl;
-    
-    //	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //	_CrtDumpMemoryLeaks();
+
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtDumpMemoryLeaks();
     return 0;
 }
 
+void mainMenu()
+{
+	Elections* electionsRound = nullptr;
 
-void start(Elections& election)
+	int option;
+	cout << endl << "Elections Manager -" << endl;
+	cout << endl << "Choose an option:" << endl;
+	cout << "1.Create new elections round." << endl;
+	cout << "2.Load an existing round of elections." << endl;
+	cout << "3.Exit." << endl;
+	cin >> option;
+
+	switch (static_cast<MainMenu>(option)) {
+	case MainMenu::NEW:
+		electionsRound = createNewRound();
+		break;
+	case MainMenu::LOAD:
+		electionsRound = loadElections();
+		break;
+	case MainMenu::EXIT:
+		break;
+	default:
+		cout << "Wrong Input!" << endl;
+		break;
+	}
+
+	if (electionsRound) {
+		start(&electionsRound);
+		delete electionsRound;
+	}
+}
+
+Elections* createNewRound() 
+{
+	Elections* electionsRound = nullptr;
+	int roundType;
+	Date date;
+
+	cout << "Choose the type of the elections (";
+	cout << static_cast<int>(ElectionsType::RERGULAR) << " for Regular , ";
+	cout << static_cast<int>(ElectionsType::SIMPLE) << " for Simple): ";
+	cin >> roundType;
+	cout << "Enter the date of the elections (day-month-year): ";
+	cin >> date;
+
+	switch (static_cast<ElectionsType>(roundType))
+	{
+	case ElectionsType::RERGULAR:
+	{
+		electionsRound = new Elections(date);
+	}
+	break;
+	case ElectionsType::SIMPLE:
+	{
+		int numOfCandidates;
+		cout << "Enter the number of candidates that will be in the election: ";
+		cin >> numOfCandidates;
+		electionsRound = new SimpleElections(numOfCandidates, date);
+	}
+	break;
+	default:
+		cout << "Wrong Input!" << endl;
+		break;
+	}
+	return electionsRound;
+
+}
+
+Elections* loadElections()
+{
+	char name[MAX_SIZE];
+	cout << "Enter file name: ";
+	cin >> name;
+	ifstream infile;
+	infile.open(name, ios::binary);
+	if (!infile) {
+		cout << "An error occurred while opening the file" << endl;
+		exit(-1);
+	}
+	Elections* electionsRound = ElectionsLoader::load(infile);
+	infile.close();
+	return electionsRound;
+}
+
+
+void start(Elections** election)
 {
     int choice = 1;
     while (choice != 10) {
@@ -99,11 +124,68 @@ void start(Elections& election)
         cout << "12.Load elections from file.\n" << endl;
         
         cin >> choice;
-        if (!options(election, static_cast<EelectionsMenu>(choice))) {
-            cout << "\nOops! Something went wrong\nplease try again" << endl;
+		if(choice < 1 || choice > 12)
+			cout << endl << "Wrong input" << endl << "please try again" << endl;
+        else if (!options(election, static_cast<ElectionsMenu>(choice))) {
+            cout << endl << "Oops! Something went wrong" << endl << "please try again" << endl;
         }
         cin.ignore();
     }
+}
+
+
+bool options(Elections** election, ElectionsMenu choice)
+{
+	Elections& e = **election;
+	bool flag = true;
+	switch (choice) {
+	case ElectionsMenu::ADD_DISTRICT:
+		if (typeid(e) == typeid(SimpleElections))
+			cout << "Can't add district to simple elections." << endl;
+		else
+			flag = newDistrict(e);
+		break;
+	case ElectionsMenu::ADD_CITIZEN:
+		flag = newCitizen(e);
+		break;
+	case ElectionsMenu::ADD_PARTY:
+		flag = newParty(e);
+		break;
+	case ElectionsMenu::ADD_CANDIDATE:
+		flag = setCitizenAsCandidate(e);
+		break;
+	case ElectionsMenu::PRINT_DISTRICTS:
+		if (typeid(e) == typeid(SimpleElections))
+			cout << "There are no districts in simple elections." << endl;
+		else
+			e.getDistricts().print();
+		break;
+	case ElectionsMenu::PRINT_CITIZENS:
+		e.getVoters().print();
+		break;
+	case ElectionsMenu::PRINT_PARTIES:
+		e.getParties().print();
+		break;
+	case ElectionsMenu::VOTE:
+		flag = vote(e);
+		break;
+	case ElectionsMenu::RESULTS:
+		finish(e);
+		break;
+	case ElectionsMenu::EXIT:
+		break;
+	case ElectionsMenu::SAVE:
+		flag = saveToFile(e);
+		break;
+	case ElectionsMenu::LOAD:
+		delete *election;
+		*election = loadElections();
+		break;
+	default:
+		flag = false;
+		break;
+	}
+	return flag;
 }
 
 bool newDistrict(Elections& election) {
@@ -134,7 +216,7 @@ bool newParty(Elections& election) {
 
 bool newCitizen(Elections& election) {
     char name[MAX_SIZE];
-    int id, year, district_id;
+    int id, year, district_id = 1;
     cout << "Enter name: ";
     cin.ignore();
     cin.getline(name, MAX_SIZE);
@@ -142,17 +224,21 @@ bool newCitizen(Elections& election) {
     cin >> id;
     cout << "Enter year of birth: ";
     cin >> year;
-    cout << "Enter district id: ";
-    cin >> district_id;
+	if (typeid(election) != typeid(SimpleElections)) {
+		cout << "Enter district id: ";
+		cin >> district_id;
+	}
     return election.addPerson(name, id, year, district_id);
 }
 
 bool setCitizenAsCandidate(Elections& election) {
-    int candidate_id, party_id, district_id;
+	int candidate_id, party_id, district_id = 1;
     cout << "Enter candidate ID: ";
     cin >> candidate_id;
-    cout << "Enter district ID: ";
-    cin >> district_id;
+	if (typeid(election) != typeid(SimpleElections)) {
+		cout << "Enter district id: ";
+		cin >> district_id;
+	}
     cout << "Enter party ID: ";
     cin >> party_id;
     return election.addPersonAsCandidate(candidate_id, party_id, district_id);
@@ -167,50 +253,25 @@ bool vote(Elections& election) {
     return election.vote(id, party_id);
 }
 
-bool options(Elections& election, EelectionsMenu choice)
-{
-    bool flag = true;
-    switch (choice) {
-        case EelectionsMenu::ADD_DISTRICT:
-            flag = newDistrict(election);
-            break;
-        case EelectionsMenu::ADD_CITIZEN:
-            flag = newCitizen(election);
-            break;
-        case EelectionsMenu::ADD_PARTY:
-            flag = newParty(election);
-            break;
-        case EelectionsMenu::ADD_CANDIDATE:
-            flag = setCitizenAsCandidate(election);
-            break;
-        case EelectionsMenu::PRINT_DISTRICTS:
-            election.getDistricts().print();
-            break;
-        case EelectionsMenu::PRINT_CITIZENS:
-            election.getVoters().print();
-            break;
-        case EelectionsMenu::PRINT_PARTIES:
-            election.getParties().print();
-            break;
-        case EelectionsMenu::VOTE:
-            flag = vote(election);
-            break;
-        case EelectionsMenu::RESULTS:
-            finish(election);
-            break;
-        case EelectionsMenu::EXIT:
-            break;
-        case EelectionsMenu::SAVE:
-            break;
-        case EelectionsMenu::LOAD:
-            break;
-        default:
-            flag = false;
-            break;
-    }
-    return flag;
-}
 
+bool saveToFile(Elections& election)
+{
+	char name[MAX_SIZE];
+	cout << "Enter file name: ";
+	cin >> name;
+
+	ofstream outfile;
+	outfile.open(name, ios::binary);
+
+	if (!outfile) {
+		cout << "An error occurred while opening the file" << endl;
+		exit(-1);
+	}
+
+	ElectionsLoader::save(outfile, &election);
+	outfile.close();
+	return true;
+}
 void printStatistics(Elections& election) {
     int numOfDistricts = election.getDistricts().getLength();
     int numOfParties = election.getParties().getLength();
@@ -221,8 +282,11 @@ void printStatistics(Elections& election) {
     {
         const District& district = election.getDistricts()[i];
         
-        cout << "------------------- District No." << (i+1) << " -------------------" << endl;
-        cout << district << endl << "Winning candidates: "<< endl;
+		if (typeid(election) != typeid(SimpleElections)) {
+			cout << "------------------- District No." << (i + 1) << " -------------------" << endl;
+			cout << district << endl;
+		}
+		cout << "Winning candidates: " << endl;
         district.showWinners(cout);
         
         for (int j = 0; j < numOfParties; j++)
@@ -232,7 +296,7 @@ void printStatistics(Elections& election) {
             const PersonList& candidateList = party.getCandidatesArray().get(district.getId());
             
             cout << "\nParty ID " << party.getId() << endl;
-            if (candidateList.getPersonNumber() < numOfCandidatesFromParty)
+            if (candidateList.getPersonCount() < numOfCandidatesFromParty)
             {	//There are not enough candidates from this district
                 cout << "*** There are not enough candidates in the party to district" << i << " ***" << endl;
             }

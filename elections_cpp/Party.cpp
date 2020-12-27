@@ -7,7 +7,8 @@ namespace elections {
 int Party::totalParties = 0;
 
 Party::Party(const String& name, PersonPtr candidate) :
-	_id(++totalParties), _name(name), _firstCandidate(candidate), _totalCandidates(0), _totalVotes(0)
+	_id(++totalParties), _name(name), _firstCandidate(candidate), _totalCandidates(0), _totalVotes(0),
+	_candidates(District::totalDistricts)
 {
 }
 
@@ -16,6 +17,11 @@ Party::Party(const Party& p) :
 	_totalCandidates(p._totalCandidates) , _totalVotes(p._totalVotes),
 	_candidates(District::totalDistricts) 
 {
+}
+
+Party::Party(istream& in, int& firstCandidateID) : _firstCandidate(nullptr) {
+	totalParties++;
+	load(in, firstCandidateID);
 }
 
 Party::~Party() {
@@ -43,6 +49,34 @@ bool Party::setFirstCandidate(PersonPtr candidate)
 {
     _firstCandidate = candidate;
     return true;
+}
+
+bool Party::load(istream& in, int& firstCandidateID) {
+
+	in.read(rcastc(&_id), sizeof(_id));
+	_name.load(in);
+	in.read(rcastc(&firstCandidateID), sizeof(firstCandidateID));
+	in.read(rcastc(&_totalCandidates), sizeof(_totalCandidates));
+	if (!in.good()) {
+		std::cout << "Error reading" << std::endl;
+		exit(-1);
+	}
+	return true;
+}
+
+bool Party::save(ostream& out) const {
+	int firstCandidateID = _firstCandidate->getID();
+
+	out.write(rcastcc(&_id), sizeof(_id));
+	_name.save(out);
+	out.write(rcastcc(&firstCandidateID), sizeof(firstCandidateID));
+	out.write(rcastcc(&_totalCandidates), sizeof(_totalCandidates));
+	if (!out.good()) {
+		std::cout << "Error writing" << std::endl;
+		exit(-1);
+	}
+	_candidates.save(out);
+	return true;
 }
 
 ostream& operator<<(ostream& os, const Party& p) {

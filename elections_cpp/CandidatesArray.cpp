@@ -96,7 +96,7 @@ const CandidatesArray::Tuple& CandidatesArray::operator[](int idx) const {
 ostream& operator<<(ostream& os, const CandidatesArray& c_arr) {
     int size = c_arr.getLength();
     for (int i = 0; i < size; i++) {
-        if (c_arr[i].candidateList.getPersonNumber() > 0) {
+        if (c_arr[i].candidateList.getPersonCount() > 0) {
             os << "District No." << c_arr[i].district->getId() << " :" << endl;
             os << c_arr[i].candidateList << endl;
         }
@@ -111,4 +111,23 @@ bool CandidatesArray::checkValidIdx(int idx) const {
     return true;
 }
 
+
+bool CandidatesArray::save(ostream& out) const{
+
+	out.write(rcastcc(&_logSize), sizeof(_logSize));
+	if (!out.good()) {
+		std::cout << "Error writing" << std::endl;
+		exit(-1);
+	}
+	for (int i = 0; i < _logSize; i++) {
+		int districtID = _arr[i]->district->getId();
+		out.write(rcastcc(&districtID), sizeof(districtID));
+		if (!out.good()) {
+			std::cout << "Error writing" << std::endl;
+			exit(-1);
+		}
+		_arr[i]->candidateList.saveID(out);
+	}
+	return true;
+}
 }

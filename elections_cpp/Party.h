@@ -22,6 +22,7 @@ public:
 
 	Party(const String& name, PersonPtr candidate);
 	Party(const Party& p);
+	Party(std::istream& in, int& firstCandidateID);
 	~Party();
 
 	int getId() const { return _id; }
@@ -42,6 +43,9 @@ public:
 	// add value to the total number of candidates the party get in the elections 
 	void addTotalCandidates(int val) { _totalCandidates += val; }
 	void addTotalVotes(int val) { _totalVotes += val; }
+
+	bool load(std::istream& in , int& firstCandidateID);
+	bool save(std::ostream& out) const;
 
 	friend std::ostream& operator<<(std::ostream& os, const Party& p);
 };

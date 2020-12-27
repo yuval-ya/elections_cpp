@@ -1,7 +1,6 @@
 #include "String.h"
 using namespace std;
 String::String() : _str(nullptr), _len(0) {
-
 }
 
 String::String(const char* str) : _str(nullptr)
@@ -56,4 +55,33 @@ String& String::operator=(const String& other){
 ostream& operator<<(ostream& os, const String& str) {
 	os << str._str;
 	return os;
+}
+
+
+bool String::load(istream& in) {
+	if (_str)
+		delete[] _str;
+
+	in.read(rcastc(&_len), sizeof(_len));
+	_str = new char[_len + 1];
+	in.read(rcastc(_str), sizeof(char)*_len);
+	_str[_len] = '\0';
+
+	if (!in.good()) {
+		std::cout << "Error reading" << std::endl;
+		exit(-1);
+	}
+
+	return true;
+}
+
+bool String::save(ostream& out) const {
+	out.write(rcastcc(&_len), sizeof(_len));
+	out.write(rcastcc(_str), sizeof(char)*_len);
+
+	if (!out.good()) {
+		std::cout << "Error writing" << std::endl;
+		exit(-1);
+	}
+	return true;
 }

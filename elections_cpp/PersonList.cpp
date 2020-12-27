@@ -11,10 +11,15 @@ using namespace std;
 
 namespace elections {
 
+
 	PersonList::PersonList() : _head(nullptr), _tail(nullptr), _personCount(0) {
 	}
 
 	PersonList::~PersonList() {
+		makeEmpty();
+	}
+
+	void PersonList::makeEmpty() {
 		Node* curr = _head;
 		Node* temp;
 
@@ -23,9 +28,9 @@ namespace elections {
 			curr = curr->next;
 			delete temp;
 		}
+		_personCount = 0;
 	}
-
-
+	
     void PersonList::print(int count) const
     {
         Node* curr = _head;
@@ -37,32 +42,9 @@ namespace elections {
         }
     }
 
-
-	PersonPtr PersonList::addPerson(const Person& p)
-	{
-		PersonPtr person_p = new Person(p);
-
-		Node* newnode = new Node();
-		newnode->person_p = person_p;
-
-		if (_head == nullptr) {
-			_head = _tail = newnode;
-		}
-		else
-		{
-			_tail->next = newnode;
-			_tail = _tail->next;
-		}
-
-		_personCount++;
-		return person_p;
-	}
-
-
 	const Person& PersonList::addPerson(PersonPtr p) {
 		Node* newnode = new Node();
 		newnode->person_p = p;
-
 
 		if (_head == nullptr) {
 			_head = _tail = newnode;
@@ -146,4 +128,41 @@ const PersonList& PersonList::operator=(const PersonList& other)
 		return os;
 	}
 
+
+	bool PersonList::save(std::ostream& out) const {
+		return saveHelper(out, saveMode::SAVE_ALL);
+	}
+
+	bool PersonList::saveID(std::ostream& out) const {
+		return saveHelper(out, saveMode::SAVE_ID);
+	}
+
+		bool PersonList::saveHelper(std::ostream& out, saveMode mode) const {
+		out.write(rcastcc(&_personCount), sizeof(_personCount));
+		
+		Node* curr = _head;
+		while (curr != nullptr) {
+			PersonPtr person = curr->person_p;
+
+			switch (mode)
+			{
+			case saveMode::SAVE_ID:
+				{
+					int id = person->getID();
+					out.write(rcastcc(&id), sizeof(id));
+					if (!out.good()) {
+						std::cout << "Error writing" << std::endl;
+						exit(-1);
+					}
+				}
+				break;
+			case saveMode::SAVE_ALL:
+				person->save(out);
+				break;
+			}
+
+			curr = curr->next;
+		}
+		return true;
+	}
 }

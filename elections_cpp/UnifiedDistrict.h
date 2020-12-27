@@ -7,18 +7,24 @@
 //
 
 #pragma once
+#include <iostream>
 #include "District.h"
+
 
 namespace elections {
 
 class UnifiedDistrict : public District {
     
-private:
+	// A class representing a Unified District in the elections
+	// Inherit all District attributes
+
 public:
-    UnifiedDistrict(String name, int numberOfCandidates);
+    UnifiedDistrict(const String& name, int numberOfCandidates);
     UnifiedDistrict(const UnifiedDistrict&);
+	UnifiedDistrict(std::istream& in);
     virtual ~UnifiedDistrict();
 
+	// Calculates the partition of candidates in unified district
     virtual void evalPartition();
     
 	virtual void type(std::ostream& os) const { os << "Unified"; }

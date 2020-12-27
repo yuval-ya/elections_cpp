@@ -4,21 +4,25 @@ using namespace std;
 
 namespace elections {
 
+
 	SimpleElections::SimpleElections(int numOfCandidates, const Date& date) : Elections(date)
 	{
-		DividedDistrict dummyDistrict("Dummy District", numOfCandidates);
-		_districts.add(dummyDistrict);
+		District* dummy = new DividedDistrict("Dummy District", numOfCandidates);
+		_districts.add(dummy);
+	}
+
+	SimpleElections::SimpleElections(std::istream& in) : Elections(in) {
 	}
 
 	SimpleElections::~SimpleElections() {
 	}
 
-	bool SimpleElections::addDistrict(String name, int number_of_candidates, DistrictType type) {
+	bool SimpleElections::addDistrict(const String& name, int number_of_candidates, DistrictType type) {
 		cout << "\nNo district can be added to this type of election." << endl;
 		return false;
 	}
 
-	bool SimpleElections::addPerson(String name, int id, int birth_year, int distric_id) {
+	bool SimpleElections::addPerson(const String& name, int id, int birth_year, int distric_id) {
 		return Elections::addPerson(name, id, birth_year, 1);
 	}
 

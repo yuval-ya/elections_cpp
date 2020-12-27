@@ -57,14 +57,14 @@ PersonPtr& PersonPtr::operator=(PersonPtr& other)
 }
 
 
-bool PersonPtr::operator==(Person* pnt) const
+bool PersonPtr::operator==(PersonPtr pnt) const
 {
-    return _p == pnt;
+    return _p == pnt._p;
 }
 
-bool PersonPtr::operator!=(Person* pnt) const
+bool PersonPtr::operator!=(PersonPtr pnt) const
 {
-    return _p != pnt;
+    return _p != pnt._p;
 }
 
 }

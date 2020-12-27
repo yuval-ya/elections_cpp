@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
+
 class Date
 {
 
@@ -13,6 +16,7 @@ private:
     static bool checkDay(int);
 public:
 	Date();
+	Date(std::istream& in);
 	Date(int day, int month, int year);
 	Date(const Date&);
 	~Date();
@@ -31,5 +35,10 @@ public:
 	friend std::istream& operator>>(std::istream&, Date&);
 	
 	const Date& operator=(const Date&);
+
+	bool load(std::istream& in);
+
+	bool save(std::ostream& out) const;
+
 };
 
