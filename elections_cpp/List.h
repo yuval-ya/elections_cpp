@@ -176,7 +176,7 @@ public:
             return &_curr->next->data;
         }
         
-        // increment-decrement iterator methods
+        // increment iterator methods
         iterator& operator++() { // ++itr
             _curr = _curr->next;
             return *this;
@@ -224,6 +224,16 @@ public:
         bool operator==(const const_iterator& other) const { return _curr == other._curr; }
         bool operator!=(const const_iterator& other) const { return !(*this == other); }
 
+		/*
+		*
+		*
+		*	operator== and operator!= to iterator?
+		*
+		*
+		*/
+
+
+
         const T& operator*() {
             return _curr->next->data;
         }
@@ -231,7 +241,7 @@ public:
             return &_curr->next->data;
         }
 
-        // increment-decrement iterator methods
+        // increment iterator methods
         const_iterator& operator++() { // ++itr
             _curr = _curr->next;
             return *this;
@@ -266,14 +276,13 @@ public:
         Node<T> *toDelete = iter._curr->next;
         
         iter._curr->next = iter._curr->next->next;
+
         if (toDelete == _tail)
             _tail = iter._curr;
         delete toDelete;
-        return iter;
-
+        return iter; // ?? what will be returned (++) ?? //  ++iterator(iter)
     }
     const iterator& erase(const iterator& first, const iterator& last) {
-
 
     }
 };

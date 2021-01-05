@@ -1,15 +1,44 @@
 #define _CRTDB_MAP_ALLOC
 //#include <crtdbg.h>
 #include "Main.h" 
-#include "List.h"
 
 using namespace elections;
 using namespace std;
 
 int main(void) {
 	
-    mainMenu();
-    cout << "Bye!" << endl;
+	List<int> lst;
+	lst.push_back(1);
+	lst.push_back(2);
+	lst.push_back(3);
+	lst.push_back(4);
+	lst.push_back(5);
+
+
+
+	cout << endl;
+	for (auto num : lst) {
+		cout << num << " ";
+	}
+	cout << endl;
+
+	auto it = lst.begin();
+	auto itEnd = lst.end();
+
+	while (it != itEnd) {
+		it = lst.erase(it);
+	}
+
+
+
+	cout << endl;
+	for (auto num : lst) {
+		cout << num << " ";
+	}
+	cout << endl;
+
+    //mainMenu();
+    //cout << "Bye!" << endl;
 
 //	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 //	_CrtDumpMemoryLeaks();

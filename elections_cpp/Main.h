@@ -2,6 +2,7 @@
 
 #include "ElectionsLoader.h"
 #include "Menu.h"
+#include "List.h"
 #include <fstream>
 
 
