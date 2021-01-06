@@ -172,6 +172,9 @@ public:
         T& operator*() {
             return _curr->next->data;
         }
+        const T& operator*() const {
+             return _curr->next->data;
+         }
         T* operator->() {
             return &_curr->next->data;
         }
@@ -276,13 +279,21 @@ public:
         Node<T> *toDelete = iter._curr->next;
         
         iter._curr->next = iter._curr->next->next;
-
         if (toDelete == _tail)
             _tail = iter._curr;
         delete toDelete;
+        _size--;
         return iter; // ?? what will be returned (++) ?? //  ++iterator(iter)
     }
     const iterator& erase(const iterator& first, const iterator& last) {
 
+        //Node<T> *firstNode = first._curr->next, *lastNode = last._curr, *toDelete;
+        iterator iter = first;
+        
+        while (iter._curr->next != last._curr->next) {
+            iter = erase(iter);
+        }
+        
+        return first;
     }
 };
