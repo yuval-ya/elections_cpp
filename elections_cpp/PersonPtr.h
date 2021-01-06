@@ -26,7 +26,7 @@ namespace elections {
 		PersonPtr(Person*);
 		~PersonPtr();
 
-		PersonPtr& operator=(PersonPtr&);
+		PersonPtr& operator=(const PersonPtr&);
 		bool operator==(PersonPtr pnt) const;
 		bool operator!=(PersonPtr pnt) const;
 		Person* operator->() { return _p; }
@@ -34,5 +34,7 @@ namespace elections {
 
 		const Person* operator->() const { return _p; }
 		const Person& operator*() const { return *_p; }
+
+		friend std::ostream& operator<<(std::ostream& os, const PersonPtr& p);
 	};
 }

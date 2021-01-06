@@ -50,12 +50,18 @@ bool Elections::addDistrict(const String& name, int number_of_candidates, Distri
 
 bool Elections::addPerson(const String& name, int id, int birth_year, int distric_id)
 {
-    if (_voters.getPersonPtr(id) != nullptr || distric_id > _districts.getLength() || distric_id <= 0) {
-        return false;
-    }
+
+
+	auto p = std::find_if(_voters.begin(), _voters.end(),
+		[id](PersonPtr p)->bool { return p->getID() == id; });
+		
+	if (p != _voters.end() || distric_id > _districts.getLength() || distric_id <= 0) {
+		return false;
+	}
+
     District& district = _districts.get(distric_id);
 	PersonPtr newPerson = new Person(name, id, birth_year, &district);
-	_voters.addPerson(newPerson);
+	_voters.push_back(newPerson);
     district.getVoters().addPerson(newPerson);
     return true;
 }
@@ -63,10 +69,15 @@ bool Elections::addPerson(const String& name, int id, int birth_year, int distri
 
 bool Elections::addParty(const String& name, int candidate_id)
 {
-    PersonPtr candidate = _voters.getPersonPtr(candidate_id);
-    if (candidate == nullptr || candidate->isCandidate()) {
+
+	auto candidateIter = std::find_if(_voters.begin(), _voters.end(),
+		[candidate_id](PersonPtr p)->bool { return p->getID() == candidate_id; });
+
+    if (candidateIter == _voters.end() || (*candidateIter)->isCandidate()) {
         return false;
     }
+	PersonPtr candidate = *candidateIter;
+
     Party* newParty = new Party(name, candidate);
     _parties.add(newParty);
     _districts.addPartyToDistrict(newParty);
@@ -84,10 +95,12 @@ bool Elections::addPersonAsCandidate(int person_id, int party_id, int district_i
     if (district_id <= _districts.getLength() && district_id > 0
         && party_id <= _parties.getLength() && party_id > 0)
     {
-        PersonPtr candidate = _voters.getPersonPtr(person_id);
-        
-        if (candidate != nullptr && !candidate->isCandidate())
+		auto candidateIter = std::find_if(_voters.begin(), _voters.end(),
+			[person_id](PersonPtr p)->bool { return p->getID() == person_id; });
+
+        if (candidateIter != _voters.end() && !(*candidateIter)->isCandidate())
         {
+			PersonPtr candidate = *candidateIter;
             Party& party = _parties.get(party_id);
 			party.getCandidatesArray().get(district_id).addPerson(candidate);
             candidate->setAsCandidate(&party);
@@ -99,7 +112,8 @@ bool Elections::addPersonAsCandidate(int person_id, int party_id, int district_i
 
 bool Elections::vote(int person_id, int party_id)
 {
-    PersonPtr person = _voters.getPersonPtr(person_id);
+	PersonPtr person = *(std::find_if(_voters.begin(), _voters.end(),
+		[person_id](PersonPtr p)->bool { return p->getID() == person_id; }));
     if (person == nullptr || person->isVoted() || party_id > _parties.getLength()) {
         return false;
     }
@@ -155,7 +169,7 @@ bool Elections::load(std::istream& in) {
 bool Elections::save(std::ostream& out) const {
 	_date.save(out);
 	_districts.save(out);
-	_voters.save(out);
+	//_voters.save(out);
 	_parties.save(out);
 	_votes.save(out);
 	return true;

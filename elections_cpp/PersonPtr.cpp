@@ -34,15 +34,16 @@ PersonPtr::~PersonPtr()
 
 void PersonPtr::release()
 {
-    --*_r;
-    if (*_r == 0) {
-        delete _r;
-        delete _p;
-    }
+	if (_r) {
+		--*_r;
+		if (*_r == 0) {
+			delete _r;
+			delete _p;
+		}
+	}
 }
 
-PersonPtr& PersonPtr::operator=(PersonPtr& other)
-{
+PersonPtr& PersonPtr::operator=(const PersonPtr& other) {
 
     if (this != &other) {
         if (_r != nullptr)
@@ -65,6 +66,12 @@ bool PersonPtr::operator==(PersonPtr pnt) const
 bool PersonPtr::operator!=(PersonPtr pnt) const
 {
     return _p != pnt._p;
+}
+
+
+std::ostream& operator<<(std::ostream& os, const PersonPtr& p) {
+	os << *p;
+	return os;
 }
 
 }

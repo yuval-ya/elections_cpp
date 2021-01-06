@@ -1,49 +1,34 @@
 #define _CRTDB_MAP_ALLOC
-//#include <crtdbg.h>
+#include <crtdbg.h>
+
 #include "Main.h" 
+#include "IterSort.h"
+#include <list>
+
+
 
 using namespace elections;
 using namespace std;
+using namespace mySTL;
 
 int main(void) {
-	
-	List<int> lst;
-	lst.push_back(1);
-	lst.push_back(2);
-	lst.push_back(3);
-	lst.push_back(4);
-	lst.push_back(5);
+	{
+		//List<int> lst;
+		//lst.push_back(1);
+		//lst.push_back(3);
+		//cout << endl;
+		//for (auto num : lst) {
+		//	cout << num << " ";
+		//}
 
-
-
-	cout << endl;
-	for (auto num : lst) {
-		cout << num << " ";
+		mainMenu();
+		cout << "Bye!" << endl;
 	}
-	cout << endl;
-
-	auto it = lst.begin();
-	auto itEnd = lst.end();
-
-	while (it != itEnd) {
-		it = lst.erase(it);
-	}
-
-
-
-	cout << endl;
-	for (auto num : lst) {
-		cout << num << " ";
-	}
-	cout << endl;
-
-    //mainMenu();
-    //cout << "Bye!" << endl;
-
-//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-//	_CrtDumpMemoryLeaks();
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtDumpMemoryLeaks();
     return 0;
 }
+
 
 void mainMenu()
 {
@@ -72,6 +57,7 @@ void mainMenu()
 	}
 
 	if (electionsRound) {
+		Menu::test(*electionsRound);
 		start(&electionsRound);
 		delete electionsRound;
 	}
@@ -186,7 +172,8 @@ bool options(Elections** election, ElectionsMenu choice)
 			e.getDistricts().print();
 		break;
 	case ElectionsMenu::PRINT_CITIZENS:
-		e.getVoters().print();
+		print(e.getVoters().begin(), e.getVoters().end());
+		//e.getVoters().print();
 		break;
 	case ElectionsMenu::PRINT_PARTIES:
 		e.getParties().print();
@@ -212,6 +199,7 @@ bool options(Elections** election, ElectionsMenu choice)
 	}
 	return flag;
 }
+
 
 bool newDistrict(Elections& election) {
     char name[MAX_SIZE];

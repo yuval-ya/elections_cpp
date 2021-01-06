@@ -26,7 +26,7 @@ namespace elections
 			District& district = elections.getDistricts().get(districtID);
 			person->setDistrict(&district);
 
-			elections.getVoters().addPerson(person);
+			elections.getVoters().push_back(person);
 			district.getVoters().addPerson(person);
 		}
 	}
@@ -39,7 +39,10 @@ namespace elections
 		for (int i = 0; i < numOfParties; i++) {
 			int firstCandidateID = 0;
 			Party* party = new Party(in, firstCandidateID);
-			PersonPtr firstCandidate = elections.getVoters().getPersonPtr(firstCandidateID);
+
+			PersonPtr firstCandidate = *(std::find_if(elections.getVoters().begin(), elections.getVoters().end(),
+				[firstCandidateID](PersonPtr p)->bool { return p->getID() == firstCandidateID; }));
+
 			elections.getParties().add(party);
 			party->setFirstCandidate(firstCandidate);
 			firstCandidate->setAsCandidate(party);
@@ -66,7 +69,8 @@ namespace elections
 			{
 				in.read(rcastc(&candidateID), sizeof(candidateID));
 				checkFile(in);
-				PersonPtr candidate = elections.getVoters().getPersonPtr(candidateID);
+				PersonPtr candidate = *(std::find_if(elections.getVoters().begin(), elections.getVoters().end(),
+					[candidateID](PersonPtr p)->bool { return p->getID() == candidateID; }));
 				candidatesList.addPerson(candidate);
 				candidate->setAsCandidate(party);
 			}

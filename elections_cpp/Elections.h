@@ -6,6 +6,10 @@
 #include "UnifiedDistrict.h"
 #include "DividedDistrict.h"
 #include "VotesList.h"
+#include "List.h"
+#include <algorithm> 
+
+using namespace mySTL;
 
 namespace elections {
 
@@ -16,11 +20,11 @@ class Elections
     // A class representing an Elections round
     
 protected:
-	Date			_date;
-    PersonList		_voters;
-    DistrictArray	_districts;
-    PartyArray		_parties;
-	VotesList		_votes;
+	Date				_date;
+    List<PersonPtr>		_voters;
+    DistrictArray		_districts;
+    PartyArray			_parties;
+	VotesList			_votes;
 
 public:
 	Elections(const Date&);
@@ -34,8 +38,8 @@ public:
 	Date& getDate() { return _date; }
     const DistrictArray& getDistricts() const { return _districts; }
     DistrictArray& getDistricts() { return _districts; }
-    const PersonList& getVoters() const { return _voters; }
-    PersonList& getVoters() { return _voters; }
+    const List<PersonPtr>& getVoters() const { return _voters; }
+	List<PersonPtr>& getVoters() { return _voters; }
     const PartyArray& getParties() const { return _parties; }
     PartyArray& getParties() { return _parties; }
 	const VotesList& getVotes() const { return _votes; }
