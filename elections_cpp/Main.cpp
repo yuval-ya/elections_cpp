@@ -3,19 +3,16 @@
 
 #include "Main.h" 
 #include "Utilities.h"
-#include <list>
-
-
 
 using namespace elections;
 using namespace std;
 using namespace mySTL;
 
 int main(void) {
-	{
-		mainMenu();
-		cout << "Bye!" << endl;
-	}
+
+	mainMenu();
+	cout << "Bye!" << endl;
+
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	_CrtDumpMemoryLeaks();
     return 0;
@@ -25,27 +22,36 @@ int main(void) {
 void mainMenu()
 {
 	Elections* electionsRound = nullptr;
-
 	int option;
-	cout << endl << "Elections Manager -" << endl;
-	cout << endl << "Choose an option:" << endl;
-	cout << "1.Create new elections round." << endl;
-	cout << "2.Load an existing round of elections." << endl;
-	cout << "3.Exit." << endl;
-	cin >> option;
+	bool flag = true;
 
-	switch (static_cast<MainMenu>(option)) {
-	case MainMenu::NEW:
-		electionsRound = createNewRound();
-		break;
-	case MainMenu::LOAD:
-		electionsRound = loadElections();
-		break;
-	case MainMenu::EXIT:
-		break;
-	default:
-		cout << "Wrong Input!" << endl;
-		break;
+	while (flag) {
+		cout << endl << "Elections Manager -" << endl;
+		cout << endl << "Choose an option:" << endl;
+		cout << "1.Create new elections round." << endl;
+		cout << "2.Load an existing round of elections." << endl;
+		cout << "3.Exit." << endl;
+		cin >> option;
+
+		try {
+			switch (static_cast<MainMenu>(option)) {
+			case MainMenu::NEW:
+				electionsRound = createNewRound();
+				break;
+			case MainMenu::LOAD:
+				electionsRound = loadElections();
+				break;
+			case MainMenu::EXIT:
+				break;
+			default:
+				throw invalid_argument("Invalid option");
+				break;
+			}
+			flag = false;
+		}
+		catch (exception& ex) {
+			cout << "Error: " << ex.what() << endl;
+		}
 	}
 
 	if (electionsRound) {
@@ -58,15 +64,24 @@ void mainMenu()
 Elections* createNewRound() 
 {
 	Elections* electionsRound = nullptr;
-	int roundType;
 	Date date;
 
+	while (true){
+		cout << "Enter the date of the elections (day-month-year): ";
+		try {
+			cin >> date;
+			break;
+		}
+		catch (exception& ex) {
+			cout << "Error: " << ex.what() << endl;
+		}
+	}
+
+	int roundType;
 	cout << "Choose the type of the elections (";
 	cout << static_cast<int>(ElectionsType::RERGULAR) << " for Regular , ";
 	cout << static_cast<int>(ElectionsType::SIMPLE) << " for Simple): ";
 	cin >> roundType;
-	cout << "Enter the date of the elections (day-month-year): ";
-	cin >> date;
 
 	switch (static_cast<ElectionsType>(roundType))
 	{
@@ -84,7 +99,7 @@ Elections* createNewRound()
 	}
 	break;
 	default:
-		cout << "Wrong Input!" << endl;
+		throw invalid_argument("Invalid elections type");
 		break;
 	}
 	return electionsRound;

@@ -68,7 +68,6 @@ bool Elections::addPerson(const string& name, int id, int birth_year, int distri
     return true;
 }
 
-
 bool Elections::addParty(const string& name, int candidate_id)
 {
 	PersonPtr candidate = findPerson(candidate_id);
