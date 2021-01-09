@@ -27,7 +27,7 @@ namespace elections
 			person->setDistrict(&district);
 
 			elections.getVoters().push_back(person);
-			district.getVoters().addPerson(person);
+			district.getVoters().push_back(person);
 		}
 	}
 

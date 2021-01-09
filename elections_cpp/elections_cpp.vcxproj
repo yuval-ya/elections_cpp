@@ -142,6 +142,7 @@
     <ClCompile Include="PersonPtr.cpp" />
     <ClCompile Include="SimpleElections.cpp" />
     <ClCompile Include="String.cpp" />
+    <ClCompile Include="StringLoader.cpp" />
     <ClCompile Include="UnifiedDistrict.cpp" />
     <ClCompile Include="VotesList.cpp" />
   </ItemGroup>
@@ -155,7 +156,8 @@
     <ClInclude Include="Elections.h" />
     <ClInclude Include="ElectionsLoader.h" />
     <ClInclude Include="ElectionsRoundLoader.h" />
-    <ClInclude Include="IterSort.h" />
+    <ClInclude Include="StringLoader.h" />
+    <ClInclude Include="Utilities.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Menu.h" />

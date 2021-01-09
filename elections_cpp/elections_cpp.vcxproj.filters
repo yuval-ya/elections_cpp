@@ -78,6 +78,9 @@
     <ClCompile Include="VotesList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StringLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Person.h">
@@ -146,7 +149,10 @@
     <ClInclude Include="List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IterSort.h">
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StringLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

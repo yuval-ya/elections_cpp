@@ -12,7 +12,7 @@ using namespace std;
 
 namespace elections {
 
-DividedDistrict::DividedDistrict(const String& name, int numberOfCandidates) : District(name, numberOfCandidates) {
+DividedDistrict::DividedDistrict(const string& name, int numberOfCandidates) : District(name, numberOfCandidates) {
 }
 
 DividedDistrict::DividedDistrict(const DividedDistrict& other) : District(other) {
@@ -26,19 +26,20 @@ DividedDistrict::~DividedDistrict() {
 
 void DividedDistrict::evalPartition(){
     District::evalPartition();
-    
-    for (int i = 0; i < _partiesData.getLength() ; i++){
-        int num_candidates = _partiesData[i].candidates;
-        _partiesData[i].party->addTotalCandidates(num_candidates);
-		_chosenCandidates.addPerson(_partiesData[i].party->getCandidatePtr());
-    }
+	int size = _partiesData.size();
+	for (int i = 0; i < size; i++) {
+		int num_candidates = get<2>(_partiesData[i]);
+		get<0>(_partiesData[i])->addTotalCandidates(num_candidates);
+		_chosenCandidates.push_back(get<0>(_partiesData[i])->getCandidatePtr());
+	}
 }
 
 ostream& DividedDistrict::showWinners(ostream& out) const{
-    for(int i = 0; i < _partiesData.getLength() && _partiesData[i].candidates > 0; i++){
-		out << "First candidate of Party No." << _partiesData[i].party->getId() << ": ";
-		out << _partiesData[i].party->getCandidate() << " with " ;
-        out << _partiesData[i].candidates << " candidates" <<endl;
+	int size = _partiesData.size();
+    for(int i = 0; i < size && get<2>(_partiesData[i]) > 0; i++){
+		out << "First candidate of Party No." << get<0>(_partiesData[i])->getId() << ": ";
+		out << get<0>(_partiesData[i])->getCandidate() << " with " ;
+        out << get<2>(_partiesData[i]) << " candidates" <<endl;
     }
     return out;
 }

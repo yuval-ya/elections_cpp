@@ -107,7 +107,7 @@ void DistrictArray::print() const {
 void DistrictArray::addPartyToDistrict(Party* p) {
 	for (int i = 0; i < _logSize; i++)
 	{
-		_arr[i]->getPartiesData().add(p);
+		_arr[i]->getPartiesData().push_back(p);
 	}
 }
 

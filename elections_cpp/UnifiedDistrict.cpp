@@ -12,7 +12,7 @@ using namespace std;
 
 namespace elections {
 
-UnifiedDistrict::UnifiedDistrict(const String& name, int numberOfCandidates) : District(name, numberOfCandidates) {
+UnifiedDistrict::UnifiedDistrict(const string& name, int numberOfCandidates) : District(name, numberOfCandidates) {
 }
 
 UnifiedDistrict::UnifiedDistrict(const UnifiedDistrict& other) : District(other) {
@@ -26,13 +26,13 @@ UnifiedDistrict::~UnifiedDistrict() {
 
 void UnifiedDistrict::evalPartition(){
     District::evalPartition(); // sort the array
-    _partiesData[0].party->addTotalCandidates(_numberOfCandidates);  
-	_chosenCandidates.addPerson(_partiesData[0].party->getCandidatePtr());
+    get<0>(_partiesData[0])->addTotalCandidates(_numberOfCandidates);  
+	_chosenCandidates.push_back(get<0>(_partiesData[0])->getCandidatePtr());
 }
 
 ostream& UnifiedDistrict::showWinners(ostream& out) const {
-	out << "First candidate of Party No." << _partiesData[0].party->getId() << ": ";
-	out << _partiesData[0].party->getCandidate() << " with " ;
+	out << "First candidate of Party No." << get<0>(_partiesData[0])->getId() << ": ";
+	out << get<0>(_partiesData[0])->getCandidate() << " with " ;
     out << _numberOfCandidates << " candidates " <<endl;
     return out;
 }

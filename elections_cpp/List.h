@@ -41,9 +41,9 @@ namespace mySTL
 			delete _head;
 		}
 
-		int size() { return _size; }
+		int size() const { return _size; }
 
-		bool empty() { return _head == _tail; }
+		bool empty() const { return _head == _tail; }
 
 		void clear() {
 			Node<T>* curr = _head->next;
@@ -126,7 +126,7 @@ namespace mySTL
 			return *this;
 		}
 
-		bool operator==(const List& other) {
+		bool operator==(const List& other) const {
 			Node<T> *curr1 = _head->next, *curr2 = other._head->next;
 
 			while (curr1 != nullptr && curr2 != nullptr) {

@@ -9,11 +9,13 @@
 #include "PersonPtr.h"
 #include <iostream>
 
+using namespace std;
+
 namespace elections {
 
 PersonPtr::PersonPtr() : _p(nullptr), _r(nullptr) {}
 
-PersonPtr::PersonPtr(const String& name, int id, int year, const District* district) :
+PersonPtr::PersonPtr(const string& name, int id, int year, const District* district) :
     _p(new Person(name, id, year, district)), _r(new int(1))
 {
 }

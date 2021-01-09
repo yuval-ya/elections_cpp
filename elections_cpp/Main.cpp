@@ -2,7 +2,7 @@
 #include <crtdbg.h>
 
 #include "Main.h" 
-#include "IterSort.h"
+#include "Ut"
 #include <list>
 
 
@@ -306,10 +306,10 @@ void printStatistics(Elections& election) {
         {
             const Party& party = election.getParties()[j];
             int numOfCandidatesFromParty = district.getPartyCandidatesNum(party.getId());
-            const PersonList& candidateList = party.getCandidatesArray().get(district.getId());
+            const List<PersonPtr>& candidateList = party.getCandidateList(district.getId());
             
             cout << "\nParty ID " << party.getId() << endl;
-            if (candidateList.getPersonCount() < numOfCandidatesFromParty)
+            if (candidateList.size() < numOfCandidatesFromParty)
             {	//There are not enough candidates from this district
                 cout << "*** There are not enough candidates in the party to district" << i << " ***" << endl;
             }
