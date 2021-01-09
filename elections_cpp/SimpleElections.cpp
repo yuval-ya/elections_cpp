@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SimpleElections.h"
+
 using namespace std;
 
 namespace elections {
@@ -8,7 +9,7 @@ namespace elections {
 	SimpleElections::SimpleElections(int numOfCandidates, const Date& date) : Elections(date)
 	{
 		District* dummy = new DividedDistrict("Dummy District", numOfCandidates);
-		_districts.add(dummy);
+		_districts.push_back(dummy);
 	}
 
 	SimpleElections::SimpleElections(std::istream& in) : Elections(in) {
@@ -17,12 +18,12 @@ namespace elections {
 	SimpleElections::~SimpleElections() {
 	}
 
-	bool SimpleElections::addDistrict(const String& name, int number_of_candidates, DistrictType type) {
+	bool SimpleElections::addDistrict(const string& name, int number_of_candidates, DistrictType type) {
 		cout << "\nNo district can be added to this type of election." << endl;
 		return false;
 	}
 
-	bool SimpleElections::addPerson(const String& name, int id, int birth_year, int distric_id) {
+	bool SimpleElections::addPerson(const string& name, int id, int birth_year, int distric_id) {
 		return Elections::addPerson(name, id, birth_year, 1);
 	}
 

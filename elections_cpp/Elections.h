@@ -17,14 +17,13 @@ enum class ElectionsType { RERGULAR = 1, SIMPLE };
 class Elections
 {
     // A class representing an Elections round
-
- protected:   
-
+public:
 	using PersonList = mySTL::List<PersonPtr>;
 	using DistrictArray = std::vector<District*>;
 	using PartyArray = std::vector<Party*>;
 	using VotesList = mySTL::List<std::tuple<PersonPtr, Party*>>;
 
+ protected:   
 	Date			_date;
 	PersonList		_voters;
 	DistrictArray	_districts;
@@ -81,6 +80,7 @@ public:
 
 	bool load(std::istream& in);
 	bool save(std::ostream& out) const;
+
 };
 
 }

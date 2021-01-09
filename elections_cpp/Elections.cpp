@@ -143,14 +143,14 @@ bool Elections::finalEvaluation() {
 
 
 Party** Elections::getSortedPartiesArr(int& size) {
-    int numOfParties = _parties.getLength();
+    int numOfParties = _parties.size();
     Party** res = new Party*[numOfParties];
     
-    for (int i = 0; i < numOfParties; i++)
-        res[i] = &_parties[i];
+    //for (int i = 0; i < numOfParties; i++)
+    //    res[i] = &_parties[i];
 
-    PartyArray::mergeSort(res, 0, numOfParties - 1);
-    size = numOfParties;
+    //PartyArray::mergeSort(res, 0, numOfParties - 1);
+    //size = numOfParties;
     return res;
 }
 
@@ -165,11 +165,11 @@ bool Elections::load(std::istream& in) {
 }
 
 bool Elections::save(std::ostream& out) const {
-	_date.save(out);
-	_districts.save(out);
+	//_date.save(out);
+	//_districts.save(out);
 	//_voters.save(out);
-	_parties.save(out);
-	_votes.save(out);
+	//_parties.save(out);
+	//_votes.save(out);
 	return true;
 }
 

@@ -8,7 +8,7 @@
 
 #include "List.h"
 #include "Party.h"
-
+#include "StringLoader.h"
 
 
 namespace elections {
