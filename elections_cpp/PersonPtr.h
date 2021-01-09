@@ -21,12 +21,12 @@ namespace elections {
 		void release();
 	public:
 		PersonPtr();
-		PersonPtr(const String&, int idnum, int year, const District* district);
+		PersonPtr(const std::string&, int idnum, int year, const District* district);
 		PersonPtr(const PersonPtr&);
 		PersonPtr(Person*);
 		~PersonPtr();
 
-		PersonPtr& operator=(PersonPtr&);
+		PersonPtr& operator=(const PersonPtr&);
 		bool operator==(PersonPtr pnt) const;
 		bool operator!=(PersonPtr pnt) const;
 		Person* operator->() { return _p; }
@@ -34,5 +34,9 @@ namespace elections {
 
 		const Person* operator->() const { return _p; }
 		const Person& operator*() const { return *_p; }
+
+		friend std::ostream& operator<<(std::ostream& os, const PersonPtr& p);
+		
+		bool save(std::ostream& out) const { _p->save(out); }
 	};
 }

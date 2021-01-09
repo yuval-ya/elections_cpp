@@ -30,34 +30,16 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="String.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DistrictArray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PartyArray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PersonList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PersonPtr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CandidatesArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DividedDistrict.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UnifiedDistrict.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PartyDataArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimpleElections.cpp">
@@ -75,7 +57,7 @@
     <ClCompile Include="ElectionsRoundLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VotesList.cpp">
+    <ClCompile Include="StringLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,22 +77,7 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="String.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DistrictArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PartyArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PersonList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PersonPtr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CandidatesArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Main.h">
@@ -120,9 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UnifiedDistrict.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PartyDataArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimpleElections.h">
@@ -140,7 +104,13 @@
     <ClInclude Include="ElectionsRoundLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VotesList.h">
+    <ClInclude Include="List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StringLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,8 +1,15 @@
 #pragma once
+
 #include <iostream>
-#include "String.h"
-#include "PersonList.h"
-#include "PartyDataArray.h"
+#include <algorithm>
+#include <vector>
+#include <tuple>
+#include <string>
+
+#include "List.h"
+#include "Party.h"
+#include "StringLoader.h"
+
 
 namespace elections {
 
@@ -11,40 +18,49 @@ namespace elections {
 	class District
 	{
 		// A class representing a District in the elections
+	
+	using partyTuple = std::tuple<Party*, int, int>; // (party, votes, candidates)
+	using PartyDataArray = std::vector<partyTuple>;
+	using PersonList = mySTL::List<PersonPtr>;
 
 	protected:
-        String          _name;
+        std::string     _name;
 		int				_id;
 		int				_numberOfCandidates;
         int				_numberOfVoters;
 		PersonList		_voters;
-        PartyDataArray  _partiesData;
+		PartyDataArray  _partiesData; 
 		PersonList		_chosenCandidates;
+
+		const partyTuple& getPartyData(int party_id) const;
+		partyTuple& getPartyData(int party_id);
 
 	public:
 		static int totalDistricts;
 		
-		District(const String& name, int number_of_candidates);
+		District(const std::string& name, int numberOfCandidates);
 		District(const District&);
 		District(std::istream& in);
 		virtual ~District();
 
 		int getId() const { return _id; }
-		const String& getName() const { return _name; }
+		const std::string& getName() const { return _name; }
 		int getNumberOfCandidates() const { return _numberOfCandidates; }
 		int getNumberOfVoters() const { return _numberOfVoters; }
-		int getCitizensNumber() const { return _voters.getPersonCount(); }
-		int getPartyVotes(int party_id) const { return _partiesData.get(party_id).votes; }
-		int getPartyCandidatesNum(int party_id) const { return _partiesData.get(party_id).candidates; }
+		int getCitizensNumber() const { return _voters.size(); }
+		
+		int getPartyVotes(int party_id) const;
+		int getPartyCandidatesNum(int party_id) const;
+
 		PartyDataArray& getPartiesData() { return _partiesData; }
-		const PartyDataArray& getPartiesData() const { return _partiesData; }   
+		const PartyDataArray& getPartiesData() const { return _partiesData; }
         PersonList& getVoters() { return _voters; }
         const PersonList& getVoters() const { return _voters; }
 		PersonList& getChosenCandidates() { return _chosenCandidates; }
 		const PersonList& getChosenCandidates() const { return _chosenCandidates; }
 
 		bool setNumberOfCandidates(int numberOfCandidates);
-		bool setName(const String& name);
+		bool setName(const std::string& name);
 		bool setId(int id);
         
         bool vote(int party_id);

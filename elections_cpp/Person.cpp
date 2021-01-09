@@ -1,11 +1,13 @@
 #include "District.h"
 #include "Party.h"
 #include "Person.h"
+#include "StringLoader.h"
+
 using namespace std;
 
 namespace elections {
 
-	Person::Person(const String& name, int id, int year, const District* district) :
+	Person::Person(const string& name, int id, int year, const District* district) :
 		_name(name), _id(id), _birthYear(year), _district(district),
 		_vote(nullptr), _isCandidate(nullptr)
 	{
@@ -39,7 +41,7 @@ namespace elections {
 	Person::~Person() {
 	}
 
-	bool Person::setName(const String& name)
+	bool Person::setName(const string& name)
 	{
 		_name = name;
 		return true;
@@ -97,7 +99,7 @@ namespace elections {
 
 	bool Person::load(std::istream& in) {
 		in.read(rcastc(&_id), sizeof(_id));
-		_name.load(in);
+		_name = StringLoader::load(in);
 		in.read(rcastc(&_birthYear), sizeof(_birthYear));
 		if (!in.good()) {
 			std::cout << "Error reading" << std::endl;
@@ -116,7 +118,7 @@ namespace elections {
 			candidate = _isCandidate->getId();
 
 		out.write(rcastcc(&_id), sizeof(_id));
-		_name.save(out);
+		StringLoader::save(out, _name);
 		out.write(rcastcc(&_birthYear), sizeof(_birthYear));
 		out.write(rcastcc(&district), sizeof(district));
 		out.write(rcastcc(&vote), sizeof(vote));

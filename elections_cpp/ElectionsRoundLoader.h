@@ -15,6 +15,17 @@ namespace elections
 		static void loadCandidatesArray(std::istream& in, Elections& elections, Party* party);
 		static void loadVotes(std::istream& in, Elections& elections);
 		static void checkFile(std::istream& in);
+		
+		static void saveVotes(std::ostream& out, const Elections::VotesList& lst);
+		static void saveDistricts(std::ostream& out, const Elections::DistrictArray& lst);
+
+		template<class T>
+		static void saveStruct(std::ostream& out, const T& pointersStruct) {
+			int size = pointersStruct.size();
+			out.write(rcastcc(&size), sizeof(size));
+			for (auto obj : pointersStruct) 
+				obj->save(out);
+		}
 	};
 }
 

@@ -18,7 +18,7 @@ class DividedDistrict : public District {
 	// Inherit all District attributes
 
 public:
-    DividedDistrict(const String& name, int numberOfCandidates);
+    DividedDistrict(const std::string& name, int numberOfCandidates);
     DividedDistrict(const DividedDistrict&);
 	DividedDistrict(std::istream& in);
     virtual ~DividedDistrict();

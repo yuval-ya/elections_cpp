@@ -19,7 +19,7 @@ class UnifiedDistrict : public District {
 	// Inherit all District attributes
 
 public:
-    UnifiedDistrict(const String& name, int numberOfCandidates);
+    UnifiedDistrict(const std::string& name, int numberOfCandidates);
     UnifiedDistrict(const UnifiedDistrict&);
 	UnifiedDistrict(std::istream& in);
     virtual ~UnifiedDistrict();

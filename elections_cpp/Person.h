@@ -1,5 +1,5 @@
 #pragma once
-#include "String.h"
+#include <string>
 #include <iostream>
 
 namespace elections {
@@ -13,25 +13,25 @@ namespace elections {
 
 	private:
 		int					_id;
-		String				_name;
+		std::string			_name;
 		int					_birthYear;
 		const District*		_district;
 		const Party*		_vote;
 		const Party*		_isCandidate;
 
 	public:
-		Person(const String&, int id, int year, const District* district);
+		Person(const std::string&, int id, int year, const District* district);
 		Person(const Person& p);
 		Person(std::istream& in);
 		Person(std::istream& in, int& districtID, int& vote, int& candidate);
 		~Person();
 
-		const String& getName() const { return _name; }
+		const std::string& getName() const { return _name; }
 		int getID() const { return _id; };
 		int getYear() const { return _birthYear; };
 		int getDistrictID() const;
 
-		bool setName(const String& name);
+		bool setName(const std::string& name);
 		bool setId(int id);
 		bool setBirthYear(int birthYear);
 		bool setDistrict(const District* district);
