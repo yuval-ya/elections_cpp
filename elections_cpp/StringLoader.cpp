@@ -12,10 +12,9 @@ string StringLoader::load(istream& in){
 	tmpName[size] = '\0';
 
 	string name = tmpName;
-	delete tmpName;
+	delete[] tmpName;
 
 	if (!in.good()) {
-		throw;
 		/*
 		*
 		*
@@ -27,7 +26,7 @@ string StringLoader::load(istream& in){
 
 void StringLoader::save(ostream& out, const string& str) {
 	
-	int size = str.size();
+	int size = str.length();
 	out.write(rcastcc(&size), sizeof(size));
 	out.write(str.c_str(), size);
 

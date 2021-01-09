@@ -36,5 +36,7 @@ namespace elections {
 		const Person& operator*() const { return *_p; }
 
 		friend std::ostream& operator<<(std::ostream& os, const PersonPtr& p);
+		
+		bool save(std::ostream& out) const { _p->save(out); }
 	};
 }

@@ -123,10 +123,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CandidatesArray.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="District.cpp" />
-    <ClCompile Include="DistrictArray.cpp" />
     <ClCompile Include="DistrictLoader.cpp" />
     <ClCompile Include="DividedDistrict.cpp" />
     <ClCompile Include="Elections.cpp" />
@@ -135,22 +133,15 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Party.cpp" />
-    <ClCompile Include="PartyArray.cpp" />
-    <ClCompile Include="PartyDataArray.cpp" />
     <ClCompile Include="Person.cpp" />
-    <ClCompile Include="PersonList.cpp" />
     <ClCompile Include="PersonPtr.cpp" />
     <ClCompile Include="SimpleElections.cpp" />
-    <ClCompile Include="String.cpp" />
     <ClCompile Include="StringLoader.cpp" />
     <ClCompile Include="UnifiedDistrict.cpp" />
-    <ClCompile Include="VotesList.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CandidatesArray.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="District.h" />
-    <ClInclude Include="DistrictArray.h" />
     <ClInclude Include="DistrictLoader.h" />
     <ClInclude Include="DividedDistrict.h" />
     <ClInclude Include="Elections.h" />
@@ -162,15 +153,10 @@
     <ClInclude Include="Main.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Party.h" />
-    <ClInclude Include="PartyArray.h" />
-    <ClInclude Include="PartyDataArray.h" />
     <ClInclude Include="Person.h" />
-    <ClInclude Include="PersonList.h" />
     <ClInclude Include="PersonPtr.h" />
     <ClInclude Include="SimpleElections.h" />
-    <ClInclude Include="String.h" />
     <ClInclude Include="UnifiedDistrict.h" />
-    <ClInclude Include="VotesList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

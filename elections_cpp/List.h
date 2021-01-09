@@ -121,6 +121,7 @@ namespace mySTL
 				Node<T>* curr = other._head->next;
 				while (curr != nullptr) {
 					push_back(curr->data);
+					curr = curr->next;
 				}
 			}
 			return *this;

@@ -1,5 +1,7 @@
 #include "ElectionsRoundLoader.h"
+#include "DistrictLoader.h"
 
+using namespace mySTL;
 using namespace std;
 
 namespace elections
@@ -11,7 +13,7 @@ namespace elections
 		checkFile(in);
 
 		for (int i = 0; i < numOfDistricts; i++) {
-			elections.getDistricts().add(DistrictLoader::load(in));
+			elections.getDistricts().push_back(DistrictLoader::load(in));
 		}
 	}
 	void ElectionsRoundLoader::loadVoters(istream& in, Elections& elections) {
@@ -23,7 +25,7 @@ namespace elections
 			int districtID = 0, vote = 0, candidate = 0;
 
 			PersonPtr person = new Person(in, districtID, vote, candidate);
-			District& district = elections.getDistricts().get(districtID);
+			District& district = elections.findDistrict(districtID);
 			person->setDistrict(&district);
 
 			elections.getVoters().push_back(person);
@@ -40,19 +42,21 @@ namespace elections
 			int firstCandidateID = 0;
 			Party* party = new Party(in, firstCandidateID);
 
-			PersonPtr firstCandidate = *(std::find_if(elections.getVoters().begin(), elections.getVoters().end(),
-				[firstCandidateID](PersonPtr p)->bool { return p->getID() == firstCandidateID; }));
-
-			elections.getParties().add(party);
+			PersonPtr firstCandidate = elections.findPerson(firstCandidateID);
+			elections.getParties().push_back(party);
 			party->setFirstCandidate(firstCandidate);
 			firstCandidate->setAsCandidate(party);
-			elections.getDistricts().addPartyToDistrict(party);
+
+			for (auto district : elections.getDistricts())
+				district->getPartiesData().push_back(make_tuple(party,0,0));
+
 			loadCandidatesArray(in, elections, party);
 		}
 	}
 
 	void ElectionsRoundLoader::loadCandidatesArray(istream& in, Elections& elections, Party* party) {
-		DistrictArray& districts = elections.getDistricts();
+		Elections::DistrictArray& districts = elections.getDistricts();
+
 		int sizeOfCandidatesArray = 0, districtID = 0, sizeOfCandidatesList = 0, candidateID = 0;
 		in.read(rcastc(&sizeOfCandidatesArray), sizeof(sizeOfCandidatesArray));
 		checkFile(in);
@@ -62,16 +66,15 @@ namespace elections
 			in.read(rcastc(&districtID), sizeof(districtID));
 			in.read(rcastc(&sizeOfCandidatesList), sizeof(sizeOfCandidatesList));
 			checkFile(in);
-			party->getCandidatesArray().add(&districts.get(districtID));
-			PersonList& candidatesList = party->getCandidatesArray().get(districtID);
+			party->getCandidatesArray().push_back(make_tuple(&elections.findDistrict(districtID), Elections::PersonList()));
+			Elections::PersonList& candidatesList = party->getCandidateList(districtID);
 
 			for (int k = 0; k < sizeOfCandidatesList; k++)
 			{
 				in.read(rcastc(&candidateID), sizeof(candidateID));
 				checkFile(in);
-				PersonPtr candidate = *(std::find_if(elections.getVoters().begin(), elections.getVoters().end(),
-					[candidateID](PersonPtr p)->bool { return p->getID() == candidateID; }));
-				candidatesList.addPerson(candidate);
+				PersonPtr candidate = elections.findPerson(candidateID);
+				candidatesList.push_back(candidate);
 				candidate->setAsCandidate(party);
 			}
 		}
@@ -95,6 +98,34 @@ namespace elections
 		if (!in.good()) {
 			std::cout << "Error reading" << std::endl;
 			exit(-1);
+		}
+	}
+
+	void ElectionsRoundLoader::saveDistricts(std::ostream& out, const Elections::DistrictArray& districts) {
+		int size = districts.size();
+		out.write(rcastcc(&size), sizeof(size));
+		for (auto district : districts)
+			DistrictLoader::save(out, district);
+	}
+
+	template<class T>
+	static void saveStruct(std::ostream& out, const T& pointersStruct) {
+
+	}
+
+	void ElectionsRoundLoader::saveVotes(ostream& out,const Elections::VotesList& votesList) {
+		int size = votesList.size();
+		out.write(rcastcc(&size), sizeof(size));
+		for (auto vote : votesList) {
+			int personID = get<0>(vote)->getID();
+			int partyID = get<1>(vote)->getId();
+			out.write(rcastcc(&personID), sizeof(personID));
+			out.write(rcastcc(&partyID), sizeof(partyID));
+			if (!out.good()) throw;
+			/*
+			*
+			*
+			*/
 		}
 	}
 }

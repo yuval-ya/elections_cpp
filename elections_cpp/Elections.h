@@ -4,6 +4,7 @@
 #include "UnifiedDistrict.h"
 #include "DividedDistrict.h"
 #include "List.h"
+#include "Utilities.h"
 
 #include <string>
 #include <vector>
@@ -17,14 +18,13 @@ enum class ElectionsType { RERGULAR = 1, SIMPLE };
 class Elections
 {
     // A class representing an Elections round
-
- protected:   
-
+public:
 	using PersonList = mySTL::List<PersonPtr>;
 	using DistrictArray = std::vector<District*>;
 	using PartyArray = std::vector<Party*>;
 	using VotesList = mySTL::List<std::tuple<PersonPtr, Party*>>;
 
+ protected:   
 	Date			_date;
 	PersonList		_voters;
 	DistrictArray	_districts;
@@ -77,10 +77,11 @@ public:
     
     // return a pointer tp Party array and it's size (as an output parameter)
     // The array is sorted by the order of votes each party received (the winnig party in index 0)
-    Party** getSortedPartiesArr(int& size);
+    void sortPartiesArray();
 
 	bool load(std::istream& in);
 	bool save(std::ostream& out) const;
+
 };
 
 }

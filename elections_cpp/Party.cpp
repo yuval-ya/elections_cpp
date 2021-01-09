@@ -9,15 +9,14 @@ namespace elections {
 int Party::totalParties = 0;
 
 Party::Party(const string& name, PersonPtr candidate) :
-	_id(++totalParties), _name(name), _firstCandidate(candidate), _totalCandidates(0), _totalVotes(0),
-	_candidates(District::totalDistricts)
+	_id(++totalParties), _name(name), _firstCandidate(candidate), _totalCandidates(0), _totalVotes(0)
 {
 }
 
-Party::Party(const Party& p) :
-	_id(p._id), _name(p._name), _firstCandidate(p._firstCandidate),
-	_totalCandidates(p._totalCandidates) , _totalVotes(p._totalVotes),
-	_candidates(District::totalDistricts) 
+Party::Party(const Party& other) :
+	_id(other._id), _name(other._name), _firstCandidate(other._firstCandidate),
+	_totalCandidates(other._totalCandidates) , _totalVotes(other._totalVotes),
+	_candidates(other._candidates)
 {
 }
 
@@ -52,6 +51,7 @@ bool Party::setFirstCandidate(PersonPtr candidate) {
 }
 
 Party::PersonList& Party::getCandidateList(int district_id) {
+
 	auto iter = find_if(_candidates.begin(), _candidates.end(),
 		[district_id](DistrictTuple tp)->bool { return get<0>(tp)->getId() == district_id; });
 	
@@ -66,6 +66,7 @@ Party::PersonList& Party::getCandidateList(int district_id) {
 	return get<1>(*iter);
 }
 const Party::PersonList& Party::getCandidateList(int district_id) const {
+	
 	auto iter = find_if(_candidates.begin(), _candidates.end(),
 		[district_id](DistrictTuple tp)->bool { return get<0>(tp)->getId() == district_id; });
 

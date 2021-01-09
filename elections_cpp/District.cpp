@@ -1,6 +1,6 @@
 #include "District.h"
 #include "Utilities.h"
-#include "StringLoader.h"
+
 
 #include <iostream>
 
@@ -12,7 +12,7 @@ namespace elections {
 	int District::totalDistricts = 0;
 
 	District::District(const string& name, int numberOfCandidates) :
-		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0), _partiesData(Party::totalParties)
+		_id(++totalDistricts), _name(name), _numberOfCandidates(numberOfCandidates), _numberOfVoters(0)
 	{
 	}
 
@@ -139,18 +139,17 @@ namespace elections {
 
 		if (_numberOfCandidates > count) {
 			auto max = max_element(_partiesData.begin(), _partiesData.end(),
-				[](partyTuple p1, partyTuple p2)->int { return myCmp(get<1>(p1), get<1>(p2)); });
+				[](partyTuple p1, partyTuple p2)->int { return get<1>(p1) < get<1>(p2); });
 			if (max == _partiesData.end())
 				throw;
 			/*
 			*
 			*/
-
 			get<2>(*max) += _numberOfCandidates - count;
 		}
 
-		sort(_partiesData.begin(), _partiesData.end(), 
-			[](partyTuple p1, partyTuple p2)->int { return myCmp(get<2>(p2), get<2>(p1)); });
+		myIterSort(_partiesData.begin(), _partiesData.end(), 
+			[](partyTuple p1, partyTuple p2)->int { return get<2>(p2) < get<2>(p1); });
 	}
 
 	bool District::save(ostream& out) const{
