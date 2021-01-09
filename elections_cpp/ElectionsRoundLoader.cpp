@@ -100,4 +100,32 @@ namespace elections
 			exit(-1);
 		}
 	}
+
+	void ElectionsRoundLoader::saveDistricts(std::ostream& out, const Elections::DistrictArray& districts) {
+		int size = districts.size();
+		out.write(rcastcc(&size), sizeof(size));
+		for (auto district : districts)
+			DistrictLoader::save(out, district);
+	}
+
+	template<class T>
+	static void saveStruct(std::ostream& out, const T& pointersStruct) {
+
+	}
+
+	void ElectionsRoundLoader::saveVotes(ostream& out,const Elections::VotesList& votesList) {
+		int size = votesList.size();
+		out.write(rcastcc(&size), sizeof(size));
+		for (auto vote : votesList) {
+			int personID = get<0>(vote)->getID();
+			int partyID = get<1>(vote)->getId();
+			out.write(rcastcc(&personID), sizeof(personID));
+			out.write(rcastcc(&partyID), sizeof(partyID));
+			if (!out.good()) throw;
+			/*
+			*
+			*
+			*/
+		}
+	}
 }

@@ -100,14 +100,14 @@ bool Elections::addPersonAsCandidate(int person_id, int party_id, int district_i
 			candidate->setAsCandidate(&party);
 			return true;
 		}
-		else
-			throw;
+		//else
+		//	throw;
 		/*
 		*
 		*/
     }
-	catch(...){
-
+	catch(const char* msg){
+		cout << msg << endl;
 	}
     return false;
 }
@@ -141,19 +141,11 @@ bool Elections::finalEvaluation() {
     return true;
 }
 
-
-Party** Elections::getSortedPartiesArr(int& size) {
-    int numOfParties = _parties.size();
-    Party** res = new Party*[numOfParties];
-    
-    //for (int i = 0; i < numOfParties; i++)
-    //    res[i] = &_parties[i];
-
-    //PartyArray::mergeSort(res, 0, numOfParties - 1);
-    //size = numOfParties;
-    return res;
+void Elections::sortPartiesArray() {	
+	myIterSort(_parties.begin(), _parties.end(), [](Party* p1, Party* p2)->int {
+		return p1->getTotalCandidates() > p2->getTotalCandidates();
+	});
 }
-
 
 bool Elections::load(std::istream& in) {
 	_date.load(in);
@@ -165,11 +157,11 @@ bool Elections::load(std::istream& in) {
 }
 
 bool Elections::save(std::ostream& out) const {
-	//_date.save(out);
-	//_districts.save(out);
-	//_voters.save(out);
-	//_parties.save(out);
-	//_votes.save(out);
+	_date.save(out);
+	ElectionsRoundLoader::saveDistricts(out, _districts);
+	ElectionsRoundLoader::saveStruct(out, _voters);
+	ElectionsRoundLoader::saveStruct(out, _parties);
+	ElectionsRoundLoader::saveVotes(out, _votes);
 	return true;
 }
 
@@ -178,7 +170,7 @@ PersonPtr& Elections::findPerson(int id) {
 		[id](PersonPtr p)->bool { return p->getID() == id; });
 
 	if (iter == _voters.end()) {
-		throw;
+		throw "person not found";
 		/*
 		*/
 	}

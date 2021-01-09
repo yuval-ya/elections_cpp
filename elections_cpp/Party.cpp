@@ -13,9 +13,10 @@ Party::Party(const string& name, PersonPtr candidate) :
 {
 }
 
-Party::Party(const Party& p) :
-	_id(p._id), _name(p._name), _firstCandidate(p._firstCandidate),
-	_totalCandidates(p._totalCandidates) , _totalVotes(p._totalVotes)
+Party::Party(const Party& other) :
+	_id(other._id), _name(other._name), _firstCandidate(other._firstCandidate),
+	_totalCandidates(other._totalCandidates) , _totalVotes(other._totalVotes),
+	_candidates(other._candidates)
 {
 }
 

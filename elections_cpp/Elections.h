@@ -4,6 +4,7 @@
 #include "UnifiedDistrict.h"
 #include "DividedDistrict.h"
 #include "List.h"
+#include "Utilities.h"
 
 #include <string>
 #include <vector>
@@ -76,7 +77,7 @@ public:
     
     // return a pointer tp Party array and it's size (as an output parameter)
     // The array is sorted by the order of votes each party received (the winnig party in index 0)
-    Party** getSortedPartiesArr(int& size);
+    void sortPartiesArray();
 
 	bool load(std::istream& in);
 	bool save(std::ostream& out) const;
