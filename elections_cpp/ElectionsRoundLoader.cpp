@@ -37,19 +37,19 @@ namespace elections
         in.read(rcastc(&numOfParties), sizeof(numOfParties));
         
         for (int i = 0; i < numOfParties; i++) {
-            int firstCandidateID = 0;
+            string firstCandidateID;
             Party* party = new Party(in, firstCandidateID);
             
             try {
                 PersonPtr firstCandidate = elections.findPerson(firstCandidateID);
                 firstCandidate->setAsCandidate(party);
                 party->setFirstCandidate(firstCandidate);
-                elections.getParties().push_back(party);
                 
                 for (auto district : elections.getDistricts())
                     district->getPartiesData().push_back(make_tuple(party,0,0));
                 
                 loadCandidatesArray(in, elections, party);
+                elections.getParties().push_back(party);
             }
             catch (...) {
                 delete party;
@@ -59,9 +59,9 @@ namespace elections
     }
     
     void ElectionsRoundLoader::loadCandidatesArray(istream& in, Elections& elections, Party* party) {
-        int sizeOfCandidatesArray = 0, districtID = 0, sizeOfCandidatesList = 0, candidateID = 0;
-        in.read(rcastc(&sizeOfCandidatesArray), sizeof(sizeOfCandidatesArray));
+        int sizeOfCandidatesArray = 0, districtID = 0, sizeOfCandidatesList = 0;
         
+        in.read(rcastc(&sizeOfCandidatesArray), sizeof(sizeOfCandidatesArray));
         for (int j = 0; j < sizeOfCandidatesArray; j++)
         {
             in.read(rcastc(&districtID), sizeof(districtID));
@@ -71,7 +71,7 @@ namespace elections
             
             for (int k = 0; k < sizeOfCandidatesList; k++)
             {
-                in.read(rcastc(&candidateID), sizeof(candidateID));
+                string candidateID = StringLoader::load(in);
                 PersonPtr candidate = elections.findPerson(candidateID);
                 candidate->setAsCandidate(party);
                 candidatesList.push_back(candidate);
@@ -85,8 +85,8 @@ namespace elections
         in.read(rcastc(&numOfVotes), sizeof(numOfVotes));
         for (int i = 0; i < numOfVotes; i++)
         {
-            int personID = 0, partyID = 0;
-            in.read(rcastc(&personID), sizeof(personID));
+            int partyID = 0;
+            string personID = StringLoader::load(in);
             in.read(rcastc(&partyID), sizeof(partyID));
             elections.vote(personID, partyID);
         }
@@ -105,9 +105,9 @@ namespace elections
         int size = votesList.size();
         out.write(rcastcc(&size), sizeof(size));
         for (auto vote : votesList) {
-            int personID = get<0>(vote)->getID();
+            string personID = get<0>(vote)->getID();
             int partyID = get<1>(vote)->getId();
-            out.write(rcastcc(&personID), sizeof(personID));
+            StringLoader::save(out, personID);
             out.write(rcastcc(&partyID), sizeof(partyID));
         }
     }

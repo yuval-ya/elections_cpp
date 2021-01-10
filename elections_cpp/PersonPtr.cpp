@@ -15,7 +15,7 @@ namespace elections {
 
 PersonPtr::PersonPtr() : _p(nullptr), _r(nullptr) {}
 
-PersonPtr::PersonPtr(const string& name, int id, int year, const District* district) : PersonPtr()
+PersonPtr::PersonPtr(const string& name,const std::string& id, int year, const District* district) : PersonPtr()
 {
     try {
         _p = new Person(name, id, year, district);

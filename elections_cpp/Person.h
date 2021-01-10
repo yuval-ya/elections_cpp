@@ -12,7 +12,7 @@ namespace elections {
 		// A class representing a citizen in the elections
 
 	private:
-		int					_id;
+		std::string			_id;
 		std::string			_name;
 		int					_birthYear;
 		const District*		_district;
@@ -22,19 +22,19 @@ namespace elections {
         static const int ID_SIZE = 9;
 
 	public:
-		Person(const std::string&, int id, int year, const District* district);
+		Person(const std::string&,const std::string& id, int year, const District* district);
 		Person(const Person& p);
 		Person(std::istream& in);
 		Person(std::istream& in, int& districtID, int& vote, int& candidate);
 		~Person();
 
 		const std::string& getName() const { return _name; }
-		int getID() const { return _id; };
+		const std::string& getID() const { return _id; };
 		int getYear() const { return _birthYear; };
 		int getDistrictID() const;
 
 		void setName(const std::string& name);
-		void setId(int id);
+		void setId(const std::string& id);
 		void setBirthYear(int birthYear);
 		void setDistrict(const District* district);
 

@@ -65,7 +65,7 @@ void mainMenu()
     }
     
     if (electionsRound) {
-        //Menu::test(*electionsRound);
+       // Menu::test(*electionsRound);
         try {
             start(&electionsRound);
             delete electionsRound;
@@ -126,7 +126,7 @@ Elections* createNewRound()
 Elections* loadElections()
 {
     Elections* electionsRound;
-    char name[MAX_SIZE];
+    string name;
     cout << "Enter file name: ";
     cin >> name;
     ifstream infile;
@@ -140,6 +140,7 @@ Elections* loadElections()
     catch (...) {
         if (infile)
             infile.close();
+        cout << "Error while opening/reading file!" <<endl;
         throw;
     }
     
@@ -166,6 +167,7 @@ void start(Elections** election)
         cout << "12.Load elections from file.\n" << endl;
         
         try {
+            cin.ignore();
             cin >> choice;
             if(choice < 1 || choice > 12)
                 throw "Wrong input";
@@ -181,7 +183,6 @@ void start(Elections** election)
             cout << "Please try again" <<endl;
         }
         
-        cin.ignore();
     }
 }
 
@@ -237,11 +238,11 @@ void options(Elections** election, ElectionsMenu choice)
 
 
 void newDistrict(Elections& election) {
-    char name[MAX_SIZE];
+    string name;
     int candidates_num, type;
     cout << "Enter district name: ";
     cin.ignore();
-    cin.getline(name, MAX_SIZE);
+    getline(cin, name);
     cout << "Enter district type: (" ;
     cout << static_cast<int>(DistrictType::DIVIDED) <<" for Divided, ";
     cout << static_cast<int>(DistrictType::UNIFIED) << " for Unified) ";
@@ -252,22 +253,21 @@ void newDistrict(Elections& election) {
 }
 
 void newParty(Elections& election) {
-    char name[MAX_SIZE];
-    int candidate_id;
+    string name, candidate_id;
     cout << "Enter party name: ";
     cin.ignore();
-    cin.getline(name, MAX_SIZE);
+    getline(cin, name);
     cout << "Enter first candidate ID: ";
     cin >> candidate_id;
     election.addParty(name, candidate_id);
 }
 
 void newCitizen(Elections& election) {
-    char name[MAX_SIZE];
-    int id, year, district_id = 1;
+    string name, id;
+    int year, district_id = 1;
     cout << "Enter name: ";
     cin.ignore();
-    cin.getline(name, MAX_SIZE);
+    getline(cin, name);
     cout << "Enter id: ";
     cin >> id;
     cout << "Enter year of birth: ";
@@ -280,7 +280,8 @@ void newCitizen(Elections& election) {
 }
 
 void setCitizenAsCandidate(Elections& election) {
-    int candidate_id, party_id, district_id = 1;
+    int party_id, district_id = 1;
+    string candidate_id;
     cout << "Enter candidate ID: ";
     cin >> candidate_id;
     if (typeid(election) != typeid(SimpleElections)) {
@@ -293,7 +294,8 @@ void setCitizenAsCandidate(Elections& election) {
 }
 
 void vote(Elections& election) {
-    int id, party_id;
+    int party_id;
+    string id;
     cout << "Enter ID: ";
     cin >> id;
     cout << "Enter party ID: ";
@@ -304,7 +306,7 @@ void vote(Elections& election) {
 
 void saveToFile(Elections& election)
 {
-    char name[MAX_SIZE];
+    string name;
     cout << "Enter file name: ";
     cin >> name;
     

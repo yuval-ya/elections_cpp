@@ -21,7 +21,7 @@ namespace elections {
 		void release();
 	public:
 		PersonPtr();
-		PersonPtr(const std::string&, int idnum, int year, const District* district);
+		PersonPtr(const std::string&,const std::string& id, int year, const District* district);
 		PersonPtr(const PersonPtr&);
 		PersonPtr(Person*);
 		~PersonPtr();

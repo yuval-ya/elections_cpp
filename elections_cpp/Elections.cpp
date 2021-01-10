@@ -50,12 +50,12 @@ void Elections::addDistrict(const string& name, int number_of_candidates, Distri
 }
 
 
-void Elections::addPerson(const string& name, int id, int birth_year, int distric_id)
+void Elections::addPerson(const string& name,const std::string& id, int birth_year, int distric_id)
 {
 	auto p = std::find_if(_voters.begin(), _voters.end(),
 		[id](PersonPtr p)->bool { return p->getID() == id; });
 
-    if (p != _voters.end()) throw invalid_argument("There is citizen with the same ID number");
+    if (p != _voters.end()) throw invalid_argument("There is no citizen with the same ID number");
     if (_date.getYear() - birth_year < 18) throw  invalid_argument("This citizen can't vote (under 18)");
 
 	District& district = findDistrict(distric_id);
@@ -64,7 +64,7 @@ void Elections::addPerson(const string& name, int id, int birth_year, int distri
     district.getVoters().push_back(newPerson);
 }
 
-void Elections::addParty(const string& name, int candidate_id)
+void Elections::addParty(const string& name, const string& candidate_id)
 {
 	PersonPtr candidate = findPerson(candidate_id);
     Party* newParty = new Party(name, candidate);
@@ -83,7 +83,7 @@ void Elections::addParty(const string& name, int candidate_id)
     }
 }
 
-void Elections::addPersonAsCandidate(int person_id, int party_id, int district_id)
+void Elections::addPersonAsCandidate(const string& person_id, int party_id, int district_id)
 {
     PersonPtr candidate = findPerson(person_id);
     Party& party = findParty(party_id);
@@ -91,7 +91,7 @@ void Elections::addPersonAsCandidate(int person_id, int party_id, int district_i
     party.getCandidateList(district_id).push_back(candidate);
 }
 
-void Elections::vote(int person_id, int party_id)
+void Elections::vote(const string& person_id, int party_id)
 {
 	PersonPtr person = findPerson(person_id);
     Party& party = findParty(party_id);
@@ -153,7 +153,7 @@ void Elections::save(std::ostream& out) const {
 	ElectionsRoundLoader::saveVotes(out, _votes);
 }
 
-PersonPtr& Elections::findPerson(int id) {
+PersonPtr& Elections::findPerson(const std::string& id) {
 	auto iter = std::find_if(_voters.begin(), _voters.end(),
 		[id](PersonPtr p)->bool { return p->getID() == id; });
 
@@ -163,7 +163,7 @@ PersonPtr& Elections::findPerson(int id) {
 	return *iter;
 }
 
-const PersonPtr& Elections::findPerson(int id) const {
+const PersonPtr& Elections::findPerson(const std::string& id) const {
 	auto iter = std::find_if(_voters.begin(), _voters.end(),
 		[id](PersonPtr p)->bool { return p->getID() == id; });
 

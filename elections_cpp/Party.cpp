@@ -20,13 +20,12 @@ Party::Party(const Party& other) :
 {
 }
 
-Party::Party(istream& in, int& firstCandidateID) : _firstCandidate(nullptr) {
+Party::Party(istream& in, string& firstCandidateID) : _firstCandidate(nullptr) {
 	totalParties++;
 	load(in, firstCandidateID);
 }
 
-Party::~Party() {
-	
+Party::~Party() {	
 }
 
 void Party::setName(const string& name)
@@ -67,20 +66,18 @@ const Party::PersonList& Party::getCandidateList(int district_id) const {
 	return get<1>(*iter);
 }
 
-void Party::load(istream& in, int& firstCandidateID) {
+void Party::load(istream& in, string& firstCandidateID) {
 
 	in.read(rcastc(&_id), sizeof(_id));
 	_name = StringLoader::load(in);
-	in.read(rcastc(&firstCandidateID), sizeof(firstCandidateID));
-	in.read(rcastc(&_totalCandidates), sizeof(_totalCandidates));
+    firstCandidateID = StringLoader::load(in);
+    in.read(rcastc(&_totalCandidates), sizeof(_totalCandidates));
 }
 
 void Party::save(ostream& out) const {
-	int firstCandidateID = _firstCandidate->getID();
-
 	out.write(rcastcc(&_id), sizeof(_id));
 	StringLoader::save(out, _name);
-	out.write(rcastcc(&firstCandidateID), sizeof(firstCandidateID));
+    StringLoader::save(out, _firstCandidate->getID());
 	out.write(rcastcc(&_totalCandidates), sizeof(_totalCandidates));
 
 	saveCandidatesArray(out);
@@ -97,11 +94,9 @@ void Party::saveCandidatesArray(std::ostream& out) const {
 		int lstSize = get<1>(districtTuple).size();
 		out.write(rcastcc(&lstSize), sizeof(lstSize));
 
-		for (auto personPtr : get<1>(districtTuple)) {
-			int personID = personPtr->getID();
-			out.write(rcastcc(&personID), sizeof(personID));
-		}
-	} 	 
+		for (auto personPtr : get<1>(districtTuple))
+			StringLoader::save(out, personPtr->getID());
+	}
 }
 
 ostream& operator<<(ostream& os, const Party& p) {

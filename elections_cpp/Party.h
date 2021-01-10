@@ -32,7 +32,7 @@ public:
 
 	Party(const std::string& name, PersonPtr candidate);
 	Party(const Party& p);
-	Party(std::istream& in, int& firstCandidateID);
+	Party(std::istream& in, std::string& firstCandidateID);
 	~Party();
 
 	int getId() const { return _id; }
@@ -56,7 +56,7 @@ public:
 	void addTotalCandidates(int val) { _totalCandidates += val; }
 	void addTotalVotes(int val) { _totalVotes += val; }
 
-	void load(std::istream& in , int& firstCandidateID);
+    void load(std::istream& in , std::string& firstCandidateID);
 	void save(std::ostream& out) const;
 
 	friend std::ostream& operator<<(std::ostream& os, const Party& p);

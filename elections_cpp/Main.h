@@ -10,8 +10,6 @@ enum class ElectionsMenu { ADD_DISTRICT = 1, ADD_CITIZEN, ADD_PARTY, ADD_CANDIDA
 
 enum class MainMenu { NEW = 1, LOAD, EXIT };
 
-const int MAX_SIZE = 100;
-
 void mainMenu();
 elections::Elections* loadElections();
 elections::Elections* createNewRound();

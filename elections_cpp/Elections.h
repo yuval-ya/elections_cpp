@@ -50,8 +50,8 @@ public:
 	const VotesList& getVotes() const { return _votes; }
 	VotesList& getVotes() { return _votes; }
 
-	PersonPtr& findPerson(int id);
-	const PersonPtr& findPerson(int id) const;
+	PersonPtr& findPerson(const std::string& id);
+	const PersonPtr& findPerson(const std::string& id) const;
 	District& findDistrict(int id);
 	const District& findDistrict(int id) const;
 	Party& findParty(int id);
@@ -61,15 +61,15 @@ public:
     virtual void addDistrict(const std::string& name, int number_of_candidates, DistrictType type);
     
     // add a new person to the voters list and to the district he belongs
-    virtual void addPerson(const std::string& name, int id, int birth_year, int distric_id);
+    virtual void addPerson(const std::string& name,const std::string& id, int birth_year, int distric_id);
     
     // add new party to the elections
-    void addParty(const std::string& name, int candidate_id);
+    void addParty(const std::string& name, const std::string& candidate_id);
     
     // Add a person as a candidate of a party in a given district
-	virtual void addPersonAsCandidate(int person_id, int party_id, int district_id);
+	virtual void addPersonAsCandidate(const std::string& person_id, int party_id, int district_id);
     
-    void vote(int person_id, int party_id);
+    void vote(const std::string& person_id, int party_id);
     
     // Performs a calculation of all votes in all districts and updates the number of
     // votes and candidates each party received

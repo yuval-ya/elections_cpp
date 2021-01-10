@@ -8,7 +8,7 @@ using namespace std;
 namespace elections {
 
 
-Person::Person(const string& name, int id, int year, const District* district) :
+Person::Person(const string& name,const string& id, int year, const District* district) :
 _name(name), _birthYear(year), _district(district),
 _vote(nullptr), _isCandidate(nullptr)
 {
@@ -43,11 +43,15 @@ void Person::setName(const string& name) {
     _name = name;
 }
 
-void Person::setId(int id) {
-    string number = to_string(id);
-    if (number.length() != ID_SIZE) {
+void Person::setId(const string& id) {
+    if (id.length() != ID_SIZE) {
         throw invalid_argument("Invalid ID");
     }
+    
+    for (auto ch : id) {
+        if (ch > '9' || ch < '0')
+            throw invalid_argument("Invalid ID");
+    }    
     _id = id;
 }
 void Person::setBirthYear(int birthYear) {
@@ -92,8 +96,7 @@ ostream& operator<<(ostream& os, const Person& p) {
 }
 
 void Person::load(std::istream& in) {
-    int id;
-    in.read(rcastc(&id), sizeof(id));
+    string id = StringLoader::load(in);
     setId(id);
     _name = StringLoader::load(in);
     in.read(rcastc(&_birthYear), sizeof(_birthYear));
@@ -109,7 +112,7 @@ void Person::save(std::ostream& out) const {
     if (_isCandidate)
         candidate = _isCandidate->getId();
     
-    out.write(rcastcc(&_id), sizeof(_id));
+    StringLoader::save(out, _id);
     StringLoader::save(out, _name);
     out.write(rcastcc(&_birthYear), sizeof(_birthYear));
     out.write(rcastcc(&district), sizeof(district));
