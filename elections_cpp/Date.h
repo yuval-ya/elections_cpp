@@ -34,9 +34,9 @@ public:
 	
 	const Date& operator=(const Date&);
 
-	bool load(std::istream& in);
+	void load(std::istream& in);
 
-	bool save(std::ostream& out) const;
+	void save(std::ostream& out) const;
 
 };
 

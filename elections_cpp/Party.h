@@ -47,17 +47,17 @@ public:
     int getTotalCandidates() const { return _totalCandidates; }
     int getTotalVotes() const { return _totalVotes; }
 
-	bool setName(const std::string& name);
-	bool setId(int id);
-    bool setTotalCandidates(int val);
-    bool setFirstCandidate(PersonPtr candidate);
+	void setName(const std::string& name);
+	void setId(int id);
+    void setTotalCandidates(int val);
+    void setFirstCandidate(PersonPtr candidate);
 
 	// add value to the total number of candidates the party get in the elections 
 	void addTotalCandidates(int val) { _totalCandidates += val; }
 	void addTotalVotes(int val) { _totalVotes += val; }
 
-	bool load(std::istream& in , int& firstCandidateID);
-	bool save(std::ostream& out) const;
+	void load(std::istream& in , int& firstCandidateID);
+	void save(std::ostream& out) const;
 
 	friend std::ostream& operator<<(std::ostream& os, const Party& p);
 };

@@ -10,7 +10,7 @@ namespace elections {
 
 	public:
 		static District* load(std::istream& in);
-		static bool save(std::ostream& out ,District* district);
+		static void save(std::ostream& out ,District* district);
 	};
 
 }

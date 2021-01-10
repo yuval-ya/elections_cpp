@@ -29,25 +29,21 @@ Party::~Party() {
 	
 }
 
-bool Party::setName(const string& name)
+void Party::setName(const string& name)
 {
 	_name = name;
-	return true;
 }
 
-bool Party::setId(int id) {
+void Party::setId(int id) {
 	_id = id;
-	return true;
 }
 
-bool Party::setTotalCandidates(int val) {
+void Party::setTotalCandidates(int val) {
 	_totalCandidates = val;
-	return true;
 }
 
-bool Party::setFirstCandidate(PersonPtr candidate) {
+void Party::setFirstCandidate(PersonPtr candidate) {
 	_firstCandidate = candidate;
-	return true;
 }
 
 Party::PersonList& Party::getCandidateList(int district_id) {
@@ -56,13 +52,8 @@ Party::PersonList& Party::getCandidateList(int district_id) {
 		[district_id](DistrictTuple tp)->bool { return get<0>(tp)->getId() == district_id; });
 	
 	if (iter == _candidates.end())
-		throw;
-	/*
-	*
-	*
-	*
-	*/
-
+		throw invalid_argument("Invalid district ID");
+    
 	return get<1>(*iter);
 }
 const Party::PersonList& Party::getCandidateList(int district_id) const {
@@ -70,44 +61,29 @@ const Party::PersonList& Party::getCandidateList(int district_id) const {
 	auto iter = find_if(_candidates.begin(), _candidates.end(),
 		[district_id](DistrictTuple tp)->bool { return get<0>(tp)->getId() == district_id; });
 
-	if (iter == _candidates.end())
-		throw;
-	/*
-	*
-	*
-	*
-	*/
+    if (iter == _candidates.end())
+        throw invalid_argument("Invalid district ID");
 
 	return get<1>(*iter);
 }
 
-bool Party::load(istream& in, int& firstCandidateID) {
+void Party::load(istream& in, int& firstCandidateID) {
 
 	in.read(rcastc(&_id), sizeof(_id));
 	_name = StringLoader::load(in);
 	in.read(rcastc(&firstCandidateID), sizeof(firstCandidateID));
 	in.read(rcastc(&_totalCandidates), sizeof(_totalCandidates));
-	if (!in.good()) {
-		std::cout << "Error reading" << std::endl;
-		exit(-1);
-	}
-	return true;
 }
 
-bool Party::save(ostream& out) const {
+void Party::save(ostream& out) const {
 	int firstCandidateID = _firstCandidate->getID();
 
 	out.write(rcastcc(&_id), sizeof(_id));
 	StringLoader::save(out, _name);
 	out.write(rcastcc(&firstCandidateID), sizeof(firstCandidateID));
 	out.write(rcastcc(&_totalCandidates), sizeof(_totalCandidates));
-	if (!out.good()) {
-		std::cout << "Error writing" << std::endl;
-		exit(-1);
-	}
-	
+
 	saveCandidatesArray(out);
-	return true;
 }
 
 void Party::saveCandidatesArray(std::ostream& out) const {
@@ -125,13 +101,7 @@ void Party::saveCandidatesArray(std::ostream& out) const {
 			int personID = personPtr->getID();
 			out.write(rcastcc(&personID), sizeof(personID));
 		}
-
-		if (!out.good()) {
-			std::cout << "Error writing" << std::endl;
-			exit(-1);
-		}
 	} 	 
-
 }
 
 ostream& operator<<(ostream& os, const Party& p) {

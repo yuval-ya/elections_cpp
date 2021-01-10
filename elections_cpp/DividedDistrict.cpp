@@ -26,20 +26,22 @@ DividedDistrict::~DividedDistrict() {
 
 void DividedDistrict::evalPartition(){
     District::evalPartition();
-	int size = _partiesData.size();
-	for (int i = 0; i < size; i++) {
-		int num_candidates = get<2>(_partiesData[i]);
-		get<0>(_partiesData[i])->addTotalCandidates(num_candidates);
-		_chosenCandidates.push_back(get<0>(_partiesData[i])->getCandidatePtr());
+	for (auto partyData : _partiesData) {
+		int num_candidates = get<2>(partyData);
+		get<0>(partyData)->addTotalCandidates(num_candidates);
+		_chosenCandidates.push_back(get<0>(partyData)->getCandidatePtr());
 	}
 }
 
 ostream& DividedDistrict::showWinners(ostream& out) const{
-	int size = _partiesData.size();
-    for(int i = 0; i < size && get<2>(_partiesData[i]) > 0; i++){
-		out << "First candidate of Party No." << get<0>(_partiesData[i])->getId() << ": ";
-		out << get<0>(_partiesData[i])->getCandidate() << " with " ;
-        out << get<2>(_partiesData[i]) << " candidates" <<endl;
+   
+    for(auto partyData : _partiesData) {
+        if (get<2>(partyData) > 0) {
+            out << "First candidate of Party No." << get<0>(partyData)->getId() << ": ";
+            out << get<0>(partyData)->getCandidate() << " with " ;
+            out << get<2>(partyData) << " candidates" <<endl;
+        }
+        else break;
     }
     return out;
 }

@@ -18,6 +18,8 @@ namespace elections {
 		const District*		_district;
 		const Party*		_vote;
 		const Party*		_isCandidate;
+        
+        static const int ID_SIZE = 9;
 
 	public:
 		Person(const std::string&, int id, int year, const District* district);
@@ -31,27 +33,24 @@ namespace elections {
 		int getYear() const { return _birthYear; };
 		int getDistrictID() const;
 
-		bool setName(const std::string& name);
-		bool setId(int id);
-		bool setBirthYear(int birthYear);
-		bool setDistrict(const District* district);
+		void setName(const std::string& name);
+		void setId(int id);
+		void setBirthYear(int birthYear);
+		void setDistrict(const District* district);
 
 		// set the citizen as a candidate of a party by adding the pointer to the party
-		bool setAsCandidate(const Party* p);
-
-		// returns if the citizen is a candidate of some party
-		bool isCandidate() const;
+		void setAsCandidate(const Party* p);
 
 		// returns if the citizen already voted in the current elections
 		bool isVoted() const;
 
 		// save the party that the citizen vote for 
-		bool setVote(const Party* p);
+		void setVote(const Party* p);
 
 		friend std::ostream& operator<<(std::ostream& os, const Person& p);
 
-		bool load(std::istream& in);
-		bool save(std::ostream& out) const;
+		void load(std::istream& in);
+		void save(std::ostream& out) const;
 
 	};
 

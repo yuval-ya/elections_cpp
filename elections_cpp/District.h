@@ -47,7 +47,6 @@ namespace elections {
 		const std::string& getName() const { return _name; }
 		int getNumberOfCandidates() const { return _numberOfCandidates; }
 		int getNumberOfVoters() const { return _numberOfVoters; }
-		int getCitizensNumber() const { return _voters.size(); }
 		
 		int getPartyVotes(int party_id) const;
 		int getPartyCandidatesNum(int party_id) const;
@@ -59,11 +58,11 @@ namespace elections {
 		PersonList& getChosenCandidates() { return _chosenCandidates; }
 		const PersonList& getChosenCandidates() const { return _chosenCandidates; }
 
-		bool setNumberOfCandidates(int numberOfCandidates);
-		bool setName(const std::string& name);
-		bool setId(int id);
+		void setNumberOfCandidates(int numberOfCandidates);
+		void setName(const std::string& name);
+		void setId(int id);
         
-        bool vote(int party_id);
+        void vote(int party_id);
 
 		// Calculation of the percentage of votes in the whole district
 		float calcVotersPercentage() const;
@@ -82,8 +81,8 @@ namespace elections {
         
 		virtual void type(std::ostream&) const = 0;
 
-		bool save(std::ostream& out) const;
-		bool load(std::istream& in);
+		void save(std::ostream& out) const;
+		void load(std::istream& in);
         
 		friend std::ostream& operator<<(std::ostream& os, const District& d);
 	};

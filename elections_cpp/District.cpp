@@ -34,31 +34,25 @@ namespace elections {
 
 	float District::calcVotersPercentage() const
 	{
-		int citizenNumber = getCitizensNumber();
+		int citizenNumber = _voters.size();
 		if (citizenNumber == 0)
-		{
-			// division by zero error!
-			return 0;
-		}
+            throw runtime_error("Attempt to divide by zero");
+
 		return _numberOfVoters / static_cast<float>(citizenNumber) * 100;
 	}
 
 	float District::calcPartyPercentInVotes(int party_id) const
 	{
 		if (_numberOfVoters == 0)
-		{
-			// division by zero error!
-			return 0;
-		}
+            throw runtime_error("Attempt to divide by zero");
+        
 		return (getPartyVotes(party_id) / static_cast<float>(_numberOfVoters)) * 100;
 	}
 
 	int District::calcFinalSumOfCandidatesFromParty(int idx) const {
-		if (_numberOfVoters == 0)
-		{
-			// division by zero error!
-			return 0;
-		}
+        if (_numberOfVoters == 0)
+            throw runtime_error("Attempt to divide by zero");
+        
 		int res = static_cast<int>((get<1>(_partiesData[idx]) / static_cast<float>(_numberOfVoters)) * _numberOfCandidates);
 		return res;
 	}
@@ -76,25 +70,17 @@ namespace elections {
 			[party_id](partyTuple partyTp)->bool { return get<0>(partyTp)->getId() == party_id; });
 		
 		if (tp == _partiesData.end())
-			throw;
-		/*
-		*
-		*
-		*
-		*/
+            throw invalid_argument("Invalid party ID");
+        
 		return *tp;
 	}
 	District::partyTuple& District::getPartyData(int party_id) {
 		auto tp = find_if(_partiesData.begin(), _partiesData.end(),
 			[party_id](partyTuple partyTp)->bool { return get<0>(partyTp)->getId() == party_id; });
 
-		if (tp == _partiesData.end())
-			throw;
-		/*
-		*
-		*
-		*
-		*/
+        if (tp == _partiesData.end())
+            throw invalid_argument("Invalid party ID");
+
 		return *tp;
 	}
 
@@ -106,45 +92,43 @@ namespace elections {
 		return os;
 	}
 
-	bool District::vote(int party_id) {
+	void District::vote(int party_id) {
 		get<1>(getPartyData(party_id))++;
 		_numberOfVoters++;
-		return true;
 	}
 
-	bool District::setNumberOfCandidates(int numberOfCandidates) {
+	void District::setNumberOfCandidates(int numberOfCandidates) {
 		_numberOfCandidates = numberOfCandidates;
-		return true;
 	}
 
-	bool District::setName(const string& name)
-	{
+	void District::setName(const string& name) {
 		_name = name;
-		return true;
 	}
 
-	bool District::setId(int id) {
+	void District::setId(int id) {
 		_id = id;
-		return true;
 	}
 
 	void District::evalPartition()
 	{
 		int parties_num = _partiesData.size(), count = 0;
-
-		for (int i = 0; i < parties_num; i++) {	
-			get<2>(_partiesData[i]) = calcFinalSumOfCandidatesFromParty(i);
+		for (int i = 0; i < parties_num; i++) {
+            try {
+                get<2>(_partiesData[i]) = calcFinalSumOfCandidatesFromParty(i);
+            }
+            catch (runtime_error& ex) {
+                get<2>(_partiesData[i]) = 0;
+            }
 			count += get<2>(_partiesData[i]);
 		}
 
 		if (_numberOfCandidates > count) {
 			auto max = max_element(_partiesData.begin(), _partiesData.end(),
 				[](partyTuple p1, partyTuple p2)->int { return get<1>(p1) < get<1>(p2); });
+            
 			if (max == _partiesData.end())
-				throw;
-			/*
-			*
-			*/
+				throw runtime_error("There are no parties in the elections - can't evaluate the results");
+            
 			get<2>(*max) += _numberOfCandidates - count;
 		}
 
@@ -152,25 +136,15 @@ namespace elections {
 			[](partyTuple p1, partyTuple p2)->int { return get<2>(p2) < get<2>(p1); });
 	}
 
-	bool District::save(ostream& out) const{
+	void District::save(ostream& out) const{
 		out.write(rcastcc(&_id), sizeof(_id));
 		StringLoader::save(out, _name);
 		out.write(rcastcc(&_numberOfCandidates), sizeof(_numberOfCandidates));
-		if (!out.good()) {
-			std::cout << "Error writing" << std::endl;
-			exit(-1);
-		}
-		return true;
 	}
 
-	bool District::load(istream& in) {
+	void District::load(istream& in) {
 		in.read(rcastc(&_id), sizeof(_id));
 		_name = StringLoader::load(in);
 		in.read(rcastc(&_numberOfCandidates), sizeof(_numberOfCandidates));
-		if (!in.good()) {
-			std::cout << "Error reading" << std::endl;
-			exit(-1);
-		}
-		return true;
 	}
 }
