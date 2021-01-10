@@ -104,14 +104,11 @@ void Elections::vote(const string& person_id, int party_id)
 }
 
 void Elections::finalEvaluation() {
-    
 	for (auto party : _parties)
 		party->setTotalCandidates(0);
     
 	for (auto district : _districts)
-		district->evalPartition();
-    
-    
+		district->evalPartition(); 
 }
 
 void Elections::sortPartiesArray() {

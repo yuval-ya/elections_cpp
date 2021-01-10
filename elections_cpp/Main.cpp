@@ -1,6 +1,3 @@
-#define _CRTDB_MAP_ALLOC
-//#include <crtdbg.h>
-
 #include "Main.h" 
 #include "Utilities.h"
 
@@ -22,8 +19,6 @@ int main(void) {
     }
     
     cout << "Bye!" << endl;
-    //	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //	_CrtDumpMemoryLeaks();
     return 0;
 }
 
@@ -64,18 +59,17 @@ void mainMenu()
         }
     }
     
-    if (electionsRound) {
-       Menu::test(*electionsRound);
-        try {
-            start(&electionsRound);
-            delete electionsRound;
-        }
-        catch (const exception& ex) {
-            if (electionsRound)
-                delete electionsRound;
-            throw;
-        }
-    }
+	if (electionsRound) {
+		try {
+			start(&electionsRound);
+			delete electionsRound;
+		}
+		catch (const exception& ex) {
+			if (electionsRound)
+				delete electionsRound;
+			throw;
+		}
+	}
 }
 
 Elections* createNewRound() 

@@ -6,11 +6,13 @@
 
 class Date
 {
-    static const int MIN_DAY, MAX_MONTH, MIN_MONTH, MIN_YEAR, MAX_YEAR;
-	static const int DAYS_PER_MONTH[13];
+	// A class representing a date.
 
 private:
 	int	_day, _month, _year;
+
+    static const int MIN_DAY, MAX_MONTH, MIN_MONTH, MIN_YEAR, MAX_YEAR;
+	static const int DAYS_PER_MONTH[13];
 
 public:
 	Date();

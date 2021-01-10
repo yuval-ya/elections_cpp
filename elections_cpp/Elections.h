@@ -57,13 +57,13 @@ public:
 	Party& findParty(int id);
 	const Party& findParty(int id) const;
     
-    // add new district to the elections; type : 0 = DividedDistrict, 1 = UnifiedDistrict
+    // Add new district to the elections;
     virtual void addDistrict(const std::string& name, int number_of_candidates, DistrictType type);
     
-    // add a new person to the voters list and to the district he belongs
+    // Add a new person to the voters list and to the district he belongs
     virtual void addPerson(const std::string& name,const std::string& id, int birth_year, int distric_id);
     
-    // add new party to the elections
+    // Add new party to the elections
     void addParty(const std::string& name, const std::string& candidate_id);
     
     // Add a person as a candidate of a party in a given district
@@ -75,13 +75,12 @@ public:
     // votes and candidates each party received
     void finalEvaluation();
     
-    // return a pointer tp Party array and it's size (as an output parameter)
-    // The array is sorted by the order of votes each party received (the winnig party in index 0)
+    // Sort parties array by the order of votes each party received (the winnig party in index 0)
+	// using mySTL algorithm
     void sortPartiesArray();
 
 	void load(std::istream& in);
 	void save(std::ostream& out) const;
-
 };
 
 }

@@ -18,7 +18,7 @@ namespace elections {
 
 		virtual void addDistrict(const std::string& name, int number_of_candidates, DistrictType type) override;
 
-		// add a new person to the voters list and to the district he belongs
+		// Add a new person to the voters list and to the district he belongs
 		virtual void addPerson(const std::string& name,const std::string& id, int birth_year, int distric_id = 1) override;
 
 		// Add a person as a candidate of a party in a given district

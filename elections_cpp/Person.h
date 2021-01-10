@@ -37,15 +37,13 @@ namespace elections {
 		void setId(const std::string& id);
 		void setBirthYear(int birthYear);
 		void setDistrict(const District* district);
+		void setVote(const Party* p);
 
 		// set the citizen as a candidate of a party by adding the pointer to the party
 		void setAsCandidate(const Party* p);
 
 		// returns if the citizen already voted in the current elections
 		bool isVoted() const;
-
-		// save the party that the citizen vote for 
-		void setVote(const Party* p);
 
 		friend std::ostream& operator<<(std::ostream& os, const Person& p);
 
