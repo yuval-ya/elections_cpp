@@ -13,7 +13,7 @@ int main(void) {
     try {
         mainMenu();
     }
-    catch (exception& ex)
+    catch (const exception& ex)
     {
         cout << "Error: " << ex.what() << endl;
         cout << "Program exit with return value -1" << endl;
@@ -59,18 +59,18 @@ void mainMenu()
             }
             flag = false;
         }
-        catch (invalid_argument& ex) {
+        catch (const invalid_argument& ex) {
             cout << "Error: " << ex.what() << endl;
         }
     }
     
     if (electionsRound) {
-       // Menu::test(*electionsRound);
+       Menu::test(*electionsRound);
         try {
             start(&electionsRound);
             delete electionsRound;
         }
-        catch (...) {
+        catch (const exception& ex) {
             if (electionsRound)
                 delete electionsRound;
             throw;
@@ -89,7 +89,7 @@ Elections* createNewRound()
             cin >> date;
             break;
         }
-        catch (invalid_argument& ex) {
+        catch (const invalid_argument& ex) {
             cout << "Error: " << ex.what() << endl;
         }
     }
@@ -131,7 +131,7 @@ Elections* loadElections()
     cin >> name;
     ifstream infile;
     infile.exceptions(ifstream::eofbit);
-    
+
     try {
         infile.open(name, ios::binary);
         electionsRound = ElectionsLoader::load(infile);
@@ -174,11 +174,11 @@ void start(Elections** election)
             
             options(election, static_cast<ElectionsMenu>(choice));
         }
-        catch (invalid_argument& ex) {
+        catch (const invalid_argument& ex) {
             cout << "Error: " << ex.what() <<endl;
             cout << "Please try again" <<endl;
         }
-        catch (char* msg) {
+        catch (const char* msg) {
             cout << "Error: " << msg <<endl;
             cout << "Please try again" <<endl;
         }
@@ -228,8 +228,11 @@ void options(Elections** election, ElectionsMenu choice)
             saveToFile(e);
             break;
         case ElectionsMenu::LOAD:
+        {
+            Elections* tmp = loadElections();
             delete *election;
-            *election = loadElections();
+            *election = tmp;
+        }
             break;
         default:
             break;
@@ -317,7 +320,7 @@ void saveToFile(Elections& election)
         outfile.open(name, ios::binary);
         ElectionsLoader::save(outfile, &election);
     }
-    catch (ostream::failure& ex) {
+    catch (const ostream::failure& ex) {
         if (outfile)
             outfile.close();
         throw "opening/writing file failed";
@@ -351,7 +354,7 @@ void printStatistics(Elections& election) {
             try {
                 cout << "Percentage of votes - " << district->calcPartyPercentInVotes(party->getId()) << endl;
             }
-            catch (runtime_error& ex) {
+            catch (const runtime_error& ex) {
                 cout << "Error: " << ex.what() << endl;
                 cout << "The number of voters in this district is 0!" << endl;
             }
@@ -359,7 +362,7 @@ void printStatistics(Elections& election) {
         try {
             cout << "\nPercentage of votes in the district: " << district->calcVotersPercentage() << endl << endl;
         }
-        catch (runtime_error& ex) {
+        catch (const runtime_error& ex) {
             cout << "Error: " << ex.what() << endl;
             cout << "The number of citizens in this district is 0!" << endl;
         }

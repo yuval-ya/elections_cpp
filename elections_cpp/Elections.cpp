@@ -77,7 +77,7 @@ void Elections::addParty(const string& name, const string& candidate_id)
             district->getPartiesData().push_back(make_tuple(newParty, 0, 0));
         }
     }
-    catch (exception& ex) {
+    catch (const exception& ex) {
         delete newParty;
         throw ex;
     }

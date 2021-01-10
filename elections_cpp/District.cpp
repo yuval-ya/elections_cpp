@@ -116,7 +116,7 @@ namespace elections {
             try {
                 get<2>(_partiesData[i]) = calcFinalSumOfCandidatesFromParty(i);
             }
-            catch (runtime_error& ex) {
+            catch (const runtime_error& ex) {
                 get<2>(_partiesData[i]) = 0;
             }
 			count += get<2>(_partiesData[i]);
