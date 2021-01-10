@@ -18,17 +18,15 @@ namespace elections {
 	SimpleElections::~SimpleElections() {
 	}
 
-	bool SimpleElections::addDistrict(const string& name, int number_of_candidates, DistrictType type) {
-		cout << "\nNo district can be added to this type of election." << endl;
-		return false;
+	void SimpleElections::addDistrict(const string& name, int number_of_candidates, DistrictType type) {
 	}
 
-	bool SimpleElections::addPerson(const string& name, int id, int birth_year, int distric_id) {
-		return Elections::addPerson(name, id, birth_year, 1);
+	void SimpleElections::addPerson(const string& name, int id, int birth_year, int distric_id) {
+		Elections::addPerson(name, id, birth_year, 1);
 	}
 
-	bool SimpleElections::addPersonAsCandidate(int person_id, int party_id, int distric_id) {
-		return Elections::addPersonAsCandidate(person_id, party_id, 1);
+	void SimpleElections::addPersonAsCandidate(int person_id, int party_id, int distric_id) {
+		Elections::addPersonAsCandidate(person_id, party_id, 1);
 	}
 
 

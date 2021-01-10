@@ -111,6 +111,7 @@ void Elections::finalEvaluation() {
 	for (auto district : _districts)
 		district->evalPartition();
     
+    
 }
 
 void Elections::sortPartiesArray() {
@@ -120,7 +121,7 @@ void Elections::sortPartiesArray() {
         });
     }
     catch (...) {
-        throw "fail to sort parties array";
+        throw runtime_error("Fail to sort parties array");
     }
 }
 

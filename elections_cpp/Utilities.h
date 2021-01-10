@@ -26,6 +26,20 @@ namespace mySTL
 		for (auto obj : PointrsStruct) {
 			std::cout << *obj << std::endl;
 		}
-	}
+    }
+
+    template <class T>
+    void print(const T& PointrsStruct, int size) {
+        int i = 0;
+        for (auto obj : PointrsStruct) {
+            if (i < size)
+                std::cout << *obj << std::endl;
+            else
+                break;
+            i++;
+        }
+        
+        if (i < size) throw "There is no engouh object in is struct";
+    }
 
 }

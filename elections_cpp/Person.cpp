@@ -105,7 +105,8 @@ void Person::save(std::ostream& out) const {
     district = _district->getId();
     if (isVoted())
         vote = _vote->getId();
-    if (isCandidate())
+    
+    if (_isCandidate)
         candidate = _isCandidate->getId();
     
     out.write(rcastcc(&_id), sizeof(_id));
