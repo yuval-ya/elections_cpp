@@ -2,8 +2,9 @@
 #include "Date.h"
 using namespace std;
 
+const int Date::DAYS_PER_MONTH[13] = { -1,31,28,31,30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
 const int
-Date::MAX_DAY = 31,
 Date::MIN_DAY = 1,
 Date::MAX_MONTH = 12,
 Date::MIN_MONTH = 1,
@@ -17,10 +18,9 @@ Date::Date(istream& in) {
 	load(in);
 }
 
-Date::Date(int day, int month, int year) : Date() {
+Date::Date(int day, int month, int year) {
 	setDate(day, month, year);
 }
-
 
 Date::Date(const Date& other) {
 	_year = other._year;
@@ -28,68 +28,52 @@ Date::Date(const Date& other) {
 	_day = other._day;
 }
 
-
 Date::~Date() {
-
 }
 
-
-bool Date::setDate(int day, int month, int year) {
-	if (!(checkDay(day) && checkMonth(month) && checkYear(year)))
-	{
-		return false;
-	}
-	_year = year;
-	_month = month;
-	_day = day;
-	return true;
+void Date::setDate(int day, int month, int year) {
+	setYear(year);
+	setMonth(month);
+	setDay(day);
 }
 
-
-bool Date::setDate(const Date& other) {
-    return setDate(other._day, other._month, other._year);
+void Date::setDate(const Date& other) {
+    setDate(other._day, other._month, other._year);
 }
 
+void Date::setDay(int day) {
+	if (day < MIN_DAY || day > DAYS_PER_MONTH[_month])
+		throw invalid_argument("Invalid day");
 
-bool Date::setDay(int day) {
-	if (!checkDay(day)) {
-		return false;
-	}
 	_day = day; 
-	return true;
 }
 
+void Date::setMonth(int month) {
+	if (month < MIN_MONTH || month > MAX_MONTH) 
+		throw invalid_argument("Invalid month");
 
-bool Date::setMonth(int month) {
-	if (!checkMonth(month)) {
-		return false;
-	}
 	_month = month;
-	return true;
 }
 
+void Date::setYear(int year) {
+	if (year < MIN_YEAR || year > MAX_YEAR) 
+		throw invalid_argument("Invalid year");
 
-bool Date::setYear(int year) {
-	if (!checkYear(year)) {
-		return false;
-	}
 	_year = year; 
-	return true;
 }
-
 
 ostream& operator<<(ostream& os, const Date& date) {
 	os << date._day << "/" << date._month << "/" << date._year;
 	return os;
 }
-
     
 istream& operator>>(istream& in, Date& date) {
-	in >> date._day >> date._month >> date._year;
+	int day, month, year;
+	in >> day >> month >> year;
+	date.setDate(day, month, year);
 	return in;
 }
 
-    
 const Date& Date::operator=(const Date& other) {
 	_year = other._year;
 	_month = other._month;
@@ -97,40 +81,16 @@ const Date& Date::operator=(const Date& other) {
 	return *this;
 }
 
-    
-bool Date::checkDay(int day) {
-    return day >= MIN_DAY && day <= MAX_DAY;
-}
-
-    
-bool Date::checkMonth(int month) {
-    return month >= MIN_MONTH && month <= MAX_MONTH;
-}
-
-    
-bool Date::checkYear(int year) {
-    return year >= MIN_YEAR && year <= MAX_YEAR;
-}
-
-
-bool Date::load(istream& in){
+void Date::load(istream& in){
 	in.read(rcastc(&_day), sizeof(_day));
 	in.read(rcastc(&_month), sizeof(_month));
 	in.read(rcastc(&_year), sizeof(_year));
-	if (!in.good()) {
-		std::cout << "Error reading" << std::endl;
-		exit(-1);
-	}
-	return true;
+	if (!in.good()) throw File_Error("Unable to read from file");
 }
 
-bool Date::save(ostream& out) const{
+void Date::save(ostream& out) const{
 	out.write(rcastcc(&_day), sizeof(_day));
 	out.write(rcastcc(&_month), sizeof(_month));
 	out.write(rcastcc(&_year), sizeof(_year));
-	if (!out.good()) {
-		std::cout << "Error writing" << std::endl;
-		exit(-1);
-	}
-	return true;
+	if (!out.good()) throw File_Error("Unable to write to file");
 }

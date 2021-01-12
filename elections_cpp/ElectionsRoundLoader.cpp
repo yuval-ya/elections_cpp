@@ -10,21 +10,22 @@ namespace elections
 	void ElectionsRoundLoader::loadDistricts(istream& in, Elections& elections) {
 		int numOfDistricts;
 		in.read(rcastc(&numOfDistricts), sizeof(numOfDistricts));
-		checkFile(in);
+		if (!in.good()) throw File_Error("Unable to read from file");
 
 		for (int i = 0; i < numOfDistricts; i++) {
 			elections.getDistricts().push_back(DistrictLoader::load(in));
 		}
 	}
+
 	void ElectionsRoundLoader::loadVoters(istream& in, Elections& elections) {
 		int numOfPerson;
 		in.read(rcastc(&numOfPerson), sizeof(numOfPerson));
-		checkFile(in);
+		if (!in.good()) throw File_Error("Unable to read from file");
 
 		for (int i = 0; i < numOfPerson; i++) {
 			int districtID = 0, vote = 0, candidate = 0;
 
-			PersonPtr person = new Person(in, districtID, vote, candidate);
+			PersonPtr person = new Person(in, districtID, vote, candidate); // PersonPtr deletes itself
 			District& district = elections.findDistrict(districtID);
 			person->setDistrict(&district);
 
@@ -36,46 +37,51 @@ namespace elections
 	void ElectionsRoundLoader::loadParties(istream& in, Elections& elections) {
 		int numOfParties;
 		in.read(rcastc(&numOfParties), sizeof(numOfParties));
-		checkFile(in);
+		if (!in.good()) throw File_Error("Unable to read from file");
 
 		for (int i = 0; i < numOfParties; i++) {
-			int firstCandidateID = 0;
+			string firstCandidateID;
 			Party* party = new Party(in, firstCandidateID);
 
-			PersonPtr firstCandidate = elections.findPerson(firstCandidateID);
-			elections.getParties().push_back(party);
-			party->setFirstCandidate(firstCandidate);
-			firstCandidate->setAsCandidate(party);
+			try {
+				PersonPtr firstCandidate = elections.findPerson(firstCandidateID);
+				firstCandidate->setAsCandidate(party);
+				party->setFirstCandidate(firstCandidate);
 
-			for (auto district : elections.getDistricts())
-				district->getPartiesData().push_back(make_tuple(party,0,0));
+				for (auto district : elections.getDistricts())
+					district->getPartiesData().push_back(make_tuple(party, 0, 0));
 
-			loadCandidatesArray(in, elections, party);
+				loadCandidatesArray(in, elections, party);
+				elections.getParties().push_back(party);
+			}
+			catch (...) {
+				delete party;
+				throw;
+			}
 		}
 	}
 
 	void ElectionsRoundLoader::loadCandidatesArray(istream& in, Elections& elections, Party* party) {
-		Elections::DistrictArray& districts = elections.getDistricts();
+		int sizeOfCandidatesArray = 0, districtID = 0, sizeOfCandidatesList = 0;
 
-		int sizeOfCandidatesArray = 0, districtID = 0, sizeOfCandidatesList = 0, candidateID = 0;
 		in.read(rcastc(&sizeOfCandidatesArray), sizeof(sizeOfCandidatesArray));
-		checkFile(in);
+		if (!in.good()) throw File_Error("Unable to read from file");
 
 		for (int j = 0; j < sizeOfCandidatesArray; j++)
 		{
 			in.read(rcastc(&districtID), sizeof(districtID));
 			in.read(rcastc(&sizeOfCandidatesList), sizeof(sizeOfCandidatesList));
-			checkFile(in);
+			if (!in.good()) throw File_Error("Unable to read from file");
+
 			party->getCandidatesArray().push_back(make_tuple(&elections.findDistrict(districtID), Elections::PersonList()));
 			Elections::PersonList& candidatesList = party->getCandidateList(districtID);
 
 			for (int k = 0; k < sizeOfCandidatesList; k++)
 			{
-				in.read(rcastc(&candidateID), sizeof(candidateID));
-				checkFile(in);
+				string candidateID = StringLoader::load(in);
 				PersonPtr candidate = elections.findPerson(candidateID);
-				candidatesList.push_back(candidate);
 				candidate->setAsCandidate(party);
+				candidatesList.push_back(candidate);
 			}
 		}
 	}
@@ -84,48 +90,43 @@ namespace elections
 	void ElectionsRoundLoader::loadVotes(istream& in, Elections& elections) {
 		int numOfVotes;
 		in.read(rcastc(&numOfVotes), sizeof(numOfVotes));
-		checkFile(in);
-		for (int i = 0; i < numOfVotes; i++) {
-			int personID = 0, partyID = 0;
-			in.read(rcastc(&personID), sizeof(personID));
+		if (!in.good()) throw File_Error("Unable to read from file");
+
+		for (int i = 0; i < numOfVotes; i++)
+		{
+			int partyID = 0;
+			string personID = StringLoader::load(in);
 			in.read(rcastc(&partyID), sizeof(partyID));
-			checkFile(in);
+			if (!in.good()) throw File_Error("Unable to read from file");
+
 			elections.vote(personID, partyID);
 		}
 	}
 
-	void ElectionsRoundLoader::checkFile(istream& in) {
-		if (!in.good()) {
-			std::cout << "Error reading" << std::endl;
-			exit(-1);
-		}
-	}
 
 	void ElectionsRoundLoader::saveDistricts(std::ostream& out, const Elections::DistrictArray& districts) {
 		int size = districts.size();
 		out.write(rcastcc(&size), sizeof(size));
+		if (!out.good()) throw File_Error("Unable to write to file");
+
 		for (auto district : districts)
 			DistrictLoader::save(out, district);
 	}
 
-	template<class T>
-	static void saveStruct(std::ostream& out, const T& pointersStruct) {
 
-	}
-
-	void ElectionsRoundLoader::saveVotes(ostream& out,const Elections::VotesList& votesList) {
+	void ElectionsRoundLoader::saveVotes(ostream& out, const Elections::VotesList& votesList) {
 		int size = votesList.size();
 		out.write(rcastcc(&size), sizeof(size));
+		if (!out.good()) throw File_Error("Unable to write to file");
+
 		for (auto vote : votesList) {
-			int personID = get<0>(vote)->getID();
+			string personID = get<0>(vote)->getID();
 			int partyID = get<1>(vote)->getId();
-			out.write(rcastcc(&personID), sizeof(personID));
+			StringLoader::save(out, personID);
 			out.write(rcastcc(&partyID), sizeof(partyID));
-			if (!out.good()) throw;
-			/*
-			*
-			*
-			*/
+			if (!out.good()) throw File_Error("Unable to write to file");
 		}
 	}
 }
+
+

@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
-
-#define rcastcc reinterpret_cast<const char*>
-#define rcastc reinterpret_cast<char*>
+#include <fstream>
+#include "File_Handler.h"
 
 class StringLoader
 {

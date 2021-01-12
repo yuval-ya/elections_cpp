@@ -21,7 +21,7 @@ namespace elections {
 		void release();
 	public:
 		PersonPtr();
-		PersonPtr(const std::string&, int idnum, int year, const District* district);
+		PersonPtr(const std::string&,const std::string& id, int year, const District* district);
 		PersonPtr(const PersonPtr&);
 		PersonPtr(Person*);
 		~PersonPtr();
@@ -37,6 +37,6 @@ namespace elections {
 
 		friend std::ostream& operator<<(std::ostream& os, const PersonPtr& p);
 		
-		bool save(std::ostream& out) const { _p->save(out); }
+		void save(std::ostream& out) const { _p->save(out); }
 	};
 }

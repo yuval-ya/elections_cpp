@@ -158,7 +158,7 @@ namespace mySTL
 			~iterator() {}
 
 			friend class const_iterator;
-			friend class List;
+			friend class List<T>;
 
 			const iterator& operator=(const iterator& other) {
 				_curr = other._curr;
@@ -220,7 +220,7 @@ namespace mySTL
 			}
 
 			friend class iterator;
-			friend class List;
+			friend class List<T>;
 
 			bool operator==(const const_iterator& other) const { return _curr == other._curr; }
 			bool operator!=(const const_iterator& other) const { return !(*this == other); }

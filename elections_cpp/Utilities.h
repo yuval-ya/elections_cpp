@@ -3,7 +3,7 @@
 
 namespace mySTL
 {
-
+	// Our implementaion for iterator_swap
 	template <class iterator>
 	void myIterSwap(iterator& i, iterator& j)
 	{
@@ -12,6 +12,7 @@ namespace mySTL
 		*j = temp;
 	}
 
+	// Our implementaion for template bubble sort
 	template <class iterator, class Func>
 	void myIterSort(const iterator& begin, const iterator& end, const Func& cmp)
 	{
@@ -21,11 +22,13 @@ namespace mySTL
 					myIterSwap(i, j);
 	}
 
+	// Template print function to pointers struct
+	// Restrictions: object must have implementaion of operator<< and operator*
 	template <class T>
 	void print(const T& PointrsStruct) {
 		for (auto obj : PointrsStruct) {
 			std::cout << *obj << std::endl;
 		}
-	}
+    }
 
 }
