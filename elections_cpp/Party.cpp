@@ -72,6 +72,8 @@ void Party::load(istream& in, string& firstCandidateID) {
 	_name = StringLoader::load(in);
     firstCandidateID = StringLoader::load(in);
     in.read(rcastc(&_totalCandidates), sizeof(_totalCandidates));
+	if (!in.good()) throw File_Error("Unable to read from file");
+
 }
 
 void Party::save(ostream& out) const {
@@ -79,6 +81,7 @@ void Party::save(ostream& out) const {
 	StringLoader::save(out, _name);
     StringLoader::save(out, _firstCandidate->getID());
 	out.write(rcastcc(&_totalCandidates), sizeof(_totalCandidates));
+	if (!out.good()) throw File_Error("Unable to write to file");
 
 	saveCandidatesArray(out);
 }
@@ -86,6 +89,7 @@ void Party::save(ostream& out) const {
 void Party::saveCandidatesArray(std::ostream& out) const {
 	int candidatesSize = _candidates.size();
 	out.write(rcastcc(&candidatesSize), sizeof(candidatesSize));	
+	if (!out.good()) throw File_Error("Unable to write to file");
 
 	for (auto districtTuple : _candidates) {
 		int districtID = get<0>(districtTuple)->getId();
@@ -93,9 +97,10 @@ void Party::saveCandidatesArray(std::ostream& out) const {
 
 		int lstSize = get<1>(districtTuple).size();
 		out.write(rcastcc(&lstSize), sizeof(lstSize));
-
+		if (!out.good()) throw File_Error("Unable to write to file");
 		for (auto personPtr : get<1>(districtTuple))
 			StringLoader::save(out, personPtr->getID());
+		
 	}
 }
 

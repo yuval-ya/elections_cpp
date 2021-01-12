@@ -5,6 +5,7 @@
 
 #include "List.h"
 #include "PersonPtr.h"
+#include "File_Handler.h"
 
 namespace elections {
 class District;

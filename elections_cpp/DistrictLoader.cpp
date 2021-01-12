@@ -3,10 +3,11 @@
 
 namespace elections {
 
-District* DistrictLoader::load(std::istream& in) {
-    
+District* DistrictLoader::load(std::istream& in) {   
     DistrictType type;
     in.read(rcastc(&type), sizeof(type));
+	if (!in.good()) throw File_Error("Unable to read from file");
+
     switch (type)
     {
         case DistrictType::DIVIDED:
@@ -16,7 +17,7 @@ District* DistrictLoader::load(std::istream& in) {
             return new UnifiedDistrict(in);
             break;
         default:
-            throw std::runtime_error("Invalid district type in the input file");
+            throw File_Error("Invalid district type in the input file");
             break;
     }
 }
@@ -28,6 +29,8 @@ void DistrictLoader::save(std::ostream& out, District* district) {
         type = DistrictType::UNIFIED;
 
     out.write(rcastcc(&type), sizeof(type));
+	if (!out.good()) throw File_Error("Unable to write to file");
+
     district->save(out);
 }
 

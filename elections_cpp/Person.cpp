@@ -34,6 +34,7 @@ _district(nullptr), _vote(nullptr), _isCandidate(nullptr)
     in.read(rcastc(&districtID), sizeof(districtID));
     in.read(rcastc(&vote), sizeof(vote));
     in.read(rcastc(&candidate), sizeof(candidate));
+	if (!in.good()) throw File_Error("Unable to read from file");
 }
 
 Person::~Person() {
@@ -100,6 +101,7 @@ void Person::load(std::istream& in) {
     setId(id);
     _name = StringLoader::load(in);
     in.read(rcastc(&_birthYear), sizeof(_birthYear));
+	if (!in.good()) throw File_Error("Unable to read from file");
 }
 
 void Person::save(std::ostream& out) const {
@@ -118,5 +120,6 @@ void Person::save(std::ostream& out) const {
     out.write(rcastcc(&district), sizeof(district));
     out.write(rcastcc(&vote), sizeof(vote));
     out.write(rcastcc(&candidate), sizeof(candidate));
+	if (!out.good()) throw File_Error("Unable to write to file");
 }
 }

@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
-
-#define rcastcc reinterpret_cast<const char*>
-#define rcastc reinterpret_cast<char*>
+#include "File_Handler.h"
 
 class Date
 {

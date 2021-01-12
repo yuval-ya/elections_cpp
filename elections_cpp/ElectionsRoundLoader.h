@@ -22,6 +22,8 @@ namespace elections
 		static void saveStruct(std::ostream& out, const T& pointersStruct) {
 			int size = pointersStruct.size();
 			out.write(rcastcc(&size), sizeof(size));
+			if (!out.good()) throw File_Error("Unable to write to file");
+
 			for (auto obj : pointersStruct) 
 				obj->save(out);
 		}

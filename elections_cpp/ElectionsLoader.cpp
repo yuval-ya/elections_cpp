@@ -6,6 +6,8 @@ namespace elections {
 Elections* ElectionsLoader::load(std::istream& in) {
     ElectionsType type;
     in.read(rcastc(&type), sizeof(type));
+	if (!in.good()) throw File_Error("Unable to read from file");
+
     switch (type)
     {
         case ElectionsType::RERGULAR:
@@ -15,7 +17,7 @@ Elections* ElectionsLoader::load(std::istream& in) {
             return new SimpleElections(in);
             break;
         default:
-            throw std::runtime_error("Invalid election type in the input file");
+            throw File_Error("Invalid election type in the input file");
     }
 }
 
@@ -26,6 +28,8 @@ void ElectionsLoader::save(std::ostream& out, Elections* elections) {
         type = ElectionsType::SIMPLE;
     
     out.write(rcastcc(&type), sizeof(type));
+	if (!out.good()) throw File_Error("Unable to write to file");
+
     elections->save(out);
 }
 

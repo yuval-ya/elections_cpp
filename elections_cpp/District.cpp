@@ -140,11 +140,15 @@ namespace elections {
 		out.write(rcastcc(&_id), sizeof(_id));
 		StringLoader::save(out, _name);
 		out.write(rcastcc(&_numberOfCandidates), sizeof(_numberOfCandidates));
+		if (!out.good()) throw File_Error("Unable to write to file");
+
 	}
 
 	void District::load(istream& in) {
 		in.read(rcastc(&_id), sizeof(_id));
 		_name = StringLoader::load(in);
 		in.read(rcastc(&_numberOfCandidates), sizeof(_numberOfCandidates));
+		if (!in.good()) throw File_Error("Unable to read from file");
 	}
 }
+

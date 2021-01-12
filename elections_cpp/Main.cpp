@@ -1,76 +1,70 @@
 #include "Main.h" 
-#include "Utilities.h"
 
 using namespace elections;
 using namespace std;
 using namespace mySTL;
 
 int main(void) {
-    
     try {
         mainMenu();
+		cout << "Bye!" << endl;
+		return 0;
     }
-    catch (const exception& ex)
+    catch (...)
     {
-        cout << "Error: " << ex.what() << endl;
-        cout << "Program exit with return value -1" << endl;
-
+        cout << "Error: Program exit with return value -1" << endl;
         return -1;
     }
-    
-    cout << "Bye!" << endl;
-    return 0;
 }
-
 
 void mainMenu()
 {
-    Elections* electionsRound = nullptr;
-    int option;
-    bool flag = true;
-    
-    while (flag) {
-        cout << endl << "Elections Manager -" << endl;
-        cout << endl << "Choose an option:" << endl;
-        cout << "1.Create new elections round." << endl;
-        cout << "2.Load an existing round of elections." << endl;
-        cout << "3.Exit." << endl;
-        cin >> option;
-        
-        try {
-            switch (static_cast<MainMenu>(option)) {
-                case MainMenu::NEW:
-                    electionsRound = createNewRound();
-                    break;
-                case MainMenu::LOAD:
-                    electionsRound = loadElections();
-                    break;
-                case MainMenu::EXIT:
-                    flag = false;
-                    break;
-                default:
-                    throw invalid_argument("Invalid option");
-                    break;
-            }
-            flag = false;
-        }
-        catch (const invalid_argument& ex) {
-            cout << "Error: " << ex.what() << endl;
-        }
-    }
-    
-	if (electionsRound) {
+	Elections* electionsRound = nullptr;
+	int option;
+
+	cout << endl << "Elections Manager" << endl;
+	while (true) {
+		cout << "Main Menu - Choose an option:" << endl;
+		cout << "1.Create new elections round." << endl;
+		cout << "2.Load an existing round of elections." << endl;
+		cout << "3.Exit." << endl;
+
 		try {
-			start(&electionsRound);
-			delete electionsRound;
+			cin >> option;
+			switch (static_cast<MainMenu>(option)) {
+			case MainMenu::NEW:
+				electionsRound = createNewRound();
+				break;
+			case MainMenu::LOAD:
+				electionsRound = loadElections();
+				break;
+			case MainMenu::EXIT:
+				return;
+				break;
+			default:
+				throw invalid_argument("Invalid option");
+				break;
+			}
+			break;
 		}
 		catch (const exception& ex) {
-			if (electionsRound)
-				delete electionsRound;
-			throw;
+			cout << "Error: " << ex.what() << endl;
+			cout << "Please try again" << endl;
 		}
 	}
+
+	try {
+		start(&electionsRound);
+		delete electionsRound;
+	}
+	catch (...) {
+		if (electionsRound)
+			delete electionsRound;
+		throw;
+	}
+	
 }
+
 
 Elections* createNewRound() 
 {
@@ -84,68 +78,54 @@ Elections* createNewRound()
             break;
         }
         catch (const invalid_argument& ex) {
-            cout << "Error: " << ex.what() << endl;
+			cout << "Error: " << ex.what() << endl;
+			cout << "Please try again" << endl;
         }
     }
     
-    int roundType;
-    cout << "Choose the type of the elections (";
-    cout << static_cast<int>(ElectionsType::RERGULAR) << " for Regular , ";
-    cout << static_cast<int>(ElectionsType::SIMPLE) << " for Simple): ";
-    cin >> roundType;
-    
-    switch (static_cast<ElectionsType>(roundType))
-    {
-        case ElectionsType::RERGULAR:
-        {
-            electionsRound = new Elections(date);
-        }
-            break;
-        case ElectionsType::SIMPLE:
-        {
-            int numOfCandidates;
-            cout << "Enter the number of candidates that will be in the election: ";
-            cin >> numOfCandidates;
-            electionsRound = new SimpleElections(numOfCandidates, date);
-        }
-            break;
-        default:
-            throw invalid_argument("Invalid elections type");
-            break;
-    }
-    return electionsRound;
-    
-}
+	while (true) {
+		try {
+			int roundType;
+			cout << "Choose the type of the elections (";
+			cout << static_cast<int>(ElectionsType::RERGULAR) << " for Regular , ";
+			cout << static_cast<int>(ElectionsType::SIMPLE) << " for Simple): ";
+			cin >> roundType;
 
-Elections* loadElections()
-{
-    Elections* electionsRound;
-    string name;
-    cout << "Enter file name: ";
-    cin >> name;
-    ifstream infile;
-    infile.exceptions(ifstream::eofbit);
+			switch (static_cast<ElectionsType>(roundType))
+			{
+			case ElectionsType::RERGULAR:
+			{
+				electionsRound = new Elections(date);
+			}
+			break;
+			case ElectionsType::SIMPLE:
+			{
+				int numOfCandidates;
+				cout << "Enter the number of candidates that will be in the election: ";
+				cin >> numOfCandidates;
+				electionsRound = new SimpleElections(numOfCandidates, date);
+			}
+			break;
+			default:
+				throw invalid_argument("Invalid elections type");
+				break;
+			}
 
-    try {
-        infile.open(name, ios::binary);
-        electionsRound = ElectionsLoader::load(infile);
-        infile.close();
-    }
-    catch (...) {
-        if (infile)
-            infile.close();
-        cout << "Error while opening/reading file!" <<endl;
-        throw;
-    }
-    
+			break;
+		}
+		catch (const invalid_argument& ex) {
+			cout << "Error: " << ex.what() << endl;
+			cout << "Please try again" << endl;
+		}	
+	}
     return electionsRound;
 }
 
 
 void start(Elections** election)
 {
-    int choice = 1;
-    while (choice != 10) {
+    int choice;
+    do  {
         cout << "\nMain menu - choose an option:" << endl;
         cout << "1.Add District." << endl;
         cout << "2.Add Citizen." << endl;
@@ -162,24 +142,24 @@ void start(Elections** election)
         
         try {
             cin.ignore();
-            cin >> choice;
-            if(choice < 1 || choice > 12)
-                throw "Wrong input";
-            
+            cin >> choice;            
             options(election, static_cast<ElectionsMenu>(choice));
         }
-        catch (const invalid_argument& ex) {
-            cout << "Error: " << ex.what() <<endl;
-            cout << "Please try again" <<endl;
-        }
-        catch (const char* msg) {
+		catch (const char* msg) {
             cout << "Error: " << msg <<endl;
             cout << "Please try again" <<endl;
         }
-        
-    }
+        catch (const exception& ex) {
+            cout << "Error: " << ex.what() <<endl;
+            cout << "Please try again" <<endl;
+        }
+		catch (...) {
+			cout << "Error: An unexpected error occurred"<< endl;
+			cout << "Please try again" << endl;
+		}
+ 
+	} while (choice != static_cast<int>(ElectionsMenu::EXIT));
 }
-
 
 void options(Elections** election, ElectionsMenu choice)
 {
@@ -229,6 +209,7 @@ void options(Elections** election, ElectionsMenu choice)
         }
             break;
         default:
+			throw invalid_argument("Wrong input");
             break;
     }
 }
@@ -300,6 +281,28 @@ void vote(Elections& election) {
     election.vote(id, party_id);
 }
 
+Elections* loadElections()
+{
+	Elections* electionsRound;
+	string name;
+	cout << "Enter file name: ";
+	cin >> name;
+	ifstream infile(name, ios::binary);
+
+	try {
+		if (!infile.is_open())
+			throw File_Error("Unable to open file");
+		electionsRound = ElectionsLoader::load(infile);
+		infile.close();
+	}
+	catch (...) {
+		if (infile)
+			infile.close();
+		throw;
+	}
+
+	return electionsRound;
+}
 
 void saveToFile(Elections& election)
 {
@@ -307,17 +310,16 @@ void saveToFile(Elections& election)
     cout << "Enter file name: ";
     cin >> name;
     
-    ofstream outfile;
-    outfile.exceptions(ostream::eofbit); // No need to check this bit
-    
+    ofstream outfile(name, ios::binary);
     try {
-        outfile.open(name, ios::binary);
+		if (!outfile.is_open())
+			throw File_Error("Unable to open file");
         ElectionsLoader::save(outfile, &election);
     }
-    catch (const ostream::failure& ex) {
+    catch (...) {
         if (outfile)
             outfile.close();
-        throw "opening/writing file failed";
+		throw;
     }
 }
 
