@@ -225,7 +225,7 @@ void newDistrict(Elections& election) {
     cout << static_cast<int>(DistrictType::DIVIDED) <<" for Divided, ";
     cout << static_cast<int>(DistrictType::UNIFIED) << " for Unified) ";
     cin >> type;
-    cout << "\nEnter number of candidates: ";
+    cout << "Enter number of candidates: ";
     cin >> candidates_num;
     election.addDistrict(name, candidates_num, static_cast<DistrictType>(type));
 }
