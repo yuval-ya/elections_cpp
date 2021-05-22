@@ -9,7 +9,7 @@ Managing all the details of parties, districts, citizens, voting system and calc
 •	OOP concepts such as: encapsulation, aggregation, inheritance and polymorphism
 •	Serialization and Unserialization: write/read complex objects as a sequence of bytes
 •	Writing and debugging C++ code, implement data structures with iterators as C++ classes,
- creating and using custom exceptions, implement custom memory manager using smart pointers
+creating and using custom exceptions, implement custom memory manager using smart pointers
  
 ---
 
